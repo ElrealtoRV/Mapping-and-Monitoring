@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['name', 'due_date', 'user_id', 'done'];
+    protected $fillable = ['task_name', 'due_date', 'user_id', 'status','doneBy'];
 
     public function user()
     {

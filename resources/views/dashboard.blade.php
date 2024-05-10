@@ -1,4 +1,4 @@
-	@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
+	@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') ||auth()->user()->hasRole('Maintenance Personnel')|| auth()->user()->hasRole('Staff')|| auth()->user()->hasRole('Student'))
 
 
 		<x-app-layout>
@@ -48,10 +48,11 @@
 				</div>
 			</div>
 
-
+			@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') || auth()->user()->hasRole('Maintenance Personnel'))
 			<div class="head-title">
 				<div class="left">
 					<ul class="box-info">
+					@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') ||auth()->user()->hasRole('Maintenance Personnel'))
 						<li>
 							<i class="fas fa-fire-extinguisher"></i>
 							<span class="text">
@@ -64,47 +65,44 @@
 									@endif
 							</span>
 						</li>
-							<li>
-							
-								<i class='bx bxs-group'></i>
-							<span class="text">
-							@if($regularusers == 0)
-								<h3>{{ $regularusers }}</h3>
+						@endif
+						@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
+						<li>
+
+						<i class='bx bxs-group'></i>
+						<span class="text">
+							@php
+								$totalRegularUsers = \App\Models\User::where('role', 'Student')->count() + \App\Models\User::where('role', 'Staff')->count();
+							@endphp
+
+							@if($totalRegularUsers == 0)
+								<h3>{{ $totalRegularUsers }}</h3>
 								<p>User</p>
 							@else
-								<h3>{{ $regularusers }}</h3>
-								<p>User{{ $regularusers != 1 ? 's' : '' }}</p>
+								<h3>{{ $totalRegularUsers }}</h3>
+								<p>User{{ $totalRegularUsers != 1 ? 's' : '' }}</p>
 							@endif
-							</span>
-						
-							</li>
-						
-							<li>
+						</span>
+					</li>
+
 								
-								@if(is_array($userCounts) || is_object($userCounts))
-									@forelse ($userCounts as $userCount)
-										<i class='fas fa-briefcase'></i>
-										<span class="text">
-											@if($userCount == 0)
-												<h3>{{ $userCount }}</h3>
-												<p>Employee</p>
-											@else
-												<h3>{{ $userCount }}</h3>
-												<p>Employee{{ $userCount != 1 ? 's' : '' }}</p>
-											@endif
-										</span>
-									@empty
-										<p>No users found</p>
-									@endforelse
-								@else
-									<i class='fas fa-briefcase'></i>
-									<span class="text">
-										<h3>{{ $userCounts }}</h3>
-										<p>Employee{{ $userCounts != 1 ? 's' : '' }}</p>
-									</span>
-								@endif
-							</li>
-						
+							<li>
+							<i class='bx bxs-briefcase'></i>
+						<span class="text">
+							@php
+								$totalEmployee = \App\Models\User::where('role', 'Head')->count() + \App\Models\User::where('role', 'Maintenance Personnel')->count();
+							@endphp
+
+							@if($totalEmployee == 0)
+								<h3>{{ $totalEmployee }}</h3>
+								<p>Employee</p>
+							@else
+								<h3>{{ $totalEmployee }}</h3>
+								<p>Employee{{ $totalEmployee != 1 ? 's' : '' }}</p>
+							@endif
+						</span>
+					</li>
+					@endif
 
 								<li>
 									<i class='con fas fa-fire-extinguisher' ></i>
@@ -116,9 +114,9 @@
 							</ul> 
 						</div>
 					</div>
-
+					@endif
 					@if(auth()->user()->hasRole('admin'))
-
+					<div class="table-container">
 						<div class="table-data">
 									<div class="order">
 										<div class="user-list">
@@ -133,7 +131,7 @@
 												<tr>
 													<th>Name</th>
 													<th>Position</th>
-													<th style="text-align: center;">Status</th>
+													
 												</tr>
 											</thead>
 											<tbody>
@@ -149,13 +147,7 @@
 													@endforeach
 											</td>
 											
-											<td>
-											<span style="display: inline-block; padding: 5px; border-radius: 5px; text-align: center; 
-														background-color: {{ $regularuser->status == 'Active' ? 'green' : 'orange' }};
-														color: white; vertical-align: middle;">
-												{{ $regularuser->status == 'Active' ? 'Active' : 'Inactive' }}
-											</span>
-											</td>
+											
 										</tr>
 										@empty
 										<tr>
@@ -173,14 +165,6 @@
 											<td>    @foreach($user->roles as $role)
 													<li>{{ $role->name }}</li>
 													@endforeach</td>
-											<td>
-											
-											<span style="display: inline-block; padding: 5px; border-radius: 10%; text-align: center; 
-														background-color: {{ $user->status == 'active' ? 'green' : 'orange' }};
-														color: white;">
-												{{ $user->status == 'Active' ? 'Active' : 'Inactive' }}
-											</span>
-											</td>
 										</tr>
 										@empty
 										<tr>
@@ -191,14 +175,13 @@
 								</table>
 							</div>
 						</div>
+</div>
 						@endif	
 						    <div>
-								@if(auth()->user()->hasRole('admin'))
+								<!-- @if(auth()->user()->hasRole('admin'))
 									@livewire('activity-log.activity-log')
-								@endif
-								@if(auth()->user()->hasRole('Head'))
-									@livewire('task.task-manager')
-								@endif
+								@endif -->
+
 							</div>
 							
 
@@ -214,9 +197,7 @@
 				});
 
 				// Listen for the 'viewTask' event and show the view modal
-				Livewire.on('viewTask', function (taskId) {
-					Livewire.emit('showViewTaskModal', taskId);
-				});
+
 
 
 

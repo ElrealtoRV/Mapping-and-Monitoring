@@ -5,7 +5,7 @@
 				<ul class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/">Dashboard</a></li>
 					<li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
-					<li class="breadcrumb-item active">Employee List</li>
+					<li class="breadcrumb-item active">User List</li>
 				</ul>
 			</div>
 		</div>
@@ -19,10 +19,10 @@
 						<div class="row align-items-center">
 							<div class="col">
 								<div class="doctor-table-blk">
-									<h3>Employee List</h3>
+									<h3>User List</h3>
 									<div class="doctor-search-blk">
 										<div class="add-group">
-										@if(auth()->user()->hasRole('admin'))
+										@if(auth()->user()->hasRole('admin') ||auth()->user()->hasRole('Head'))
 											<a wire:click="createUser" class="btn btn-primary ms-2"><img src="{{ asset('assets/img/icons/plus.svg') }}" alt>
 											</a>
 										@endif

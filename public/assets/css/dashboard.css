@@ -8,42 +8,47 @@ body {
 }
 
 .head-title {
-    display: flex;
+    display: relative;
     align-items: stretch;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    margin-left: 20px;
-}
-.box-info li i.fa-fire-extinguisher {
+  }
+  
+  .box-info li i.fa-fire-extinguisher {
     color: orange;
-}
-.box-info li i.bxs-group {
+  }
+  
+  .box-info li i.bxs-group {
     color: green;
-}
-.box-info li i.fa-briefcase {
+  }
+  
+  .box-info li i.fa-briefcase {
     color: blue;
-}
-.box-info li i.fas-fire-extinguisher-red {
+  }
+  
+  .box-info li i.fas-fire-extinguisher-red {
     color: red;
-}
-h1 {
+  }
+  
+  h1 {
     color: #3498db;
     margin: 0;
-}
-.box-info {
+  }
+  
+  .box-info {
     width: 100%;
     list-style: none;
     display: flex;
     align-items: stretch;
     justify-content: space-around;
     padding: 20px;
-    margin: 10px;
-    flex-wrap: wrap; /* Add this to allow wrapping on smaller screens */
-}
-.box-info li {
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  }
+  
+  .box-info li {
     text-align: center;
-    width: 250px;
+    width: 350px;
     min-height: 200px;
     background-color: #fff;
     padding: 20px;
@@ -51,82 +56,122 @@ h1 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     margin-right: 18px;
-    margin-bottom: 20px; /* Add this to create spacing between boxes on smaller screens */
-}
-.box-info li:last-child {
+    margin-bottom: 20px; /* Add spacing between boxes on smaller screens */
+  }
+  
+  .box-info li:last-child {
     margin-right: 0;
-}
-.box-info i {
+  }
+  
+  .box-info i {
     font-size: 4em;
     margin-bottom: 10px;
     color: #3498db;
-}
-.box-info h3 {
+  }
+  
+  .box-info h3 {
     margin: 10px;
     font-size: 24px;
     color: #333;
-}
-.box-info p {
+  }
+  
+  .box-info p {
     margin: 0;
     font-size: 14px;
     color: #777;
-}
-.box-info li:hover {
+  }
+  
+  .box-info li:hover {
     transform: scale(1.05);
-}
-
-/* Media Queries for Responsive Design */
-@media (max-width: 480px) {
+  }
+  
+  /* Media Queries for Responsive Design */
+  @media (max-width: 1200px) {
+    /* Adjustments for screens smaller than 1200px */
     .box-info li {
-        width: 100%; /* Make boxes take full width on very small screens */
-        margin-right: 0;
-        margin-left: 0;
+      width: 220px;
+      min-height: 180px;
     }
-
+  
+    .box-info i {
+      font-size: 3em;
+    }
+  
+    .box-info h3 {
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    /* Adjustments for screens smaller than 768px (tablets) */
+    .box-info li {
+      width: 180px;
+      min-height: 160px;
+    }
+  
+    .box-info i {
+      font-size: 2.5em;
+    }
+  
+    .box-info h3 {
+      font-size: 18px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Adjustments for screens smaller than 480px (mobile phones) */
+    .box-info li {
+      width: 100%; /* Make boxes take full width on very small screens */
+      margin-right: 0;
+      margin-left: 0;
+    }
+  
     .head-title {
-        margin-left: 0;
-        justify-content: center;
+      margin-left: 0;
+      justify-content: center;
     }
-
-
-}
-
-
-
-table {
+  }
+  .table-container {
+    display: flex;
+    justify-content: center; /* Center the container horizontally */
+    align-items: center; /* Center the container vertically (optional) */
+  }
+  table {
+    display: relative;
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
+  }
+  
+  th,
+  td {
     border: 1px solid #ddd;
     padding: 15px;
     text-align: left;
-}
-
-th {
+  }
+  
+  th {
     background-color: #3498db;
     color: #fff;
-}
-
-.scrollable-box {
+  }
+  
+  .scrollable-box {
     margin-top: 20px;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-}
-
-.fas{
-    margin-left:11px;
-}
-
-button {
+  }
+  
+  .fas {
+    margin-left: 11px;
+  }
+  
+  button {
     background-color: #3498db;
     color: #fff;
     padding: 10px 15px;
@@ -134,23 +179,23 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     background-color: #2980b9;
-}
+  }
 
 /* Userlist dashboard */
 
 /* Userlist dashboard */
 
 .table-data {
-    width: 550px;
+    display: relative;
+    width: 95%;
     height: auto;
     overflow: auto;
-	background-color: #ffffff;
-	padding: 20px !important;
-	margin-left: 55px !important ;
+	background-color: #fff;
+	padding: 10px !important;
 	margin-top: -20px;  
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -202,10 +247,10 @@ button:hover {
 }
 
 #searchInput {
+    display: relative;
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-left: 270px;
     height: 20px;
     margin-top: 15px;
 }

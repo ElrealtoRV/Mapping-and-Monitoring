@@ -68,9 +68,11 @@ class FireForm extends Component
                 'expiration_date'     => 'required',
                 'description'         => 'nullable',
                 'status'     => 'nullable',
+                'status_id' => 'nullable'
                 
             ]);
             
+            $data['status_id'] = 1;
 
             $fire = FireList::find($this->fireId);
             $fire->update($data);
@@ -119,7 +121,7 @@ class FireForm extends Component
         $this->resetInputFields();
         $this->emit('closeFireModal');
         $this->emit('refreshParentFire');
-        $this->emit('refreshParentGroundFLoor');
+        $this->emit('refreshParentCas');
         $this->emit('refreshTable');
 
     }

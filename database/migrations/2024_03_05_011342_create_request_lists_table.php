@@ -13,17 +13,23 @@ return new class extends Migration
     {
         Schema::create('request_lists', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('type'); // Changing the data type
-            $table->foreign('type')->references('id')->on('type_lists');
-            $table->string('firename');
-            $table->string('serial_number');
-            $table->unsignedBigInteger('location'); // Changing the data type
-            $table->foreign('location')->references('id')->on('location_lists');
-            $table->unsignedBigInteger('request'); // Changing the data type
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('type');
+            $table->foreign('type')->references('id')->on('type_lists')->nullable();
+            $table->string('firename')->nullable();
+            $table->string('serial_number')->nullable();
+            $table->string('room');
+            $table->string('building')->nullable();
+            $table->string('floor')->nullable();
+            $table->unsignedBigInteger('request');
             $table->foreign('request')->references('id')->on('requests');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }
+    
+    
 
     /**
      * Reverse the migrations.

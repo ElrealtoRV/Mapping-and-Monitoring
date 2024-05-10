@@ -248,6 +248,10 @@ span{
 
 
     </div>
+    <div wire.ignore.self class="modal fade" id="MapFormModal" tabindex="-1" role="dialog" aria-labelledby="MapFormModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <livewire:map.form />
+        </div>
 </div>
 <script>
   // Get the modal
@@ -278,11 +282,7 @@ window.onclick = function(event) {
 </script>
 <div>
   {{-- Modal --}}
-      <div wire.ignore.self class="modal fade" id="MapFormModal" tabindex="-1" role="dialog" aria-labelledby="MapFormModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <livewire:map.form />
-        </div>
-      </div>
+      
       @section('custom_script')
       @include('layouts.scripts.MapForm-scripts')
       @endsection

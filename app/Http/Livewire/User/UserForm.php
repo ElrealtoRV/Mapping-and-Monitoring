@@ -5,6 +5,8 @@ namespace App\Http\Livewire\User;
 use App\Models\User;
 use App\Models\Position;
 use App\Models\OfficeLists;
+use App\Models\AffiliationLists;
+use App\Models\DepartmentLists;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Component;
@@ -13,7 +15,7 @@ use Carbon\Carbon;
 
 class UserForm extends Component
 {
-    public $userId, $first_name, $middle_name, $last_name, $age, $bdate, $contnum, $email, $idnum, $position_id, $office, $password, $password_confirmation;
+    public $userId, $first_name, $middle_name, $last_name, $age, $bdate, $contnum, $dept, $email, $idnum, $office, $password, $password_confirmation;
     public $action = '';  //flash
     public $message = '';  //flash
     public $roleCheck = array();
@@ -43,8 +45,8 @@ class UserForm extends Component
         $this->contnum = $user->contnum;
         $this->email = $user->email;
         $this->idnum = $user->idnum;
-        $this->position_id = $user->position_id; // Changed from 'position' to 'position_id'
         $this->office = $user->office;
+        $this->dept = $user->dept;
         $this->password = $user->password;
         $this->selectedRoles = $user->getRoleNames()->toArray();
     }
@@ -54,11 +56,11 @@ class UserForm extends Component
         if (is_object($this->selectedRoles)) {
             $this->selectedRoles = json_decode(json_encode($this->selectedRoles), true);
         }
-    
+
         if (empty($this->roleCheck)) {
             $this->roleCheck = array_map('strval', $this->selectedRoles);
         }
-    
+
         if ($this->userId) {
             $data = $this->validate([
                 'first_name' => 'required',
@@ -69,27 +71,31 @@ class UserForm extends Component
                 'contnum' => ['required', 'max:11', 'unique:users,contnum'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
                 'idnum' => ['required', 'max:9', 'unique:users,idnum'],
-                'position_id' => 'required', // Changed from 'position' to 'position_id'
-                'office' => 'required',
+                'office' => 'nullable',
+                'dept' => 'nullable',
             ]);
-    
+
             $user = User::find($this->userId);
             $user->update($data);
-    
+
             if (!empty($this->password)) {
                 $this->validate([
                     'password' => ['required', 'confirmed', Rules\Password::defaults()],
                 ]);
-    
+
                 $user->update([
                     'password' => Hash::make($this->password),
                 ]);
             }
-    
+
             $user->position_id = $this->position_id; // Assign the new position_id value
             $user->save();
             $user->syncRoles($this->roleCheck);
-    
+
+            // Update the role column directly
+            $user->role = implode(',', $this->roleCheck);
+            $user->save();
+
             $action = 'edit';
             $message = 'Successfully Updated';
         } else {
@@ -102,11 +108,12 @@ class UserForm extends Component
                 'contnum' => ['required', 'max:11', 'unique:users,contnum'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
                 'idnum' => ['required', 'max:9', 'unique:users,idnum'],
-                'position_id' => 'required', // Changed from 'position' to 'position_id'
-                'office' => 'required',
+
+                'office' => 'nullable',
+                'dept' => 'nullable',
                 'password' => ['required', 'confirmed', 'min:6', Rules\Password::defaults()],
             ]);
-    
+
             $user = User::create([
                 'first_name' => $this->first_name,
                 'middle_name' => $this->middle_name,
@@ -115,37 +122,62 @@ class UserForm extends Component
                 'bdate' => $this->bdate,
                 'contnum' => $this->contnum,
                 'idnum' => $this->idnum,
-                'position_id' => $this->position_id, // Changed from 'position' to 'position_id'
+
                 'email' => $this->email,
                 'office' => $this->office,
+                'dept' => $this->dept,
                 'password' => Hash::make($this->password)
             ]);
-                
+
             $user->assignRole($this->roleCheck);
-    
+
+            // Store selected roles as comma-separated string
+            $user->role = implode(',', $this->roleCheck);
+            $user->save();
+
             $action = 'store';
             $message = 'Successfully Created';
         }
-    
+
         $this->emit('flashAction', $action, $message);
         $this->resetInputFields();
         $this->emit('closeUserModal');
         $this->emit('refreshParentUser');
         $this->emit('refreshTable');
     }
+
+    public $showAddEmployee = true;
+    public $showAddUser = true;
+
+    public function showAddEmployee()
+    {
+        $this->showAddEmployee = true;
+    }
+
+    public function showAddUser()
+    {
+        $this->showAddUser = false;
+    }
+
     public function render()
     {
         $roles = Role::all();
         $positions = Position::all();
         $offices = OfficeLists::all();
-        $filteredPos = Position::where('description', '!=', 'Admin')->get();
+        $affiliations = AffiliationLists::all();
+        $depts = DepartmentLists::all();
+        // $filteredPos = Position::where('description', '!=', 'Admin')->get();
         $filteredRoles = Role::whereIn('name', ['Head', 'Maintenance Personnel'])->get();
+        $filteredUserRoles = Role::whereIn('name', ['Student', 'Staff'])->get();
         return view('livewire.user.user-form', [
             'roles' => $roles,
             'filteredRoles' =>  $filteredRoles,
-            'filteredPos' =>   $filteredPos,
+            'filteredUserRoles' =>  $filteredUserRoles,
+            // 'filteredPos' =>   $filteredPos,
             'positions' => $positions,
             'offices' => $offices,
+            'affiliations' => $affiliations,
+            'depts' => $depts,
         ]);
     }
 }

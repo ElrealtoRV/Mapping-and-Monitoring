@@ -16,6 +16,6 @@ class DepartmentLists extends Model
 
     public function Department()
     {
-        return $this->hasMany(RegularList::class, 'dept', 'id');
+        return $this->hasMany(User::class, 'dept', 'id');
     }
 }

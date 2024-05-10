@@ -13,16 +13,19 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('task_name');
             $table->date('due_date');
-            $table->unsignedBigInteger('user_id'); // Assuming you're relating tasks to users
-            $table->boolean('done')->default(false);
-            $table->timestamps();
-
-            // Define foreign key constraint
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('status')->default('Incomplete');
+            $table->unsignedBigInteger('doneBy')->nullable();
+            $table->foreign('doneBy')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
+    
+            
         });
     }
+    
 
     /**
      * Reverse the migrations.

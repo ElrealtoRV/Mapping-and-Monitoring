@@ -32,7 +32,10 @@ class RegularList extends Authenticatable
      {
          return $this->belongsTo(DepartmentLists::class, 'dept', 'id');
      }
-
+     public function regularUser()
+     {
+         return $this->belongsTo(RequestLists::class, 'first_name', 'last_name','idnum','affiliation');
+     }
 
      public function save(array $options = [])
      {

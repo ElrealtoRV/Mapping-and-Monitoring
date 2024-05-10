@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Request;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 use App\Models\RequestLists;
 use App\Models\TypeList;
 use App\Models\LocationList;
@@ -11,7 +12,7 @@ use App\Models\FindingList;
 
 class RequestForm extends Component
 {
-    public $requestId, $type, $firename, $serial_number, $location,$request;
+    public $requestId,$user_id, $type, $firename, $serial_number, $room,$building,$floor,$request;
     public $action = '';  //flash
     public $message = '';  //flashSSS
     public $requestCheck = array();
@@ -33,10 +34,13 @@ class RequestForm extends Component
     {
         $this->requestId = $requestId;
         $request = RequestLists::find($requestId);
+        $this->user_id = $request->user_id;
         $this->type = $request->type;
         $this->firename = $request->firename;
         $this->serial_number = $request->serial_number;
-        $this->location = $request->location;
+        $this->room = $request->room;
+        $this->building = $request->building;
+        $this->floor = $request->floor;
         $this->request = $request->request;
 
         $this->selectedRequest = $request->getRequestNames()->toArray();
@@ -55,38 +59,47 @@ class RequestForm extends Component
         if ($this->requestId) {
 
             $data = $this->validate([
-                'type'    => 'required',
-                'firename'   => 'required',
+                'type'    => 'nullable',
+                'firename'   => 'nullable',
                 'serial_number'     => 'required',
-                'location'     => 'required',
+                'room'     => 'required',
+                'building' => 'nullable',
+                'floor' => 'nullable',
                 'request'     => 'required',
                 
             ]);
-            
+            if (!isset($data['type'])) {
+                $data['type'] = null;
+            }
 
             $request = RequestLists::find($this->requestId);
             $request->update($data);
 
 
-            $request->syncFire($this->requestCheck);
+            $request->syncRequest($this->requestCheck);
 
             $action = 'edit';
             $message = 'Successfully Updated';
         } else {
 
             $this->validate([
-                'type'    => 'required',
-                'firename'   => 'required',
+                'type'    => 'nullable',
+                'firename'   => 'nullable',
                 'serial_number'     => 'required',
-                'location'     => 'required',
+                'room'     => 'required',
+                'building' => 'nullable',
+                'floor' => 'nullable',
                 'request'     => 'required',
             ]);
 
             $request = RequestLists::create([
+                'user_id' => auth()->id(),
                 'type'    => $this->type,
                 'firename'   => $this->firename,
                 'serial_number'      => $this->serial_number,
-                'location'      => $this->location,
+                'room'      => $this->room,
+                'building'      => $this->building,
+                'floor'      => $this->floor,
                 'request'      => $this->request,
             ]);
 
@@ -101,7 +114,46 @@ class RequestForm extends Component
         $this->emit('refreshTable');
 
     }
+    public function approveRequest($requestId)
+    {
+        // Find the request by ID
+        $request = RequestLists::findOrFail($requestId);
+        
+        // Update status to 'Approved'
+        $request->status = 'Approved';
+        $request->save();
 
+        // Further logic for approval...
+    }
+    public function cancelRequest($requestId)
+    {
+        $request = RequestLists::findOrFail($requestId);
+        $request->status = 'Cancelled';
+        $request->save();
+
+        $action = 'cancel';
+        $message = 'Cancel Successfully ';
+
+        $this->emit('flashAction', $action, $message);
+        $this->resetInputFields();
+        $this->emit('closeRequestModal');
+        $this->emit('refreshParentRequest   ');
+        $this->emit('refreshTable');
+    }
+
+    public function deleteRequest($requestId)
+    {
+        RequestLists::findOrFail($requestId)->delete();
+
+        $action = 'Delete';
+        $message = 'Deleted Successfully ';
+
+        $this->emit('flashAction', $action, $message);
+        $this->resetInputFields();
+        $this->emit('closeRequestModal');
+        $this->emit('refreshParentRequest   ');
+        $this->emit('refreshTable');
+    }
     public function render()
     {
         $requests =RequestLists::all();
@@ -114,6 +166,7 @@ class RequestForm extends Component
             'types' => $types,
             'locations' => $locations,
             'addrequests' => $addrequests,
+         
 
         ]);
     }

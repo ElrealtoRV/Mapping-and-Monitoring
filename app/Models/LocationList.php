@@ -23,4 +23,5 @@ class LocationList extends Model
     {
         return $this->hasMany(RequestLists::class, 'location_id');
     }
+    
 }

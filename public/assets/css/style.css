@@ -70,7 +70,7 @@ body {
             rgba(51, 53, 72, 0.05),
             rgba(51, 53, 72, 0.05)
         ),
-        #ffffff;
+        #f1eeee !important;
     overflow-x: hidden;
     height: 100%;
 }
@@ -85,6 +85,7 @@ h6 {
 h1,
 .h1 {
     font-size: 2.25rem;
+    color:black;
 }
 h2,
 .h2 {
@@ -978,14 +979,15 @@ textarea.form-control {
     top: 90px;
     width: 250px;
     z-index: 1039;
-    background-color: #fff;
+    background-color: #eee;
     bottom: 0;
     margin-top: 0px;
     position: fixed;
+    border: #b1aeae 2px ;
     left: 0;
     transition: all 0.2s ease-in-out;
     border-top-right-radius: 40px;
-    box-shadow: 5px 20px 14px rgba(46, 55, 164, 0.05);
+    box-shadow: 20px 20px 20px rgba(46, 55, 164, 0.05);
     overflow-y: hidden;
     height: 100vh;
 }
@@ -1011,8 +1013,8 @@ textarea.form-control {
     height: auto;
     padding: 0 20px;
 }
-.sidebar-menu li a:hover {
-    color: #2e37a4;
+.sidebar-menu li a:s {
+    color: #a42e2e;
 }
 .sidebar-menu ul li .active img {
     filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg)

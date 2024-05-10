@@ -23,17 +23,21 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = [
 
-        'first_name', 'middle_name', 'last_name','age','bdate','contnum','position_id', 'idnum','office', 'email', 'password','status','email_verified_at','first_name_verified_at','last_name_verified_at',
+        'first_name', 'middle_name', 'last_name','age','bdate','contnum', 'idnum','office', 'email','dept','role', 'password','status','email_verified_at','first_name_verified_at','last_name_verified_at',
     ];
 
-    public function position()
-    {
-        return $this->belongsTo(Position::class, 'position_id', 'id');
-    }
 
+    public function requests()
+    {
+        return $this->hasMany(RequestLists::class); // Assuming 'user_id' is the foreign key
+    }
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+    public function office()
+    {
+        return $this->belongsTo(OfficeLists::class);
     }
     /**
      * The attributes that should be hidden for serialization.

@@ -1,45 +1,67 @@
-<!-- resources/views/livewire/add-task-modal.blade.php -->
-<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addTaskModalLabel">{{ $editingTaskId ? 'Edit Task' : 'Add Task' }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Form to add/edit task -->
-                <form wire:submit.prevent="{{ $editingTaskId ? 'updateTask' : 'addTask' }}">
-                    <div class="form-group">
-                        <label for="taskName">Task Name</label>
-                        <input type="text" class="form-control" id="taskName" wire:model="taskName">
-                        @error('taskName') <span class="error">{{ $message }}</span> @enderror
+
+<div class="modal-content">
+    <div class="modal-header" style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
+        <h1 class="modal-title fs-5" style="color:white;">
+            @if ($taskId)
+            Edit Task
+            @else
+            Add Task
+            @endif
+        </h1>
+        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    @if ($errors->any())
+    {{ implode('', $errors->all('<div>:message</div>')) }}
+    @endif
+    <form wire:submit.prevent="store" enctype="multipart/form-data">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group local-forms">
+                        <label>
+                            Task
+                            <span class="login-danger">*</span>
+                        </label>
+                        <input class="form-control" type="text" wire:model="task_name" placeholder />
                     </div>
-                    <div class="form-group">
-                        <label for="dueDate">Due Date</label>
-                        <input type="date" class="form-control" id="dueDate" wire:model="dueDate">
-                        @error('dueDate') <span class="error">{{ $message }}</span> @enderror
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group local-forms">
+                        <label for="user_id">Assigned To</label>
+                        <select wire:model="user_id" id="user_id">
+                            <option value="">Select User</option>
+                            @php
+                                    $users = \App\Models\User::whereHas('roles', function ($query) {
+                                        $query->where('name', 'Maintenance Personnel');
+                                    })->get();
+                                @endphp
+                            @if ($users)
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                @endforeach
+                                @else
+                                    <option value="">No users found</option>
+                            @endif
+                        </select>
+                        @error('user_id') <span>{{ $message }}</span> @enderror
                     </div>
-                    <div class="form-group">
-                    <label for="user">Select Employee</label>
-                    <select class="form-control" id="user" wire:model="selectedUserId">
-                    <?php $employees = \App\Models\User::all(); ?>
-                        @foreach ($employees as $employee)
-                            <option value="{{ $employee->id }}">
-                                {{ $employee->first_name . ' ' . $employee->last_name }}
-                            </option>
-                        @endforeach
-                    </select>
                 </div>
 
 
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" wire:click="{{ $editingTaskId ? 'updateTask' : 'addTask' }}">{{ $editingTaskId ? 'Update Task' : 'Save Task' }}</button>
-            </div>
-        </div>
-    </div>
+
+            <div class="col-md-12">
+                    <div class="form-group local-forms">
+                        <label>
+                            Due Date
+                            <span class="login-danger">*</span>
+                        </label>
+                        <input class="form-control" type="date" wire:model="due_date" placeholder />
+                    </div>
+                </div>
+                <div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+    </form>
 </div>
+

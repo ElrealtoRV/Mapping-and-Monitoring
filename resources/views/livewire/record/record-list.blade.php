@@ -22,10 +22,7 @@
 								<div class="doctor-table-blk">
 									<h3>Fire Extinguisher Record</h3>
 									<div class="doctor-search-blk">
-										<div class="add-group">
-											<a wire:click="createRecord" class="btn btn-primary ms-2"><img src="{{ asset('assets/img/icons/plus.svg') }}" alt>
-											</a>
-										</div>
+
 									</div>
 								</div>
 							</div>

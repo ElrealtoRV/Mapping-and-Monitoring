@@ -12,6 +12,6 @@
     });
 
     window.livewire.on('openTaskModal', () => {
-        $('AddTask').modal('show');
+        $('#AddTask').modal('show');
     });
 </script>

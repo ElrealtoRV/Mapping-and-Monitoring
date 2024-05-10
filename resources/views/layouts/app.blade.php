@@ -7,7 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Fire Extinguisher</title>
-    <link rel="website icon" type="png" href="asset('assets/img/fireICon.png') ">
+    <link rel="website icon" type="png" href="{{ asset('assets/img/fireICon.png') }}">
+
     <!-- Fonts -->
     
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -71,7 +72,7 @@
 
     <script src="{{ asset('assets/js/jquery-3.6.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assests/css/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/css/bootstrap.min.js') }}"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets/js/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>

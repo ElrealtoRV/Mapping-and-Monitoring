@@ -1,6 +1,6 @@
 
 
-@if(auth()->user()->hasRole('Head'))
+@if(auth()->user()->hasRole('Head')|| auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
        <div class="setting-box">
             <h2 class="P">Profile</h2>
             <div class="profile">
@@ -18,7 +18,7 @@
             </div>
         </div>
 @endif
-@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
+@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
 <div class="setting-box">
                 <div class="setting2-box">
                     <h2 class="P">Notification Settings</h2>
@@ -39,6 +39,7 @@
                             <label for="commentsSwitch" class="switch"></label>
                         </div>
                     </div>
+                    @if(auth()->user()->hasRole('Head')|| auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
                     <div class="notification-category">
                     <h5 >System Updates</h5>
                     <p class="text6">Receive notifications for system updates and maintenance.</p>
@@ -47,6 +48,7 @@
                         <label for="systemUpdatesSwitch" class="switch"></label>
                     </div>
                     </div>
+                    @endif
                 </div>
                 </div>
 @endif

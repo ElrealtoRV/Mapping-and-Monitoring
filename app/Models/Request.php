@@ -14,8 +14,8 @@ class Request extends Model
     protected $primaryKey = 'id';
     protected $fillable = [ 'description' ];
 
-    public function Request()
+    public function user()
     {
-        return $this->belongsTo(RequestLists::class, 'request', 'id');
+        return $this->belongsTo(User::class);
     }
 }

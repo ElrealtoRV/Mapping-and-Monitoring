@@ -1,109 +1,71 @@
 <?php
+// app/Http/Livewire/TaskManager.php
 
 namespace App\Http\Livewire\Task;
 
 use Livewire\Component;
 use App\Models\Task;
-use App\Models\User;
-use Illuminate\Validation\Rule;
 
 class TaskManager extends Component
 {
+    public $taskId;
     public $tasks;
-    public $taskName;
-    public $dueDate;
-    public $first_name;
-    public $last_name;
-    public $editingTaskId;
-    public $selectedUserId; 
+    public $errorMessage;
+    public $successMessage;
 
-    protected $rules = [
-        'taskName' => 'required',
-        'dueDate' => 'required|date',
-        'first_name' => 'required',
-        'last_name' => 'required',
+    protected $listeners = [
+        'refreshParentTaskManager' => '$refresh',
+        'deleteTask',
+        'editTask',
+        'deleteConfirmTask'
     ];
-
+    public function updatingSearch()
+    {
+        $this->emit('refreshTable');
+    }
     public function mount()
     {
-        $this->tasks = Task::all();
+        $this->tasks = Task::with('user')->get();
     }
-    public function createTask()
+
+    public function AddTask()
     {
         $this->emit('resetInputFields');
         $this->emit('openTaskModal');
     }
-    public function addTask()
-    {
-        $this->validate($this->rules);
-
-        Task::create([
-            'name' => $this->taskName,
-            'due_date' => $this->dueDate,
-            'first_name' => $this->first_Name,
-            'last_name' => $this->last_name,
-            'done' => false,
-        ]);
-
-        $this->resetFields();
-        $this->tasks = Task::all();
-        $this->dispatchBrowserEvent('close-modal');
-    }
-
     public function editTask($taskId)
     {
-        $task = Task::findOrFail($taskId);
-        $this->taskName = $task->name;
-        $this->dueDate = $task->due_date;
-        $this->first_name = $task->first_name;
-        $this->last_name = $task->last_name;
-        $this->editingTaskId = $taskId;
+        $this->taskId = $taskId;
+        $this->emit('taskId', $this->taskId);
+        $this->emit('openTaskModal');
+        
     }
-
-    public function updateTask()
-    {
-        $this->validate($this->rules);
-
-        $task = Task::findOrFail($this->editingTaskId);
-        $task->update([
-            'name' => $this->taskName,
-            'due_date' => $this->dueDate,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-        ]);
-
-        $this->resetFields();
-        $this->tasks = Task::all();
-        $this->dispatchBrowserEvent('close-modal');
-    }
-
+    public function completeTask($taskId)
+        {
+            $task = Task::findOrFail($taskId);
+            $task->status = 'Complete';
+            // You might want to record who completed the task, assuming you have authentication
+            $task->doneBy = auth()->id();
+            $task->save();
+            $this->flash('success', 'Task completed successfully!');
+        }
     public function deleteTask($taskId)
     {
-        Task::findOrFail($taskId)->delete();
-        $this->tasks = Task::all();
-    }
+        $task = Task::find($taskId);
 
-    public function toggleTaskStatus($taskId)
-    {
-        $task = Task::findOrFail($taskId);
-        $task->done = !$task->done;
-        $task->save();
-        $this->tasks = Task::all();
-    }
-
-    private function resetFields()
-    {
-        $this->taskName = '';
-        $this->dueDate = '';
-        $this->first_name = '';
-        $this->last_name = '';
-        $this->editingTaskId = null;
+        if ($task) {
+            $task->delete();
+            $this->successMessage = 'Task deleted successfully.';
+        } else {
+            $this->errorMessage = 'Task not found.';
+        }
+        
+        $this->tasks = Task::with('user')->get(); // Refresh tasks
     }
 
     public function render()
-    {   
-        $users = User::all();
-        $tasks = Task::with('user')->get();
-        return view('livewire.task.task-manager', compact('tasks', 'users'));
+    {
+        return view('livewire.task.task-manager');
     }
 }
+

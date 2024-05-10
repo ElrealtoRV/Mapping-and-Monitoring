@@ -7,25 +7,44 @@ use Illuminate\Database\Eloquent\Model;
 
 class RequestLists extends Model
 {
-    protected $table = 'request_lists';
     use HasFactory;
+
+    protected $table = 'request_lists';
+    
     protected $fillable = [
-        'type', 'firename', 'serial_number','location','request',
+        'user_id','type', 'firename', 'serial_number', 'room', 'building', 'floor', 'status', 'request',
     ];
 
     public function fireex()
     {
         return $this->belongsTo(TypeList::class, 'type', 'id');
     }
-    public function FireLocation()
+    public function fireLocation()
     {
-        return $this->belongsTo(LocationList::class, 'location', 'id');
-        
+        return $this->belongsTo(FireList::class, 'building', 'floor', 'room');
     }
-    public function AddRequest()
+    
+    public function addRequest()
     {
         return $this->belongsTo(Request::class, 'request', 'id');
-        
+    }
+
+    public function requestNames()
+    {
+        return $this->hasMany(LocationList::class);
+    }
+    public static function getRequestNames()
+    {
+        return self::pluck('request');
+    }
+    public function syncRequest(array $RequestCheck)
+    {
+        // Implement synchronization logic here
+        // For example, you can update related records based on the provided $fireCheck array
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

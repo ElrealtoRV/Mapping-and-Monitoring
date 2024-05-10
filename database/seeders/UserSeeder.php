@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminPosition = Position::create(['description' => 'Admin']);
+     
         $adminOffice = OfficeLists::create(['description' => 'CSIT Office']);
 
         User::create([
@@ -28,14 +28,14 @@ class UserSeeder extends Seeder
             'bdate' => 'june 26, 1999',
             'email' => 'admin@gmail.com',
             'contnum' => '09269325483',
-            'position_id' => $adminPosition->id, 
+           
             'idnum' => '201901160',
             'office' => $adminOffice->id,
             'password' => bcrypt('admin123')
         ])->assignRole('admin');
 
-          // Create staff user
-          $headPosition = Position::create(['description' => 'Head']);
+         
+     
           $headOffice = OfficeLists::create(['description' => 'Building and Ground Office']);
           User::create([
             'first_name' => 'Jane',
@@ -44,28 +44,26 @@ class UserSeeder extends Seeder
             'age' => '20',
             'bdate' => 'june 26, 1998',
             'email' => 'head@gmail.com',
-            'contnum' => '09269325482',
-            'position_id' =>  $headPosition->id, 
+            'contnum' => '09269325482', 
             'idnum' => '201901161',
             'office' => $headOffice->id,
             'password' => bcrypt('staff123')
         ])->assignRole('Head');
 
-        $studentOffice = OfficeLists::create(['description' => 'IRS']);
-        $studentAfil = AffiliationLists::create(['description' => 'Student']);
-        RegularList::create([
-            'first_name' => 'Charry',
-            'middle_name' => 'Garol',
-            'last_name' => 'Hetio',
-            'age' => '20',
-            'bdate' => 'june 26, 1998',
-            'email' => 'personnel@gmail.com',
-            'contnum' => '09269325481',
-            'affiliation' =>   $studentAfil->id,
-            'idnum' => '201901162',
-            'office' => $studentOffice->id,
-            'password' => bcrypt('staff123')
-        ]);
+        // $studentOffice = OfficeLists::create(['description' => 'IRS']);
+        // RegularList::create([
+        //     'first_name' => 'Charry',
+        //     'middle_name' => 'Garol',
+        //     'last_name' => 'Hetio',
+        //     'age' => '20',
+        //     'bdate' => 'june 26, 1998',
+        //     'email' => 'personnel@gmail.com',
+        //     'contnum' => '09269325481',
+           
+        //     'idnum' => '201901162',
+        //     'office' => $studentOffice->id,
+        //     'password' => bcrypt('staff123')
+        // ])->assignRole('Maintenance Personnel');
 
     }
 }
