@@ -30,7 +30,12 @@ body {
   .box-info li i.fas-fire-extinguisher-red {
     color: red;
   }
-  
+  .box-info li i.bx-task {
+    color: rgb(189, 122, 21);
+  }
+  .box-info li span.svg {
+    color: rgb(255, 0, 170);
+  }
   h1 {
     color: #3498db;
     margin: 0;
@@ -48,14 +53,13 @@ body {
   
   .box-info li {
     text-align: center;
-    width: 350px;
+    width: 300px;
     min-height: 200px;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-    margin-right: 18px;
     margin-bottom: 20px; /* Add spacing between boxes on smaller screens */
   }
   
@@ -89,7 +93,7 @@ body {
   @media (max-width: 1200px) {
     /* Adjustments for screens smaller than 1200px */
     .box-info li {
-      width: 220px;
+      width: 200px;
       min-height: 180px;
     }
   

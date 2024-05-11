@@ -11,6 +11,13 @@
     </div>
 </div>
 	<livewire:flash-message.flash-message />
+	<div>
+	@if (session()->has('warning'))
+            <div class="alert alert-warning">
+                {{ session('warning') }}
+            </div>
+        @endif
+	</div>
 	<div class="row d-flex justify-content-center">
 		<div class="col-sm-12">
 			<div class="card card-table show-entire">
@@ -56,7 +63,7 @@
 									<th style="width: 5%">Requester</th>
 									<th style="width: 5%">Id Number</th>
 									<th style="width: 5%">Role</th>
-									<th style="width: 5%">Office/Department</th>
+									
 									
 									<th style="width: 5%">Request</th>
 									<th style="width: 5%">Type</th>
@@ -76,7 +83,7 @@
 
 								<td>{{ $request->user->idnum }}</td>
 								<td>{{ $request->user->role }}</td>
-								<td>{{ $request->user->office ?? 'N/A'. ' '. $request->user->department ?? 'N/A' }}</td>
+							
         						
 
 								<td>{{  $request->AddRequest->description  }}</td>

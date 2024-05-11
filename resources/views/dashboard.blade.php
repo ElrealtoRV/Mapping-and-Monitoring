@@ -111,6 +111,40 @@
 										<p>Expired Fire Extinguisher</p>
 									</span>
 								</li>
+								@if(auth()->user()->hasRole('Head'))
+								<li>
+									<i class='bx bx-task' ></i>
+									<span class="text">
+									@if($tasks == 0)
+										<h3>{{ $tasks }}</h3>
+										<p>Task</p>
+									@else
+										<h3>{{ $tasks }}</h3>
+										<p>Task{{ $tasks!= 1 ? 's' : '' }}</p>
+									@endif
+								</span>
+								</li>
+								
+								<li>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="60" height="60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+										<line x1="16" y1="2" x2="16" y2="6"></line>
+										<line x1="8" y1="2" x2="8" y2="6"></line>
+										<line x1="3" y1="10" x2="21" y2="10"></line>
+										</svg>
+									<span class="text">
+
+
+									@if($requests == 0)
+										<h3>{{ $requests }}</h3>
+										<p>Request</p>
+									@else
+										<h3>{{ $requests }}</h3>
+										<p>Request{{ $requests!= 1 ? 's' : '' }}</p>
+									@endif
+								</span>
+								</li>
+								@endif
 							</ul> 
 						</div>
 					</div>
@@ -121,9 +155,15 @@
 									<div class="order">
 										<div class="user-list">
 											<h1>Lists of Users & Employee</h1>
-											<form method="get" action="/dashboard">
-											<input type="text"  id="searchInput" placeholder="Search...">
-											<i class='bx bx-search search-icon'></i>
+											<form id="filterForm" method="get" action="{{ route('dashboard') }}">
+												<input type="text" name="search" id="searchInput" placeholder="Search..." value="{{ $search }}">
+												<button type="submit"><i class='bx bx-search search-icon'></i></button>
+												<select name="filter" id="filterSelect">
+												<option value="all" {{ $filter === 'all' ? 'selected' : '' }}>All</option>
+												<option value="users" {{ $filter === 'users' ? 'selected' : '' }}>Users</option>
+												<option value="employees" {{ $filter === 'employees' ? 'selected' : '' }}>Employees</option>
+												</select>
+											
 											</form>
 											</div>
 										<table>
@@ -136,26 +176,7 @@
 											</thead>
 											<tbody>
 
-									@forelse ($regular as $regularuser)
-										<tr data-type="user">
-											<td>
-												
-												<p>{{ $regularuser->first_name }} {{ $regularuser->last_name }}</p>
-											</td>
-											<td>    @foreach($regularuser->roles as $role)
-													<li>{{ $role->name }}</li>
-													@endforeach
-											</td>
-											
-											
-										</tr>
-										@empty
-										<tr>
-											<td colspan="3"></td>
-										</tr>
-									@endforelse
-
-
+									
 									@forelse ($users as $user)
 										<tr data-type="user">
 											<td>
@@ -194,6 +215,13 @@
 						// Add a specific class to the last fire extinguisher icon
 						fireIcons[fireIcons.length - 1].classList.add('fas-fire-extinguisher-red');
 					}
+
+					const filterSelect = document.getElementById('filterSelect');
+						const filterForm = document.getElementById('filterForm');
+
+						filterSelect.addEventListener('change', function () {
+							filterForm.submit();
+						});
 				});
 
 				// Listen for the 'viewTask' event and show the view modal

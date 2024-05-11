@@ -23,6 +23,14 @@ class RequestLists extends Model
     {
         return $this->belongsTo(FireList::class, 'building', 'floor', 'room');
     }
+    public function office()
+    {
+        return $this->belongsTo(OfficeLists::class);
+    }
+    public function dept()
+    {
+        return $this->belongsTo(DepartmentLists::class);
+    }
     
     public function addRequest()
     {

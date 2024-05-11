@@ -6,13 +6,20 @@
             Edit Task
             @else
             Add Task
-            @endif
+            @endif  
         </h1>
         <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     @if ($errors->any())
-    {{ implode('', $errors->all('<div>:message</div>')) }}
+    <span class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </span>
     @endif
+    
     <form wire:submit.prevent="store" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="row">
@@ -43,7 +50,7 @@
                                     <option value="">No users found</option>
                             @endif
                         </select>
-                        @error('user_id') <span>{{ $message }}</span> @enderror
+                      
                     </div>
                 </div>
 

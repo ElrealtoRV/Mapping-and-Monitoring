@@ -27,10 +27,7 @@ class UserRequest extends Component
         'deleteConfirmRequest'
         
     ];
-    public function updatingSearch()
-    {
-        $this->emit('refreshTable');
-    }
+
     public function createRequest()
     {
         $this->emit('resetInputFields');

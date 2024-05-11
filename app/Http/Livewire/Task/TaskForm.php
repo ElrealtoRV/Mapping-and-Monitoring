@@ -14,18 +14,21 @@ class TaskForm extends Component
     public $user_id;
     public $status;
     public $users;
+    
+    public $taskCheck = array();
+    public $selectedTask= [];
 
     protected $listeners = [
         'taskId',
         'resetInputFields'
     ];
 
-    protected $rules = [
-        'task_name' => 'required|string',
-        'due_date' => 'required|date',
-        'user_id' => 'required|exists:users,id',
+    // protected $rules = [
+    //     'task_name' => 'required|string',
+    //     'due_date' => 'required|date',
+    //     'user_id' => 'required|exists:users,id',
         
-    ];
+    // ];
 
     public function resetInputFields()
     {
@@ -34,39 +37,76 @@ class TaskForm extends Component
         $this->resetErrorBag();
     }
 
+    public function taskId($taskId)
+    {
+        $this->taskId = $taskId;
+        $task = Task::find($taskId);
+        $this->task_name= $task->task_name;
+        $this->user_id = $task->user_id;
+        $this->due_date = $task->due_date;
 
+
+        $this->selectedTask = $task->getTaskNames()->toArray();
+    }
 
     public function store()
     {
-        $this->validate();
-
-        $data = [
-            'task_name' => $this->task_name,
-            'due_date' => $this->due_date,
-            'user_id' => $this->user_id,
-            'status' => $this->getStatus(),
-
-        ];
-
+        if (is_object($this->selectedTask)) {
+            $this->selectedTask = json_decode(json_encode($this->selectedTask), true);
+        }
+    
+        if (empty($this->taskCheck)) {
+            $this->taskCheck = array_map('strval', $this->selectedTask);
+        }
+    
         if ($this->taskId) {
-            Task::whereId($this->taskId)->first()->update($data);
+            $data = $this->validate([
+                'task_name' => 'required|string',
+                'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d'),
+                'user_id' => 'required|exists:users,id',
+            ]);
+    
+            $task = Task::find($this->taskId);
+            $task->update($data);
+    
+            $task->syncTask($this->taskCheck);
+    
             $action = 'edit';
             $message = 'Successfully Updated';
         } else {
-            Task::create($data);
+            $this->validate([
+                'task_name' => 'required|string',
+                'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d'),
+                'user_id' => 'required|exists:users,id',
+            ], [
+                'task_name.required' => 'Task field is required.',
+                'due_date.required' => 'Due date is required.',
+                'user_id.required' => 'Assigned personnel is required.',
+                'due_date.after_or_equal' => 'The due date must be a future date.',
+                'user_id.exists' => 'Assigned personnel must be a valid user.',
+            ]);
+    
+            $task = Task::create([
+                'task_name'    => $this->task_name,
+                'user_id'   => $this->user_id,
+                'due_date'      => $this->due_date,
+            ]);
+    
             $action = 'store';
-            $message = 'Posted a Task Successfully';
+            $message = 'Successfully Created';
         }
-
+        
         $this->emit('flashAction', $action, $message);
-
         $this->resetInputFields();
         $this->emit('closeTaskModal');
         $this->emit('refreshParentTaskManager');
         $this->emit('refreshTable');
     }
+    
+    
     public function editTask($taskId)
     {
+        
         $task = Task::findOrFail($taskId);
 
         $this->taskId = $task->id;
@@ -80,7 +120,11 @@ class TaskForm extends Component
     }
     private function getStatus()
     {
-        return ($this->due_date < now()) ? 'Missed' : 'Incomplete';
+        if ($this->due_date <= now()->endOfDay()) {
+            return 'Incomplete';
+        } else {
+            return 'Complete';
+        }
     }
 
 

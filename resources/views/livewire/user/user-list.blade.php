@@ -32,9 +32,15 @@
 							</div>
 							<div class="col-auto text-end float-end ms-auto download-grp">
 								<div class="top-nav-search table-search-blk">
-									<form>
+									<form id="filterForm" >
 										<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search" name="search">
 										<a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
+									
+										<select name="filter" id="filterSelect">
+												<option value="all" {{ $filter === 'all' ? 'selected' : '' }}>All</option>
+												<option value="users" {{ $filter === 'users' ? 'selected' : '' }}>Users</option>
+												<option value="employees" {{ $filter === 'employees' ? 'selected' : '' }}>Employees</option>
+												</select>
 									</form>
 								</div>
 							</div>
@@ -57,7 +63,7 @@
 								<tr style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
 									<th style="width: 30%;color:white;">Name</th>
 									<th style="width: 25%;color:white;">Email</th>
-									<th style="color:white;">Position</th>
+									<th style="color:white;">Role</th>
 									<th style="width: 15%;color:white;">Action</th>
 								</tr>
 							</thead>
@@ -98,6 +104,31 @@
 				</div>
 			</div>
 		</div>
+		<script>
+
+				document.addEventListener('DOMContentLoaded', function () {
+					var fireIcons = document.querySelectorAll('.box-info li i.fa-fire-extinguisher');
+
+					if (fireIcons.length > 0) {
+						// Add a specific class to the last fire extinguisher icon
+						fireIcons[fireIcons.length - 1].classList.add('fas-fire-extinguisher-red');
+					}
+
+					const filterSelect = document.getElementById('filterSelect');
+						const filterForm = document.getElementById('filterForm');
+
+						filterSelect.addEventListener('change', function () {
+							filterForm.submit();
+						});
+				});
+
+				// Listen for the 'viewTask' event and show the view modal
+
+
+
+
+				</script>
+
 		{{-- Modal --}}
 		<div wire.ignore.self class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 			<div class="modal-dialog modal-dialog-centered modal-lg">

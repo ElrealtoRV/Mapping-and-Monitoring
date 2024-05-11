@@ -16,4 +16,13 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public static function getTaskNames()
+    {
+        return self::pluck('task_name');
+    }
+    public function syncTask(array $taskCheck)
+    {
+        // Implement synchronization logic here
+        // For example, you can update related records based on the provided $fireCheck array
+    }
 }

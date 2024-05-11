@@ -16,6 +16,11 @@
             {{ session('success') }}
         </div>
     @endif
+	@if (session()->has('error'))
+        <div class="alert alert-warning">
+            {{ session('error') }}
+        </div>
+    @endif
 	<div class="row d-flex justify-content-center">
 		<div class="col-sm-12">
 			<div class="card card-table show-entire">
@@ -36,7 +41,7 @@
 							</div>
 							<div class="col-auto text-end float-end ms-auto download-grp">
 								<div class="top-nav-search table-search-blk">
-									<form>
+										<form>
 										<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search">
 										<a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
 									</form>
@@ -73,7 +78,7 @@
 											{{ $task->status }}
 										</td>
 										<td>
-											{{ $task->doneBy}}
+											{{ $task->user->first_name}}  {{ $task->user->last_name }}
 										</td>
 										<td class="text-center">
 											<div class="btn-group" role="group">

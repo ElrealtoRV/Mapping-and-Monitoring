@@ -57,6 +57,12 @@ class RequestList extends Component
         // Find the request by ID
         $request = RequestLists::findOrFail($requestId);
     
+        // Check if the request is already approved
+        if ($request->status === 'Approved') {
+            session()->flash('warning', 'This request has already been approved.');
+            return;
+        }
+    
         // Update the status of the request to "Approved"
         $request->update(['status' => 'Approved']);
     
@@ -70,10 +76,10 @@ class RequestList extends Component
         //     'affiliation' => $request->regularUser->affiliation, 
         // ]);
     
-    
         // Emit an event to notify the user
         $this->emit('approveRequestSuccess', 'Request approved successfully.');
     }
+    
     
 
     
