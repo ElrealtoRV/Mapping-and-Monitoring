@@ -81,7 +81,7 @@
 						<li><a href="{{ asset('record') }}">Record</a></li>
 						<!-- <li><a href="{{ asset('type') }}">Type</a></li>
 						<li><a href="{{ asset('location') }}">Location</a></li> -->
-						<!-- <li><a href="{{ asset('inspection ') }}">Inspection Findings</a></li> -->
+						
 					</ul>
 				</li>
 				
@@ -113,7 +113,7 @@
 
 					<ul style="display: none;">	
 
-						<li><a href="/report">Activity Log</a></li>
+						<li><a href="activity-log">Activity Log</a></li>
 						<li><a href="/report">Analytical</a></li>
 					</ul>
 				</li>
@@ -136,6 +136,7 @@
 								<li><a href="{{ asset('location') }}">Location</a></li>
 								<li><a href="{{ asset('department') }}">Department</a></li>
 								<li><a href="{{ asset('office') }}">Office</a></li>
+								<li><a href="{{ asset('inspection ') }}">Inspection Findings</a></li>
 							@endif
 							</ul>
 						</li>
@@ -156,7 +157,7 @@
 							</a>
 							<ul style="display: none;">
 								<li><a href="setting">setting</a></li>
-								<li><a href="/profile">Profile</a></li>
+								<li><a href="my-profile">Profile</a></li>
 							</ul>
 						</li>
 						@endif

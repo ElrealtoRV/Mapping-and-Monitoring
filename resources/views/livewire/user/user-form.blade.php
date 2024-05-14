@@ -1,14 +1,18 @@
 
-@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
-<div class="modal-content">
-    <div class="modal-header" style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
-    @if(auth()->user()->hasRole('admin'))
-            <button class="tablinks" onclick="openTab(event, 'AddEmployee')">Add Employee</button>
-    @endif
-            <button class="tablinks" onclick="openTab(event, 'AddUser')">Add User</button>
 
-        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
+<div class="modal-content">
+<div class="modal-header" style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
+
+   
+    @if ($userId)
+        <span>Edit User</span>
+    @else
+        <button class="tablinks" onclick="openTab(event, 'AddEmployee')">Add Employee</button>
+        <button class="tablinks" onclick="openTab(event, 'AddUser')">Add User</button>
+        
+    @endif
+    <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
     @if ($errors->any())
     <span class="alert alert-danger">
         <ul>
@@ -18,7 +22,6 @@
         </ul>
     </span>
     @endif
-    @if(auth()->user()->hasRole('admin'))
     <div class="tabcontent" id="AddEmployee">
         <h1>Add Employee</h1>
     <form wire:submit.prevent="store" enctype="multipart/form-data">
@@ -250,7 +253,8 @@
         </div>
     </form>
 </div>
-@endif
+                                                                                               
+
 
 <div id="AddUser" class="tabcontent">
     @if ($errors->any())
@@ -350,20 +354,8 @@
                                 <input class="form-control" type="text" wire:model="idnum" placeholder />
                         </div>
                         </div>
-                        <!-- <div class="col-md-6">
-                            <div class="form-group local-forms">
-                                <label>Affiliation</label>
-                                <select class="form-control select" wire:model="affiliation">
 
-                                    <option value="" selected>Select an Affiliation</option>
-                                    @foreach ($affiliations as $affiliation)
-                                        <option value="{{ $affiliation->id }}">
-                                            {{ $affiliation->description }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> -->
+   
                         <div class="col-md-6">
                             <div class="form-group local-forms">
                                 <label>Office</label>
@@ -437,40 +429,11 @@
                         @endif
 
 
-                   
-
+                
                 </div>
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12">
-                            {{-- <div class="table-responsive">
-                                <table class="table border-0 custom-table comman-table mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 30%"></th>
-                                            <th style="width: 70%">Role</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (isset($selectedRoles))
-                                        @foreach ($roles as $role)
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox" wire:model.defer="selectedRoles"
-                                                    class="form-input" value="{{ $role->id }}" {{ in_array($role->id,
-                                                $selectedRoles) ? 'checked' : '' }}>
-							</td>
-							<td>
-								<span class="text-capitalize">{{ $role->name }}</span>
-							</td>
-							</tr>
-							@endforeach
-							@else
-
-							@endif
-							</tbody>
-							</table>
-						</div> --}}
                         <div style="height: 150px; overflow-y: scroll;">
                                     @if (empty($selectedRoles))
                                         @forelse ($filteredUserRoles as $role)
@@ -504,22 +467,20 @@
                                         @endforelse
                                     @endif
                                 </div>
-
                         </div>
                     </div>
                 </div>
-
 				
             </div>
            
         </div>
+       
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>
     </form>
 </div>
-</div>
-@endif
+
 
 
 <script>

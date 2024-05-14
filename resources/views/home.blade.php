@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                     
                     </ul>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                             {{ auth()->user()->last_name }}
                         </span>
                     </h2>
-                    <p>Have a nice day at work</p>
+                    <p>Have a nice day</p>
                 </div>
             </div>
             <div class="col-md-6 position-blk">
@@ -115,78 +115,12 @@
                 </div>
             </div>
             @endif
-            @if(auth()->user()->hasRole('admin'))
-            <div class="table-container">
-                <div class="table-data">
-                            <div class="order">
-                                <div class="user-list">
-                                    <h1>Lists of Users & Employee</h1>
-                                    <form method="get" action="/dashboard">
-                                    <input type="text"  id="searchInput" placeholder="Search...">
-                                    <i class='bx bx-search search-icon'></i>
-                                    </form>
-                                    </div>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                            @forelse ($regular as $regularuser)
-                                <tr data-type="user">
-                                    <td>
-                                        
-                                        <p>{{ $regularuser->first_name }} {{ $regularuser->last_name }}</p>
-                                    </td>
-                                    <td>    @foreach($regularuser->roles as $role)
-                                            <li>{{ $role->name }}</li>
-                                            @endforeach
-                                    </td>
-                                    
-                                    
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="3"></td>
-                                </tr>
-                            @endforelse
-
-
-                            @forelse ($users as $user)
-                                <tr data-type="user">
-                                    <td>
-                                        
-                                        <p>{{  $user->first_name }} {{  $user->last_name }}</p>
-                                    </td>
-                                    <td>    @foreach($user->roles as $role)
-                                            <li>{{ $role->name }}</li>
-                                            @endforeach</td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="3">No users found</td>
-                                </tr>
-                            @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-</div>
-                @endif	
-                    <div>
-                        <!-- @if(auth()->user()->hasRole('admin'))
-                            @livewire('activity-log.activity-log')
-                        @endif -->
-                        @if(auth()->user()->hasRole('Head'))
-                            @livewire('task.task-manager')
-                        @endif
-                    </div>
-                    
-
+           
+                             <div>
+								@if(auth()->user()->hasRole('Maintenance Personne')||auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
+									@livewire('home-page.home-page')
+								@endif
+							</div>
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {

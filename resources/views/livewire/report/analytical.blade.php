@@ -1,134 +1,156 @@
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <style>
+       {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
         }
 
         .header-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-            
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
 
-        }
-
-        .header-container h2 {
-            margin-bottom: 20px;
-            margin-top: 30px;
-            
         }
 
         .form-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            
+            margin-top: 20px;
         }
 
         .choices {
+            margin: 0 10px;
             display: flex;
             align-items: center;
-            gap: 5px;
+        }
+
+        .choices label {
+            margin-right: 10px;
+        }
+
+        .form-control {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .generate {
-            background: linear-gradient(to right, #3498db, #2e37a4);
+            padding: 8px 16px;
+            background-color: #28a745;
             color: #fff;
             border: none;
-            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .generate:hover {
+            background-color: #218838;
         }
 
         .box-info {
-    background: linear-gradient(to right, #3498db, #2e37a4);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    width: 100%; /* Initially, set the width to 100% */
-    max-width: 1200px; /* Set a maximum width to prevent it from becoming too wide */
-
-    /* Center the box horizontally */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media screen and (min-width: 768px) {
-    .toggle-element-active .box-info {
-        width: calc(100% - 200px); /* Subtract the width of the toggle element from the available width */
-    }
-}
-
-    
-        .box {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .box i {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        .box-info li:nth-child(1) i {
-            color: orange;
-        }
-
-        .box-info li:nth-child(2) i {
-            color: green;
-        }
-
-        .box-info li:nth-child(3) i {
-            color: blue;
-        }
-
-        .box-info li:nth-child(4) i {
-            color: red;
-        }
-
-        .box p {
-            margin: 5px 0;
-            font-weight: bold;
-        }
-
-        .chart-container {
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-gap: 20px;
-            max-width: 1200px;
-            max-height: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .chart-container .data {
-            margin-bottom: 0;
+            flex-wrap: wrap;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
             
         }
 
-        @media (max-width: 768px) {
+        .box-info li {
+            display: flex;
+            align-items: center;
+           
+            margin: 10px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .box-info li:hover {
+            transform: translateY(-5px);
+        }
+
+        .box-info i {
+            font-size: 30px;
+            margin-right: 50px;
+            color: #3498db;
+        }
+
+        .box-info h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #2c3e50;
+        }
+
+        .box-info p {
+            margin: 0;
+            color: #7f8c8d;
+        }
+
+        .chart-container {
+            display: grid;
+            gap: 20px;
+            padding: 20px;
+        }
+        .data {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (min-width: 1200px) {
+            .chart-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .chart-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 767px) {
             .chart-container {
                 grid-template-columns: 1fr;
             }
         }
-    </style>
 
+        @media (max-width: 767px) {
+            .form-row {
+                flex-direction: column;
+            }
+
+            .choices {
+                margin: 10px 0;
+            }
+
+            .box-info li {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .box-info i {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            @media (min-width: 768px) and (max-width: 1199px) {
+                .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        }
+    </style>
 
 <body>
 <div class="header-container">
@@ -145,6 +167,8 @@
             <button onclick="generateReport()" class="generate">Generate Report</button>
         </div>
 </div>
+
+
     <ul class="box-info">
         <li>
             <i class="fas fa-fire-extinguisher"></i>
@@ -158,30 +182,42 @@
                 @endif
             </span>
         </li>
-        <li>
-            <i class="fas fa-users"></i>
-            <span class="features">
-                @if($regularusers == 0)
-                    <h3>{{ $regularusers }}</h3>
-                    <p>User</p>
-                @else
-                    <h3>{{ $regularusers }}</h3>
-                    <p>User{{ $regularusers!= 1 ? 's' : '' }}</p>
-                @endif
-            </span>
-        </li>
-        <li>
-            <i class="fas fa-briefcase"></i>
-            <span class="features">
-                @if($userCounts == 0)
-                    <h3>{{ $userCounts }}</h3>
-                    <p>Employee</p>
-                @else
-                    <h3>{{ $userCounts }}</h3>
-                    <p>Employee{{ $userCounts != 1 ? 's' : '' }}</p>
-                @endif
-            </span>
-        </li>
+        @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
+						<li>
+
+						<i class='bx bxs-group'></i>
+						<span class="text">
+							@php
+								$totalRegularUsers = \App\Models\User::where('role', 'Student')->count() + \App\Models\User::where('role', 'Staff')->count();
+							@endphp
+
+							@if($totalRegularUsers == 0)
+								<h3>{{ $totalRegularUsers }}</h3>
+								<p>User</p>
+							@else
+								<h3>{{ $totalRegularUsers }}</h3>
+								<p>User{{ $totalRegularUsers != 1 ? 's' : '' }}</p>
+							@endif
+						</span>
+					</li>
+       
+                         <li>
+							<i class='bx bxs-briefcase'></i>
+						<span class="text">
+							@php
+								$totalEmployee = \App\Models\User::where('role', 'Head')->count() + \App\Models\User::where('role', 'Maintenance Personnel')->count();
+							@endphp
+
+							@if($totalEmployee == 0)
+								<h3>{{ $totalEmployee }}</h3>
+								<p>Employee</p>
+							@else
+								<h3>{{ $totalEmployee }}</h3>
+								<p>Employee{{ $totalEmployee != 1 ? 's' : '' }}</p>
+							@endif
+						</span>
+					</li>
+					@endif
         <li>
             <i class="fas fa-fire-extinguisher"></i>
             <span class="features">
@@ -189,6 +225,40 @@
                 <p>Expired Fire Extinguisher</p>
             </span>
         </li>
+        @if(auth()->user()->hasRole('Head'))
+								<li>
+									<i class='bx bx-task' ></i>
+									<span class="text">
+									@if($tasks == 0)
+										<h3>{{ $tasks }}</h3>
+										<p>Task</p>
+									@else
+										<h3>{{ $tasks }}</h3>
+										<p>Task{{ $tasks!= 1 ? 's' : '' }}</p>
+									@endif
+								</span>
+								</li>
+								
+								<li>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="60" height="60" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+										<line x1="16" y1="2" x2="16" y2="6"></line>
+										<line x1="8" y1="2" x2="8" y2="6"></line>
+										<line x1="3" y1="10" x2="21" y2="10"></line>
+										</svg>
+									<span class="text">
+
+
+									@if($requests == 0)
+										<h3>{{ $requests }}</h3>
+										<p>Request</p>
+									@else
+										<h3>{{ $requests }}</h3>
+										<p>Request{{ $requests!= 1 ? 's' : '' }}</p>
+									@endif
+								</span>
+								</li>
+								@endif
     </ul>
     <div class="chart-container">
         <div class="data">
@@ -203,42 +273,46 @@
         <div class="data">
             <canvas id="userChart"></canvas>
         </div>
+        <div class="data">
+            <canvas id="taskChart"></canvas>
+        </div>
+        <div class="data">
+            <canvas id="requestChart"></canvas>
+        </div>
     </div>
     <script>
     function generateReport() {
-        // Assuming you have logic here to generate the report
-        // For now, let's just log a message to the console
         console.log("Report generated");
-        
-        // Now, update the charts based on the generated report
         updateCharts();
     }
-    
-    function updateCharts() {
-        // Access Livewire component's data
-        const fires = @json($fires);
-        const userCounts = @json($userCounts);
-        const regularusers = @json($regularusers);
 
-        // Update the chart with Livewire data
-        updateChart('existingChart', fires, 'Fire Extinguisher');
-        updateChart('expiredChart', 0, 'Expired Fire Extinguisher'); // Provide dummy data if needed
-        updateChart('employeeChart', userCounts, 'Employee');
-        updateChart('userChart', regularusers, 'User');
+    function updateCharts() {
+        const fires = @json($fires);
+        const regularUsers = @json($totalRegularUsers);
+        const employeeCounts = @json($totalEmployee);
+        const taskCounts = @json($tasks);
+        const requestCounts = @json($requests);
+
+        updateChart('existingChart', fires, 'Fire Extinguisher', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
+        updateChart('expiredChart', 2543, 'Expired Fire Extinguisher', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)'); // Provide dummy data if needed
+        updateChart('employeeChart', employeeCounts, 'Employee', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)');
+        updateChart('userChart', regularUsers, 'User', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 1)');
+        updateChart('taskChart', taskCounts, 'Task', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 1)');
+        updateChart('requestChart', requestCounts, 'Request', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
     }
 
-    function updateChart(chartId, value, label) {
+    function updateChart(chartId, value, label, bgColor, borderColor) {
         const ctx = document.getElementById(chartId).getContext('2d');
         new Chart(ctx, {
-            type: 'bar',
+            type: 'pie', // Corrected the chart type to 'bar'
             data: {
                 labels: [label],
                 datasets: [{
                     label: 'Count',
-                    data: [value ],
-                    backgroundColor: ['rgba(52, 152, 219, 0.2)'], // Adjusted color to match the gradient
-                    borderColor: ['rgba(52, 152, 219, 1)'], // Adjusted color to match the gradient
-                    borderWidth: 1
+                    data: [value],
+                    backgroundColor: bgColor,
+                    borderColor: borderColor,
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -248,6 +322,11 @@
                         ticks: {
                             stepSize: 1
                         }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 }
             }

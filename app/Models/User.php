@@ -37,7 +37,7 @@ class User extends Authenticatable
     }
     public function office()
     {
-        return $this->belongsTo(OfficeLists::class);
+        return $this->belongsTo(OfficeLists::class,'office');
     }
 
     /**

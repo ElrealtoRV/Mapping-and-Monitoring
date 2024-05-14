@@ -40,7 +40,7 @@ class GroundFloor extends Component
     {
         $this->fireId = $fireId;
         $this->emit('fireId', $this->fireId);
-        $this->emit('openMapFormModal');
+        $this->emit('openRecordModal');
         
     }
     public function viewFire($fireId)

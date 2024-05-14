@@ -1,6 +1,6 @@
 <div>
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="modal-content" style="max-width: 800px; width: 100%;">
+    <div class="container ">
+        <div class="modal-content" style="width:100%; hv-100">
             <div class="modal-header" style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
                 <h1 class="modal-title fs-5" style="color: white;">
                     @if ($fireId)
@@ -18,10 +18,16 @@
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
+                           
                         @endforeach
                     </ul>
                 </span>
             @endif
+            @if (session()->has('room'))
+                <div class="alert alert-sdanger">
+                    {{ session('room') }}
+                </div>
+             @endif
             <form wire:submit.prevent="store" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
@@ -106,18 +112,6 @@
                                     <div class="form-group local-forms">
                                         <label>Description</label>
                                         <input class="form-control" type="text" wire:model="description" @if($viewMode) readonly @endif />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group local-forms">
-                                        <label>Status</label>
-                                        <select class="form-control" wire:model="status" @if($viewMode) disabled @endif>
-                                            <option value="Active">Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                            <option value="Refill">Refill</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>

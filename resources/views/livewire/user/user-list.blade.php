@@ -84,15 +84,11 @@
 										@endforeach
 									</td>
 									<td class="text-center">
-										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-primary btn-sm mx-1" wire:click="editUser({{ $user->id }})" title="Edit">
-												<i class='fa fa-pen-to-square'></i>
-											</button>
 
 
 										 <a class="btn btn-danger btn-sm mx-1"
                                                     wire:click="deleteUser({{ $user->id }})" title="Delete">
-											<i class="fa fa-trash"></i>
+											Delete <i class="fa fa-trash"></i>
 											</a> 
 										</div>
 									</td>

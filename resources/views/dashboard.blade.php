@@ -105,7 +105,7 @@
 					@endif
 
 								<li>
-									<i class='con fas fa-fire-extinguisher' ></i>
+									<i class='fas fa-fire-extinguisher' ></i>
 									<span class="text">
 										<h3>2543</h3>
 										<p>Expired Fire Extinguisher</p>
@@ -198,12 +198,6 @@
 						</div>
 </div>
 						@endif	
-						    <div>
-								<!-- @if(auth()->user()->hasRole('admin'))
-									@livewire('activity-log.activity-log')
-								@endif -->
-
-							</div>
 							
 
 			<script>

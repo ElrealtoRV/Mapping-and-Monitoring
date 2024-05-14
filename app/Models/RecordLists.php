@@ -27,4 +27,8 @@ class RecordLists extends Model
         return $this->belongsTo(FindingList::class, 'finding', 'id');
         
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class,);
+    }
 }

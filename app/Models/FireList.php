@@ -31,5 +31,8 @@ class FireList extends Model
         // Implement synchronization logic here
         // For example, you can update related records based on the provided $fireCheck array
     }
-    
+            public function location()
+        {
+            return $this->belongsTo(LocationList::class, 'room', 'id');
+        }
 }

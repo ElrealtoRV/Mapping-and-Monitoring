@@ -26,7 +26,7 @@ return new class extends Migration
             $table->date('installation_date');
             $table->date('expiration_date')->default(now());
             $table->text('description')->nullable();
-            $table->string('status');
+            $table->string('status')->default('Active');
             $table->timestamps();
         });
     }

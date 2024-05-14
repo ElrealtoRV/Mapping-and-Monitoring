@@ -146,18 +146,6 @@ class UserForm extends Component
         $this->emit('refreshTable');
     }
 
-    public $showAddEmployee = true;
-    public $showAddUser = true;
-
-    public function showAddEmployee()
-    {
-        $this->showAddEmployee = true;
-    }
-
-    public function showAddUser()
-    {
-        $this->showAddUser = false;
-    }
 
     public function render()
     {

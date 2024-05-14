@@ -1,3 +1,4 @@
+
 <div>
 <style>
   
@@ -51,29 +52,7 @@ span{
   font-weight: bold;
   font-size: 26px
 }
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        padding-top: 60px; /* Location of the modal */
-    }
-
-    /* Modal content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-    }
-
-
+   
 
 
 
@@ -156,6 +135,10 @@ span{
       color: gray;
       margin-left: 30px;
   }
+  #plus-icons{
+    margin-left:15px;
+    margin-top:15px;
+  }
 
   .edit-icon {
       color: green;
@@ -185,108 +168,76 @@ span{
     background-color: blue; /* Refill state background color */
 }
 </style>
+
 <livewire:flash-message.flash-message />
 <div class="scroll-container">
     <div id="ground-floor" class="floor-content">
-        
+ 
         <img src="{{ asset('assets/img/GroundFloor.png') }}" alt="GroundFloor" width="1000px" height="300px">
-        @foreach ($fire as $fires)
-        <div class="icon-container CasDean" wire:model="room" wire:click="editFire({{ $fires->id }})">
-            <i class="fas fa-edit edit-icon"></i>
-        </div>
-        <div class="icon-container CasDean" wire:model="room" wire:click="viewFire({{ $fires->id }})">
-            <i class="fas fa-eye eye-icon"></i>
-        </div>
-        <div class="icon-container CasDean"  wire:model="room" wire:click="createFire">
-            <i class="fas fa-plus plus-icon"></i>
-        </div>
+        @foreach($fire as $fires)
+        <div class="icon-container CasDean" wire:click="editFire({{ $fires->id}})">
+          <i class="fas fa-edit edit-icon"></i>
+            </div>
+            <div class="icon-container CasDean" wire:click="viewFire({{ $fires->id}})">
+                <i class="fas fa-eye eye-icon"></i>
+            </div>
+            <div class="icon-container CasDean" wire:click="createFire">
+                <i class="fas fa-plus plus-icon"></i>
+            </div>
 
 
-        <div class="icon-container CAS106" wire:click="editFire({{ $fires->id }})">
-            <i class="fas fa-edit edit-icon"></i>
+        <div class="icon-container CAS106" >
+            <i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})"></i>
         </div>
-        <div class="icon-container CAS106" wire:click="viewFire({{ $fires->id }})">
+        <div class="icon-container CAS106"  wire:click="viewFire({{ $fires->id }})" >
             <i class="fas fa-eye eye-icon"></i>
         </div>
         <div class="icon-container CAS106" wire:click="createFire">
             <i class="fas fa-plus plus-icon"></i>
         </div>
        
-        <span class="CAS105" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS105" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS105" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-plus plus-icon"></i></span>
-        <span class="CAS104" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS104" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="MCL" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="MCL" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS103" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS103" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS102" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS102" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS101" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS101" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS107" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS107" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS108" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS108" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS109" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS109" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS-SSG" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon" id="eye-icons"></i></span>
-        <span class="CAS-SSG" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"id="edit-icons"></i></span>
-        <span class="CAS110" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS110" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS111" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS111" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
-        <span class="CAS112" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-eye eye-icon"></i></span>
-        <span class="CAS112" onclick="openModal('FACULTY COMPUTING AND RESEATCH CENTER')"><i class="fas fa-edit edit-icon"></i></span>
+        <div class="CAS105" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS105" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS105" wire:click="createFire({{ $fires->id}})"><i class="fas fa-plus plus-icon"></i></div>
+        <div class="CAS104" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS104" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS104" wire:click="createFire"><i class="fas fa-plus plus-icon"></i></div>
+        <div class="MCL"    wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="MCL"    wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="MCL"    wire:click="createFire"><i class="fas fa-plus plus-icon"id="plus-icons"></i></div>
+        <div class="CAS103" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS103" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS102" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS102" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS101" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS101" wire:click="editFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS101" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS107" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS107" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS108" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS108" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS109" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS109" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS-SSG" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon" id="eye-icons"></i></div>
+        <div class="CAS-SSG" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon" id="edit-icons"></i></div>
+        <div class="CAS110" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS110" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS111" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS111" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+        <div class="CAS112" wire:click="viewFire({{ $fires->id}})"><i class="fas fa-eye eye-icon"></i></div>
+        <div class="CAS112" wire:click="editFire({{ $fires->id}})"><i class="fas fa-edit edit-icon"></i></div>
+
         @endforeach
+
 <h1 >GROUND FLOOR</h1>
-<div class="image-with-text">
-    <img src="assets/img/fireIcon.png" alt="" class="fire-ext">
-    <p class="text-next-to-image">= <span>25</span></p>
-</div>
 
-
-    </div>
-    <div wire.ignore.self class="modal fade" id="MapFormModal" tabindex="-1" role="dialog" aria-labelledby="MapFormModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <livewire:map.form />
-        </div>
-</div>
-<script>
-  // Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the image that opens the modal
-var img = document.querySelector(".fire-ext");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the image, open the modal
-img.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-</script>
 <div>
-  {{-- Modal --}}
-      
-      @section('custom_script')
-      @include('layouts.scripts.MapForm-scripts')
-      @endsection
-  </div>
+</div>
+</div>
+
+
+
+
 
 
 
@@ -296,70 +247,5 @@ window.onclick = function(event) {
 
 
   <!-- Your existing HTML code -->
-<div>
-<style>
-    /* Your existing CSS styles */
 
-    .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-        padding-top: 60px; /* Location of the modal */
-    }
-
-    /* Modal content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 50%; /* Adjust the width as needed */
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-</style>
-
-
-    <!-- Modal -->
-    <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Fire Extinguisher Details  </p>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the image, open the modal
-    var img = document.querySelector(".fire-ext");
-    img.onclick = function () {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
+  

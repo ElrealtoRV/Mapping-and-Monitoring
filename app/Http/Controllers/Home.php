@@ -47,7 +47,7 @@ class Home extends Controller
         })->count();
         
 
-        return view('dashboard', [
+        return view('home', [
             'time' => $time,
             'operations' => $operations,
             'regularusers' => $regularusers,

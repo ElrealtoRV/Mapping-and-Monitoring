@@ -23,5 +23,9 @@ class LocationList extends Model
     {
         return $this->hasMany(RequestLists::class, 'location_id');
     }
+    public function fires()
+{
+    return $this->hasMany(FireList::class, 'room', 'id');
+}
     
 }

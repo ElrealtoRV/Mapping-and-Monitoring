@@ -1,11 +1,11 @@
 <style>
 .container {
-      display: flex;
+      display: relative;
       justify-content: center;
       align-items: center;
       height: auto;
       width: auto;
-      background-color: #eee;
+
       padding-top: 20px;
     }
 
@@ -57,7 +57,7 @@
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 368px) {
   .modal-content {
     width: 200px;
   }
@@ -122,7 +122,17 @@
            
         </div>
 
-
+        <div wire.ignore.self class="modal fade" id="MapFormModal" tabindex="-1" role="dialog" aria-labelledby="MapFormModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <livewire:map.form />
+        </div>
+        </div>
+        
+  {{-- Modal --}}
+      
+      @section('custom_script')
+      @include('layouts.scripts.MapForm-scripts')
+      @endsection
 
 
 <script>

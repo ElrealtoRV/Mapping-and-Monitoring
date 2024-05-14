@@ -12,7 +12,7 @@ use App\Models\RegularLists;
 
 class RecordForm extends Component
 {
-    public $recordId, $type, $firename, $serial_number, $location, $maintenance_date, $expiration_date, $finding, $status;
+    public $recordId, $type, $firename, $serial_number, $location, $maintenance_date, $expiration_date, $finding, $status = 'Active';
     public $action = '';  //flash
     public $message = '';  //flashSSS
     public $recordCheck = array();
@@ -63,10 +63,10 @@ class RecordForm extends Component
                 'firename'   => 'required',
                 'serial_number'     => ['required','min:4', 'max:10'],
                 'location'     => 'required',
-                'installation_date'     => 'required',
-                'expiration_date'     => 'required',
+                'maintenance_date' => 'required|date|after_or_equal:today',
+                'expiration_date' => 'required|date|after_or_equal:maintenance_date',
                 'finding'         => 'nullable',
-                'status'     => 'nullable',
+               
                 
             ]);
             
@@ -86,10 +86,10 @@ class RecordForm extends Component
                 'firename'   => 'required',
                 'serial_number'     => ['required','min:4', 'max:10'],
                 'location'     => 'required',
-                'maintenance_date'     => 'required',
-                'expiration_date'         => 'required',
+                'maintenance_date' => 'required|date|after_or_equal:today',
+                'expiration_date' => 'required|date|after_or_equal:maintenance_date',
                 'finding'     => 'nullable',
-                'status'      => 'nullable',
+                
             ]);
 
             $fire = FireList::create([

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('expiration_date')->default(now());
             $table->unsignedBigInteger('finding'); // Changing the data type
             $table->foreign('finding')->references('id')->on('finding_lists')->nullable();
-            $table->string('status');
+            $table->string('status')->default('Active');
             $table->timestamps();
         });
     }

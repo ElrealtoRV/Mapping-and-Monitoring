@@ -21,6 +21,8 @@ use App\Http\Controllers\Home;
 use App\Http\Livewire\Authentication\RoleList;
 use App\Http\Livewire\Authentication\PermissionList;
 use App\Http\Livewire\Position\PositionList;
+use App\Http\Livewire\HomePage\HomePage;
+use App\Http\Livewire\Profile\MyProfile;
 use App\Http\Livewire\Affiliation\AffiliationList;
 use App\Http\Livewire\Office\OfficeList;
 use App\Http\Livewire\Record\RecordList;
@@ -57,7 +59,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('role', RoleList::class);
     Route::get('permission', PermissionList::class);
     Route::view('setting', 'setting')->name('setting');
-    Route::get('activity-log', ActivityLog::class);
+   
 });
 Route::group(['middleware' => ['role:admin|Head|Maintenance Personnel|Student|Staff']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -85,6 +87,7 @@ Route::group(['middleware' => ['role:admin|Head']], function () {
     // Route::get('fire-form', Cas::class);
     Route::get('record', RecordList::class);
     Route::get('/report', Analytical::class)->name('ground.floor');
+   
 
 
 
@@ -94,6 +97,14 @@ Route::group(['middleware' => ['role:admin|Head']], function () {
 });
 Route::group(['middleware' => ['role:Maintenance Personnel|Student|Staff']], function () {
     Route::get('/home', [Home::class, 'index'])->name('home');
+    Route::get('/home-page', HomePage::class);
+  
+});
+
+Route::group(['middleware' => ['role:Head|Maintenance Personnel|Student|Staff']], function () {
+
+    Route::get('my-profile', MyProfile::class);
+  
 });
 Route::group(['middleware' => ['role:Student|Staff']], function () {
     Route::get('user-request', UserRequest::class);
