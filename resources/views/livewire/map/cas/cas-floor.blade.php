@@ -17,6 +17,14 @@
   border-radius: 10px;
   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.5);
 }
+#tooltipText{
+
+  margin-bottom:300px;
+  margin-right:200px;
+}
+.popup{
+  margin-left:200px;
+}
 
 .floor-button {
     position: flex;

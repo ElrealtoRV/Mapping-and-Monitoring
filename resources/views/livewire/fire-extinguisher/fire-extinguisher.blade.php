@@ -1,8 +1,23 @@
-
+<style>
+	/* Styles for screens smaller than 768px (e.g., mobile devices) */
+@media (max-width: 767px) {
+    /* CSS rules for mobile screens */
+    .card-table {
+        font-size: 14px;
+    }
+    .table th, .table td {
+        padding: 0.5rem;
+    }
+    .btn {
+        font-size: 12px;
+        padding: 0.25rem 0.5rem;
+    }
+}
+</style>
 <div class="content">
 	<div class="page-header">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-md-6 col-sm-12">
 				<ul class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/">Dashboard</a></li>
 					<li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
@@ -41,10 +56,10 @@
 					</div>
 					<div>
 						<div class="row">
-							<div class="col-sm-2">
+						<div class="col-md-6 col-sm-12">
 
 							</div>
-							<div class="col-sm-2">
+							<div class="col-md-6 col-sm-12">
 
 							</div>
 						</div>

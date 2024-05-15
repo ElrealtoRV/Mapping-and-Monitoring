@@ -103,7 +103,7 @@ class Form extends Component
             'installation_date' => 'required',
             'expiration_date' => 'required',
             'description' => 'nullable',
-            'status' => 'nullable',
+            
         ]);
 
         if ($this->fireId) {
