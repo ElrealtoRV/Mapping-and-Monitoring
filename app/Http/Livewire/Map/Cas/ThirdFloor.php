@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Map\Cas;
 
 use Livewire\Component;
+use App\Models\FireList;
 
 class ThirdFloor extends Component
 {
@@ -12,6 +13,11 @@ class ThirdFloor extends Component
     public function showFloor($floor)
 {
     $this->selectedFloor = $floor;
+}
+public function mount()
+{
+    $this->fire_list = FireList::all();
+
 }
     public function render()
     {

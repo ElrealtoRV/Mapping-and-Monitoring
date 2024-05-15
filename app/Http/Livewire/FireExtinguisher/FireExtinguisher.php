@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\FireList;
 use App\Models\TypeList;
 use App\Models\LocationList;
+use Carbon\Carbon;
 
 class FireExtinguisher extends Component
 {
@@ -13,6 +14,9 @@ class FireExtinguisher extends Component
     public $search = '';
     public $action = '';  //flash
     public $message = '';  //flash
+
+   
+    
 
     protected $listeners = [
         'refreshFireExtinguisher' => '$refresh',
@@ -22,6 +26,12 @@ class FireExtinguisher extends Component
         'deleteConfirmFire'
         
     ];
+
+    public function mount()
+    {
+        $this->fire = FireList::all();
+
+    }
     public function updatingSearch()
     {
         $this->emit('refreshTable');
@@ -54,13 +64,23 @@ class FireExtinguisher extends Component
         $this->emit('flashAction', $action, $message);
         $this->emit('refreshTable');
     }
+    public function isExpirationDateCloseToWarning($expirationDate)
+    {
+        $expirationDate = Carbon::parse($expirationDate);
+        $warningDate = $expirationDate->subYears(2);
+        return Carbon::now()->gte($warningDate);
+    }
 
     public function render()
 {
+    $fireWithWarningStatus = $this->fire->map(function($fire) {
+        $fire->is_expiration_warning = $this->isExpirationDateCloseToWarning($fire->expiration_date);
+        return $fire;
+    });
     $query = FireList::query();
 
     // Eager load relationships
-    $query->with('fireex', 'fireLocation');
+
 
     // Apply search filter
     if (!empty($this->search)) {
@@ -78,13 +98,21 @@ class FireExtinguisher extends Component
     $fire = $query->get();
 
     // Fetch types if needed
-    $types = TypeList::all();
-    $locations = LocationList::all();
 
+    $fireWithWarningStatus = $this->fire->map(function($fire) {
+        $fire->is_expiration_warning = $this->isExpirationDateCloseToWarning($fire->expiration_date);
+
+        // Check if the fire extinguisher is expired
+        if (Carbon::now()->gt(Carbon::parse($fire->expiration_date))) {
+            $fire->status = 'Expired';
+        }
+        return $fire;
+    });
     return view('livewire.fire-extinguisher.fire-extinguisher', [
         'fire' => $fire,
-        'types' => $types,
-        'locations' => $locations,
+        'fire_id' => $fireWithWarningStatus,
+      
+   
     ]);
 }
 

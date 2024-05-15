@@ -50,20 +50,26 @@ class UserList extends Component
         $this->emit('refreshTable');
     }
 
-    public function render( Request $request)
+    public function render(Request $request)
     {
         $search = '';
         $filter = '';
     
         // Check if the search term is provided in the request
-        
         if ($request->has('search')) {
             $search = $request->input('search');
         }
         if ($request->has('filter')) {
             $filter = $request->input('filter');
         }
+        
         $users = User::query();
+        
+        
+        $users->whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'admin');
+        });
+    
         if (!empty($this->search)) {
             $users->where(function ($query) {
                 $query->where('first_name', 'LIKE', '%' . $this->search . '%')
@@ -89,12 +95,11 @@ class UserList extends Component
         }
     
         $users = $users->get();
-
-
+    
         return view('livewire.user.user-list', [
             'users' => $users ?? [],
             'search' => $search,
             'filter' => $filter,
-        ]); 
+        ]);
     }
 }

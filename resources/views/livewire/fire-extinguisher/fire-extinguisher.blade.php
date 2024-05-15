@@ -54,43 +54,42 @@
 						<table class="table border-0 custom-table comman-table datatable mb-0">
 							<thead>
 								<tr style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
-									<th style="width: auto; color:white;">Type</th>
-									<th style="width: auto; color:white;">Name</th>
-									<th style="width: 20%;  color:white;">Serial Number</th>
-									<th style="width:auto; color:white;">Location</th>
-									<th style="width: auto; color:white;">Installation Date</th>
-									<th style="width: auto; color:white;">Expiration Date</th>
-									<th style="width: auto; color:white;">Description</th>
+									<th style="width: 5%; color:white;">Type</th>
+									<th style="width: 5%; color:white;">Name</th>
+									<th style="width: 5%;  color:white;">Serial Number</th>
+									<th style="width:5%; color:white;">Building / Department</th>
+									<th style="width:5%; color:white;">Floor</th>
+									<th style="width:5%; color:white;">Room</th>
+									<th style="width: 5%; color:white;">Installation Date</th>
+									<th style="width: 5%; color:white;">Expiration Date</th>
+									<th style="width: 5%; color:white;">Description</th>
 									<th style="width: 10%; color:white;">Status</th>
 									<th style="width: 10%; text-align: center;color:white;">Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($fire as $fires)
-								<tr>
-                                <td>{{  $fires->fireex->description  }}</td>
-                                <td>{{ $fires->firename }}</td>
-                                <td>{{  $fires->serial_number }}</td>
-								<td>
-									{{ strval($fires->building) }} /
-									{{ strval($fires->floor) }} /
-									{{ strval($fires->room) }}
-								</td>
-
-
-                                <td>{{  $fires->installation_date }}</td>
-                                <td>{{  $fires->expiration_date }}</td>
-								<td>{{  $fires->description }}</td>
-                                <td>{{  $fires->status }}</td>
-										
-									
+							@foreach($fire as $fire_fetch_list)
+       					<tr>
+       					     <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
+       					     <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
+       					     <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
+       					     <td>{{ $fire_fetch_list->building }}</td>
+       					     <td>{{ $fire_fetch_list->floor }}</td>
+       					     <td>{{ $fire_fetch_list->room }}</td>
+       					     <td>{{ $fire_fetch_list['installation_date']}}</td>
+								<td class="{{ $fire_fetch_list->is_expiration_warning ? 'warning' : '' }}">
+                                {{ $fire_fetch_list['expiration_date'] ?: 'Empty' }}
+                            </td>
+							<td>{{ $fire_fetch_list['description']}}</td>
+       					     <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
+       					
 									<td class="text-center">
 										<div class="btn-group" role="group">
-											<button type="button" class="btn btn-primary btn-sm mx-1" wire:click="editFire({{ $fires->id }})" title="Edit">
+											<button type="button" class="btn btn-primary btn-sm mx-1" wire:click="editFire({{ $fire_fetch_list->id }})" title="Edit">
 												<i class='fa fa-pen-to-square'></i>
 											</button>
 
-											<a class="btn btn-danger btn-sm mx-1" wire:click="deleteFire({{ $fires->id }})" title="Delete">
+											<a class="btn btn-danger btn-sm mx-1" wire:click="deleteFire({{ $fire_fetch_list->id }})" title="Delete">
 												<i class="fa fa-trash"></i>
 											</a>
 										</div>

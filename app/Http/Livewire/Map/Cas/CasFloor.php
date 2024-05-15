@@ -12,20 +12,14 @@ class CasFloor extends Component
 {
     public $selectedFloor = 'ground-floor';
 
-    public function createFire()
-    {
-        $this->emit('resetInputFields');
-        $this->emit('openMapFormModal');
-    }
     public function mount()
     {
         Livewire::listen('floorSelected', function ($floorName) {
             $this->selectedFloor = $floorName; // Optional update
             // Implement logic to display the modal based on $floorName
-            $this->createFireS($floorName); // Call your modal logic method
+            $this->createFire($floorName); // Call your modal logic method
         });
     }
-    
 
     public function render()
     {

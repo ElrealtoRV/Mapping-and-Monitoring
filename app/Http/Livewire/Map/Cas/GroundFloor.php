@@ -9,70 +9,75 @@ use App\Models\LocationList;
 
 class GroundFloor extends Component
 {
-    public $fireId;
-    public $viewMode = false;
-    public $search = '';
-    public $action = '';  //flash
-    public $message = '';  //flash
     public $selectedFloor = 'ground-floor';
+    public $selectedRoom = '';
+    public $fireCasDean = []; // Initialize as an empty array
+    public $fireCas106 = []; // Initialize as an empty array
+    public $fireCas105 = []; 
+    public $fireCas104 = [];
+    public $fireMassComm = []; 
+    
+    public $fireCas103 = []; 
+    public $fireCas102 = [];
+    public $fireCas101 = [];
+    public $fireCas107 = [];
+    public $fireCas108 = [];
+    public $fireCas109 = [];
+    public $fireCas110 = [];
+    public $fireCas111 = [];
+    public $fireCas112 = [];
 
-    protected $listeners = [
-        'refreshGroundFLoor' => '$refresh',
-        'deleteFire',
-        'editFire',
-        'openViewModal'
-        
-    ];
     public function showFloor($floor)
     {
         $this->selectedFloor = $floor;
     }
-    public function updatingSearch()
+
+    public function mount()
     {
-        $this->emit('refreshTable');
+        $this->fireCasDean = FireList::where('room', 'CASDEAN')->get();
+        $this->fireCas106 = FireList::where('room', 'CAS106')->get();
+        $this->fireCas105 = FireList::where('room', 'CAS105')->get();
+        $this->fireCas104 = FireList::where('room', 'CAS104')->get();
+        $this->fireMassComm = FireList::where('room', 'MCL')->get();
+        $this->fireCas103 = FireList::where('room', 'CAS103')->get();
+        $this->fireCas102 = FireList::where('room', 'CAS102')->get();
+        $this->fireCas101 = FireList::where('room', 'CAS101')->get();
+        $this->fireCas107 = FireList::where('room', 'CAS107')->get();
+        $this->fireCas108 = FireList::where('room', 'CAS108')->get();
+        $this->fireCas109 = FireList::where('room', 'CAS109')->get();
+        $this->fireCas110 = FireList::where('room', 'CAS110')->get();
+        $this->fireCas111 = FireList::where('room', 'CAS111')->get();
+        $this->fireCas112 = FireList::where('room', 'CAS112')->get();
+        $this->locations = LocationList::all(); // Fetch all locations
     }
-    public function createFire()
+
+    public function createFire($roomId)
     {
+        $this->selectedRoom = $roomId;
         $this->emit('resetInputFields');
         $this->emit('openMapFormModal');
     }
-    public function editFire($fireId)
-    {
-        $this->fireId = $fireId;
-        $this->emit('fireId', $this->fireId);
-        $this->emit('openRecordModal');
-        
-    }
-    public function viewFire($fireId)
-    {
-        $this->fireId = $fireId;
-        $this->viewMode = true; // Set view mode to true
-        $this->emit('openMapFormModal', $this->fireId);
-    }
 
- 
     
-    public function getStatusIndicator($status)
-    {
-        if ($status === 'Active') {
-            return 'green';
-        } elseif ($status === 'Inactive') {
-            return 'orange';
-        } elseif ($status === 'Refill') {
-            return 'gray';
-        } else {
-            return 'gray'; // Default to gray if status is not recognized
-        }
-    }
 
     public function render()
     {
-        $fire =FireList::all();
-
-
         return view('livewire.map.cas.ground-floor', [
-            'fire' => $fire,
-
+            'locations' => $this->locations,
+            'fireCasDean' => $this->fireCasDean,
+            'fireCas106' => $this->fireCas106,
+            'fireCas105' => $this->fireCas105,
+            'fireCas104' => $this->fireCas104,
+            'fireMassComm' => $this->fireMassComm,
+            'fireCas103' => $this->fireCas103,
+            'fireCas102' => $this->fireCas102,
+            'fireCas101' => $this->fireCas101,
+            'fireCas107' => $this->fireCas107,
+            'fireCas108' => $this->fireCas108,
+            'fireCas109' => $this->fireCas109,
+            'fireCas110' => $this->fireCas110,
+            'fireCas111' => $this->fireCas111,
+            'fireCas112' => $this->fireCas112,
         ]);
     }
 }

@@ -13,16 +13,12 @@ return new class extends Migration
     {
         Schema::create('fire_lists', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('type'); // Changing the data type
-            $table->foreign('type')->references('id')->on('type_lists');
+            $table->string('type');
             $table->string('firename');
             $table->string('serial_number');
-            $table->unsignedBigInteger('building');
-            $table->unsignedBigInteger('floor');
-            $table->unsignedBigInteger('room');
-            $table->foreign('building')->references('id')->on('location_lists');
-            $table->foreign('floor')->references('id')->on('location_lists');
-            $table->foreign('room')->references('id')->on('location_lists');
+            $table->string('building');
+            $table->string('floor');
+            $table->string('room');
             $table->date('installation_date');
             $table->date('expiration_date')->default(now());
             $table->text('description')->nullable();

@@ -70,7 +70,6 @@ Route::group(['middleware' => ['role:admin|Head|Maintenance Personnel|Student|St
     //map
     Route::get('map', BuildingList::class);
     Route::get('/cas-floor', CasFloor::class)->name('cas.floor');
-    Route::get('/ground-floor', GroundFloor::class)->name('ground.floor');
 
 });
 Route::group(['middleware' => ['role:admin|Head']], function () {

@@ -35,4 +35,16 @@ class FireList extends Model
         {
             return $this->belongsTo(LocationList::class, 'room', 'id');
         }
+        public function firebuilding()
+        {
+            return $this->belongsTo(LocationList::class, 'building', 'id');
+        }
+        public function firefloor()
+        {
+            return $this->belongsTo(LocationList::class, 'floor', 'id');
+        }
+        public function fireroom()
+        {
+            return $this->belongsTo(LocationList::class, 'room', 'id');
+        }
 }

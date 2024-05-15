@@ -33,10 +33,10 @@
 							<div class="col-auto text-end float-end ms-auto download-grp">
 								<div class="top-nav-search table-search-blk">
 									<form id="filterForm" >
-										<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search" name="search">
+										<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search" name="search" >
 										<a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
 									
-										<select name="filter" id="filterSelect">
+										<select  style="margin-top:10px; border-radius:10px 5px 5px 5px;" name="filter" id="filterSelect">
 												<option value="all" {{ $filter === 'all' ? 'selected' : '' }}>All</option>
 												<option value="users" {{ $filter === 'users' ? 'selected' : '' }}>Users</option>
 												<option value="employees" {{ $filter === 'employees' ? 'selected' : '' }}>Employees</option>

@@ -1,6 +1,6 @@
 <div>
-    <div class="container ">
-        <div class="modal-content" style="width:100%; hv-100">
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="modal-content" style="max-width: 800px; width: 100%;">
             <div class="modal-header" style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
                 <h1 class="modal-title fs-5" style="color: white;">
                     @if ($fireId)
@@ -18,16 +18,10 @@
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
-                           
                         @endforeach
                     </ul>
                 </span>
             @endif
-            @if (session()->has('room'))
-                <div class="alert alert-sdanger">
-                    {{ session('room') }}
-                </div>
-             @endif
             <form wire:submit.prevent="store" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
@@ -38,9 +32,12 @@
                                         <label>Type</label>
                                         <select class="form-control select" wire:model="type" @if($viewMode) disabled @endif>
                                             <option value="" selected>Select a Types</option>
-                                            @foreach ($types as $type)
-                                                <option value="{{ $type->id }}">{{ $type->description }}</option>
-                                            @endforeach
+                                            <option value="water" selected>Water</option>
+                                            <option value="foam" selected>Foam</option>
+                                            <option value="CO2" selected>Carbon Dioxide CO2</option>
+                                            <option value="dry chemical powder" selected>Dry Powder</option>
+                                            <option value="wet chemical" selected>Wet Chemical</option>
+                                            <option value="powder" selected>Powder</option>
                                         </select>
                                     </div>
                                 </div>
@@ -62,10 +59,13 @@
                                     <div class="form-group local-forms">
                                         <label>Building / Department</label>
                                         <select class="form-control select" wire:model="building" @if($viewMode) disabled @endif>
-                                            <option value="" selected>Select a Building</option>
-                                            @foreach ($locations as $location)
-                                                <option value="{{ $location->id }}">{{ $location->building }}</option>
-                                            @endforeach
+                                            <option value="" selected>Select a Building/ Department</option>
+                                            <option value="CAS" selected>CAS</option>
+                                            <option value="CBA" selected>CBA</option>
+                                            <option value="ADMIN" selected>ADMIN BUILDING</option>
+                                            <option value="CNPAS" selected>CNPAS</option>
+                                            <option value="CTED" selected>CTED</option>
+                                           
                                         </select>
                                     </div>
                                 </div>
@@ -74,9 +74,12 @@
                                         <label>Floor</label>
                                         <select class="form-control select" wire:model="floor" @if($viewMode) disabled @endif>
                                             <option value="" selected>Select a Floor</option>
-                                            @foreach ($locations as $location)
-                                                <option value="{{ $location->id }}">{{ $location->floor }}</option>
-                                            @endforeach
+                                            <option value="Ground-Floor" selected>GROUND FLOOR</option>
+                                            <option value="Second-Floor" selected>SECOND FLOOR</option>
+                                            <option value="Third-Floor" selected>THIRD FLOOR</option>
+                                            <option value="FOURTH-Floor" selected>FOURTH FLOOR</option>
+                                            <option value="FIFTH-Floor" selected>FIFTH FLOOR</option>
+                                           
                                         </select>
                                     </div>
                                 </div>
@@ -85,9 +88,23 @@
                                         <label>Room / Office</label>
                                         <select class="form-control select" wire:model="room" @if($viewMode) disabled @endif>
                                             <option value="" selected>Select a Room</option>
-                                            @foreach ($locations as $location)
-                                                <option value="{{ $location->id }}">{{ $location->room }}</option>
-                                            @endforeach
+                                            <option value="CasDean" selected>CAS DEAN</option>
+                                            <option value="CAS106" selected>CAS 106</option>
+                                            <option value="CAS105" selected>CAS 105</option>
+                                            <option value="CAS104" selected>CAS 104</option>
+                                            <option value="MCL" selected>MASS COMM LABORATORY</option>
+                                            <option value="CAS103" selected>CAS 103</option>
+                                            <option value="CAS102" selected>CAS 102</option>
+                                            <option value="CAS101" selected>CAS 101</option>
+                                            <option value="CAS107" selected>CAS 107</option>
+                                            <option value="CAS108" selected>CAS 108</option>
+                                            <option value="CAS109" selected>CAS 109</option>
+                                            <option value="CAS110" selected>CAS 110</option>
+                                            <option value="CAS111" selected>CAS 111</option>
+                                            <option value="CAS112" selected>CAS 112</option>
+                                            
+
+                                           
                                         </select>
                                     </div>
                                 </div>
@@ -112,6 +129,19 @@
                                     <div class="form-group local-forms">
                                         <label>Description</label>
                                         <input class="form-control" type="text" wire:model="description" @if($viewMode) readonly @endif />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group local-forms">
+                                        <label>Status</label>
+                                        <select class="form-control" wire:model="status" @if($viewMode) disabled @endif>
+                                            <option value=" ">Select</option>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                            <option value="Refill">Refill</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
