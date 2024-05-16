@@ -17,8 +17,8 @@ class RoleAndPermissionSeeder extends Seeder
         $adminRole = Role::create(['name' => 'admin']);
         $staffRole = Role::create(['name' => 'Head']);
         $staffRole = Role::create(['name' => 'Maintenance Personnel']);
-        $staffRole = Role::create(['name' => 'Staff']);
-        $staffRole = Role::create(['name' => 'Student']);
+        $staffRole = Role::create(['name' => 'Dean']);
+        
         
     }
 }

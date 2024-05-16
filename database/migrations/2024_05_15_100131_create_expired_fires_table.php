@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('record_lists', function (Blueprint $table) {
+        Schema::create('expired_fires', function (Blueprint $table) {
             $table->id();
             $table->string('type');
             $table->string('firename');
@@ -19,11 +19,10 @@ return new class extends Migration
             $table->string('building');
             $table->string('floor');
             $table->string('room');
-            $table->date('maintenance_date');
+            $table->date('installation_date');
             $table->date('expiration_date')->default(now());
-            $table->unsignedBigInteger('finding'); // Changing the data type
-            $table->foreign('finding')->references('id')->on('finding_lists')->nullable();
-            $table->string('status')->default('Active');
+            $table->text('description')->nullable();
+            $table->string('status')->default('Expired');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('record_lists');
+        Schema::dropIfExists('expired_fires');
     }
 };

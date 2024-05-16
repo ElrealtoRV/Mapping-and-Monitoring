@@ -21,10 +21,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->bigInteger('contnum')->unique();
             $table->bigInteger('idnum')->unique();
-            $table->unsignedBigInteger('office')->nullable(); // Changing the data type
-            $table->foreign('office')->references('id')->on('office_lists');
-            $table->unsignedBigInteger('dept')->nullable();
-            $table->foreign('dept')->references('id')->on('department_lists');
+            $table->string('office');
+            $table->string('college')->nullable();
             $table->string('password');
             $table->integer('status')->default(0);
             $table->timestamp('email_verified_at')->nullable();

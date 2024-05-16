@@ -1,4 +1,4 @@
-<div>
+resources/views/livewire/map/form.blade.php<div>
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="modal-content" style="max-width: 800px; width: 100%;">
             <div class="modal-header" style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
@@ -59,7 +59,7 @@
                                     <div class="form-group local-forms">
                                         <label>Building / Department</label>
                                         <select class="form-control select" wire:model="building" @if($viewMode) disabled @endif>
-                                            <option value="" selected>Select a Building/ Department</option>
+                                            <option value="" selected>Select a Building/ College</option>
                                             <option value="CAS" selected>CAS</option>
                                             <option value="CBA" selected>CBA</option>
                                             <option value="ADMIN" selected>ADMIN BUILDING</option>
@@ -88,11 +88,22 @@
                                         <label>Room / Office</label>
                                         <select class="form-control select" wire:model="room" @if($viewMode) disabled @endif>
                                             <option value="" selected>Select a Room</option>
-                                            <option value="CASDEAN" selected>CAS DEAN</option>
+                                            <option value="CasDean" selected>CAS DEAN</option>
                                             <option value="CAS106" selected>CAS 106</option>
                                             <option value="CAS105" selected>CAS 105</option>
                                             <option value="CAS104" selected>CAS 104</option>
-                                            <option value="MASSCOM" selected>MASS COMM</option>
+                                            <option value="MCL" selected>MASS COMM LABORATORY</option>
+                                            <option value="CAS103" selected>CAS 103</option>
+                                            <option value="CAS102" selected>CAS 102</option>
+                                            <option value="CAS101" selected>CAS 101</option>
+                                            <option value="CAS107" selected>CAS 107</option>
+                                            <option value="CAS108" selected>CAS 108</option>
+                                            <option value="CAS109" selected>CAS 109</option>
+                                            <option value="CAS110" selected>CAS 110</option>
+                                            <option value="CAS111" selected>CAS 111</option>
+                                            <option value="CAS112" selected>CAS 112</option>
+                                            
+
                                            
                                         </select>
                                     </div>

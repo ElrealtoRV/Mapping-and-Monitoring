@@ -29,14 +29,11 @@ class Home extends Controller
         $operations = 0;
 
          
-        $regularusers = RegularList::count();
-        $regular = RegularList::all();
         $userCounts = User::count();
         $users = User::all();
         $tasks = Task::all();
         $fires = FireList::count();
         $affiliations = User::all();
-        $positions = Position::all();
 
         $users = User::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'admin');
@@ -50,11 +47,8 @@ class Home extends Controller
         return view('home', [
             'time' => $time,
             'operations' => $operations,
-            'regularusers' => $regularusers,
             'userCounts' => $userCounts,
             'users' => $users,
-            'positions' => $positions,
-            'regular' => $regular,
             'tasks' => $tasks,
             'fires' => $fires,
             'affiliations' => $affiliations,

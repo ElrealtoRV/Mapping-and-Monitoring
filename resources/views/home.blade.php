@@ -1,4 +1,4 @@
-@if(auth()->user()->hasRole('Maintenance Personnel') || auth()->user()->hasRole('Staff')|| auth()->user()->hasRole('Student'))
+@if(auth()->user()->hasRole('Maintenance Personnel') || auth()->user()->hasRole('Dean'))
 
 
 <x-app-layout>
@@ -72,7 +72,7 @@
                 <i class='bx bxs-group'></i>
                 <span class="text">
                     @php
-                        $totalRegularUsers = \App\Models\User::where('role', 'Student')->count() + \App\Models\User::where('role', 'Staff')->count();
+                        $totalRegularUsers = \App\Models\User::where('role', 'Dean')->count(); 
                     @endphp
 
                     @if($totalRegularUsers == 0)
@@ -117,7 +117,7 @@
             @endif
            
                              <div>
-								@if(auth()->user()->hasRole('Maintenance Personne')||auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
+								@if(auth()->user()->hasRole('Maintenance Personne')||auth()->user()->hasRole('Dean'))
 									@livewire('home-page.home-page')
 								@endif
 							</div>

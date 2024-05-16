@@ -133,7 +133,7 @@ class FireForm extends Component
         $this->resetInputFields();
         $this->emit('closeMapFormModal');
         $this->emit('refreshParentCasFloor');
-        $this->emit('refreshParentCasFloor');
+        $this->emit('refreshParentFireExtinguisher');
         $this->emit('refreshTable');
     }
 

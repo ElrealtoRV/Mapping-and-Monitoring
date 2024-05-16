@@ -1,3 +1,4 @@
+<div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <style>
        {
@@ -153,8 +154,10 @@
     </style>
 
 <body>
+<div id="analytical" class="report-content">
 <div class="header-container">
-        <h2>Fire Extinguisher Report</h2>
+
+        <h2>Analytical Report</h2>
         <div class="form-row">
             <div class="choices">
                 <label for="startDatePicker">Start Date:</label>
@@ -165,6 +168,7 @@
                 <input type="date" id="endDatePicker" class="form-control">
             </div>
             <button onclick="generateReport()" class="generate">Generate Report</button>
+          
         </div>
 </div>
 
@@ -225,7 +229,7 @@
                 <p>Expired Fire Extinguisher</p>
             </span>
         </li>
-        @if(auth()->user()->hasRole('Head'))
+        @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
 								<li>
 									<i class='bx bx-task' ></i>
 									<span class="text">
@@ -280,6 +284,7 @@
             <canvas id="requestChart"></canvas>
         </div>
     </div>
+    </div>
     <script>
     function generateReport() {
         console.log("Report generated");
@@ -332,6 +337,8 @@
             }
         });
     }
+
+
 </script>
 </body>
-
+</div>

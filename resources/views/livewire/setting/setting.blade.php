@@ -34,12 +34,49 @@
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
-  @media (min-width: 380px) {
-    .profile {
-      grid-template-columns: 1fr 1fr;
-    }
+/* For screens smaller than 480px */
+@media (max-width: 479px) {
+  .profile {
+    grid-template-columns: 1fr;
   }
+  
+  .form-group .input {
+    width: 100%;
+  }
+}
 
+/* For screens between 480px and 767px */
+@media (min-width: 480px) and (max-width: 767px) {
+  .profile {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-group .input {
+    width: 100%;
+  }
+}
+
+/* For screens between 768px and 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .profile {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .form-group .input {
+    width: 100%;
+  }
+}
+
+/* For screens larger than 1024px */
+@media (min-width: 1024px) {
+  .profile {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .form-group .input {
+    width: auto;
+  }
+}
   .form-group {
     display: flex;
     flex-direction: column;
@@ -95,7 +132,7 @@
     text-decoration: underline;
   }
 </style>
-@if(auth()->user()->hasRole('Head')|| auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
+@if(auth()->user()->hasRole('Head')|| auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Dean'))
 
 
 <div class="setting-box">
@@ -118,7 +155,7 @@
   </div>
 </div>
 @endif
-@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
+@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Dean'))
 <div class="setting-box">
                 <div class="profile-1">
                     <h2 class="P">Notification Settings</h2>
@@ -139,7 +176,7 @@
                             <label for="commentsSwitch" class="switch"></label>
                         </div>
                     </div>
-                    @if(auth()->user()->hasRole('Head')|| auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
+                    @if(auth()->user()->hasRole('Head')|| auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Dean'))
                     <div class="Notification">
                     <h5 >System Updates</h5>
                     <p class="text6">Receive notifications for system updates and maintenance.</p>

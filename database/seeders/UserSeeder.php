@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
      
-        $adminOffice = OfficeLists::create(['description' => 'CSIT Office']);
+      
 
         User::create([
             'first_name' => 'Ronver',
@@ -28,15 +28,13 @@ class UserSeeder extends Seeder
             'bdate' => 'june 26, 1999',
             'email' => 'admin@gmail.com',
             'contnum' => '09269325483',
-           
             'idnum' => '201901160',
-            'office' => $adminOffice->id,
+            'office' => 'Building and Ground Office',
             'password' => bcrypt('admin123')
         ])->assignRole('admin');
 
          
      
-          $headOffice = OfficeLists::create(['description' => 'Building and Ground Office']);
           User::create([
             'first_name' => 'Jane',
             'middle_name' => 'ehhh',
@@ -46,7 +44,7 @@ class UserSeeder extends Seeder
             'email' => 'head@gmail.com',
             'contnum' => '09269325482', 
             'idnum' => '201901161',
-            'office' => $headOffice->id,
+            'office' => 'Building and Ground Office',
             'password' => bcrypt('staff123')
         ])->assignRole('Head');
 

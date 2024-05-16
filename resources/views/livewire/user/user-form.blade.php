@@ -115,19 +115,12 @@
 
                         <div class="col-md-6">
                             <div class="form-group local-forms">
-                                <label>
-                                    Office
-                                    <span class="login-danger">*</span>
-                                </label>
-                                <select class="form-control select" type="text" wire:model="office">
+                                <label>Office</label>
+                                <select class="form-control select" wire:model="office">
 
-                                    <option value="" selected>Select an Office</option>
-                                    @foreach ( $offices as $office)
-                                        <option value="{{ $office->id }}">
-                                            {{ $office->description }}
-                                        </option>
-                                    @endforeach
-                                    </select>
+                                    <option value="" >Select an office</option>
+                                        <option value="BGO" >Building And Ground Office</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -266,7 +259,7 @@
         </ul>
     </span>
     @endif
-    <h1>Add User</h1>
+    <h1>Add Requester</h1>
     <form wire:submit.prevent="store" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="row">
@@ -361,30 +354,31 @@
                                 <label>Office</label>
                                 <select class="form-control select" wire:model="office">
 
-                                    <option value="" selected>Select an office</option>
-                                    @foreach ($offices as $office)
-                                        <option value="{{ $office->id }}">
-                                            {{ $office->description }}
-                                        </option>
-                                    @endforeach
+                                    <option value="" >Select an office</option>
+                                        <option value="CasDean" >Cas Dean Office</option>
+                                        <option value="CbaDean" >CBA Dean Office</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group local-forms">
-                                <label>Department</label>
-                                <select class="form-control select" wire:model="dept">
-
-                                    <option value="" selected>Select a Department</option>
-                                    @foreach ($depts as $dept)
-                                        <option value="{{ $dept->id }}">
-                                            {{ $dept->description }}
-                                        </option>
-                                    @endforeach
+                                <label>College</label>
+                                <select class="form-control select" wire:model="college">
+                                    <option value="" selected>Select a College</option>
+                                    <option value="CAS">College of Arts and Sciences (CAS)</option>
+                                    <option value="CBA">College of Business Administration (CBA)</option>
+                                    <option value="CTEd">College of Teacher Education (CTEd)</option>
+                                    <option value="CEA">College of Engineering and Architecture (CEA)</option>
+                                    <option value="CNPAHS">College of Nursing, Pharmacy, and Allied Health Sciences (CNPAHS)</option>
+                                    <option value="CIT">College of Industrial Technology (CIT)</option>
+                                    <option value="CCJE">College of Criminal Justice Education (CCJE)</option>
+                                    <option value="CAFF">College of Agriculture, Forestry and Fisheries (CAFF)</option>
+                                    <option value="COL">College of Law (COL)</option>
                                 </select>
                             </div>
                         </div>
+
                     </div>
                     @if (!isset($userId))
                         <div class="row">
@@ -437,7 +431,7 @@
                         <div style="height: 150px; overflow-y: scroll;">
                                     @if (empty($selectedRoles))
                                         @forelse ($filteredUserRoles as $role)
-                                            @if ($role->name == 'Student' || $role->name == 'Staff')
+                                            @if ($role->name == 'Dean')
                                                 <div class="form-check mb-2">
                                                     <input wire:model.defer="roleCheck" type="checkbox" class="form-check-input"
                                                         value="{{ $role->name }}" id="{{ $role->name }}">

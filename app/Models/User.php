@@ -23,7 +23,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = [
 
-        'first_name', 'middle_name', 'last_name','age','bdate','contnum', 'idnum','office', 'email','dept','role', 'password','status','email_verified_at','first_name_verified_at','last_name_verified_at',
+        'first_name', 'middle_name', 'last_name','age','bdate','contnum', 'idnum','office', 'email','college','role', 'password','status','email_verified_at','first_name_verified_at','last_name_verified_at',
     ];
 
 
@@ -39,7 +39,18 @@ class User extends Authenticatable
     {
         return $this->belongsTo(OfficeLists::class,'office');
     }
-
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    public function isHead()
+    {
+        return $this->role === 'head';
+    }
+    public function approveLists()
+    {
+        return $this->hasMany(ApproveList::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

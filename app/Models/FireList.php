@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class FireList extends Model
 {
@@ -13,10 +14,6 @@ class FireList extends Model
         'type', 'firename', 'serial_number','building','floor','room','installation_date','expiration_date', 'description','status',
     ];
 
-    public function fireex()
-    {
-        return $this->belongsTo(TypeList::class, 'type', 'id');
-    }
     public function fireLocation()
     {
         return $this->belongsTo(LocationList::class, 'building', 'floor', 'room', 'id');
@@ -46,5 +43,9 @@ class FireList extends Model
         public function fireroom()
         {
             return $this->belongsTo(LocationList::class, 'room', 'id');
+        }
+        public function getIsExpiredAttribute()
+        {
+            return Carbon::now()->greaterThan(Carbon::parse($this->expiration_date));
         }
 }

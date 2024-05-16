@@ -5,14 +5,14 @@ namespace App\Http\Livewire\Request;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RequestLists;
-use App\Models\TypeList;
+
 use App\Models\LocationList;
 use App\Models\Request;
 use App\Models\FindingList;
 
 class RequestForm extends Component
 {
-    public $requestId,$user_id, $type, $firename, $serial_number, $room,$building,$floor,$request;
+    public $requestId,$user_id, $type, $firename, $room,$building,$floor,$request,$created_at;
     public $action = '';  //flash
     public $message = '';  //flashSSS
     public $requestCheck = array();
@@ -37,11 +37,11 @@ class RequestForm extends Component
         $this->user_id = $request->user_id;
         $this->type = $request->type;
         $this->firename = $request->firename;
-        $this->serial_number = $request->serial_number;
         $this->room = $request->room;
         $this->building = $request->building;
         $this->floor = $request->floor;
         $this->request = $request->request;
+        $this->created_at = $request->created_at;
 
         $this->selectedRequest = $request->getRequestNames()->toArray();
     }
@@ -61,7 +61,6 @@ class RequestForm extends Component
             $data = $this->validate([
                 'type'    => 'nullable',
                 'firename'   => 'nullable',
-                'serial_number'     => 'required',
                 'room'     => 'required',
                 'building' => 'nullable',
                 'floor' => 'nullable',
@@ -85,22 +84,22 @@ class RequestForm extends Component
             $this->validate([
                 'type'    => 'nullable',
                 'firename'   => 'nullable',
-                'serial_number'     => 'required',
                 'room'     => 'required',
                 'building' => 'nullable',
                 'floor' => 'nullable',
                 'request'     => 'required',
+               
             ]);
 
             $request = RequestLists::create([
                 'user_id' => auth()->id(),
                 'type'    => $this->type,
                 'firename'   => $this->firename,
-                'serial_number'      => $this->serial_number,
                 'room'      => $this->room,
                 'building'      => $this->building,
                 'floor'      => $this->floor,
                 'request'      => $this->request,
+                
             ]);
 
             $action = 'store';
@@ -157,13 +156,11 @@ class RequestForm extends Component
     public function render()
     {
         $requests =RequestLists::all();
-        $types =TypeList::all();
         $locations =LocationList::all();
         $addrequests =Request::all();
 
         return view('livewire.request.request-form', [
             'requests' => $requests,
-            'types' => $types,
             'locations' => $locations,
             'addrequests' => $addrequests,
          

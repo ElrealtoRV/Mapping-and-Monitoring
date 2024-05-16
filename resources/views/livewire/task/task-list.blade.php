@@ -62,7 +62,7 @@
 							<thead>
 								<tr style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
                                 <th style="width: 20%; color:white;">Task</th>
-                                <th style="width: 20%; color:white;">Personnel Maintenance</th>
+                                <th style="width: 20%; color:white;">Assigned To</th>
                                 <th style="width: 20%; color:white;">Due Date</th>
                                 <th style="width: 20%; color:white;">Status</th>
                                 <th style="width: 20%; text-align: center; color:white;">Action</th>

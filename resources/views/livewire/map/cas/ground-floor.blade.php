@@ -5,7 +5,7 @@
         display: inline-block;
         position: relative;
     }
-    
+
 
 .CasDean,
 .CAS106,
@@ -136,6 +136,17 @@
 .refill {
     background-color: blue; /* Refill state background color */
 }
+#tooltipText{
+
+margin-top:-200px !important;
+margin-left:-500px !important;
+
+}
+.popup {
+    background-color:red;
+}
+
+
 </style>
 <livewire:flash-message.flash-message />
 <div class="scroll-container">
@@ -144,11 +155,11 @@
 <img src="{{ asset('assets/img/GroundFloor.png') }}" alt="GroundFloor" width="1000px" height="300px">
 <!-- Display the icon outside of the loop -->
 <div id="casDeanIcon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CasDean"><i class="fas fa-plus plus-icon" wire:click="createFire('CASDEAN')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Maintenance Personnel'))
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
         <span class="CasDean"><i class="fas fa-plus plus-icon" wire:click="createFire('CASDEAN')"></i></span>
     @endif
 
@@ -212,7 +223,7 @@
 @endif
     <div id="tooltip">
     @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS106"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS106')"></i></span>
+        
 @endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
@@ -269,9 +280,7 @@
     <span class="CAS105"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS105')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS105"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS105')"></i></span>
-@endif
+
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">

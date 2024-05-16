@@ -59,7 +59,7 @@
                                     <div class="form-group local-forms">
                                         <label>Building / Department</label>
                                         <select class="form-control select" wire:model="building" @if($viewMode) disabled @endif>
-                                            <option value="" selected>Select a Building/ Department</option>
+                                            <option value="" selected>Select a Building/College</option>
                                             <option value="CAS" selected>CAS</option>
                                             <option value="CBA" selected>CBA</option>
                                             <option value="ADMIN" selected>ADMIN BUILDING</option>

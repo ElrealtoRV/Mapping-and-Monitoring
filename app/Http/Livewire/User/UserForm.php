@@ -15,7 +15,7 @@ use Carbon\Carbon;
 
 class UserForm extends Component
 {
-    public $userId, $first_name, $middle_name, $last_name, $age, $bdate, $contnum, $dept, $email, $idnum, $office, $password, $password_confirmation;
+    public $userId, $first_name, $middle_name, $last_name, $age, $bdate, $contnum, $college, $email, $idnum, $office, $password, $password_confirmation;
     public $action = '';  //flash
     public $message = '';  //flash
     public $roleCheck = array();
@@ -46,7 +46,7 @@ class UserForm extends Component
         $this->email = $user->email;
         $this->idnum = $user->idnum;
         $this->office = $user->office;
-        $this->dept = $user->dept;
+        $this->college = $user->college;
         $this->password = $user->password;
         $this->selectedRoles = $user->getRoleNames()->toArray();
     }
@@ -72,7 +72,7 @@ class UserForm extends Component
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
                 'idnum' => ['required', 'max:9', 'unique:users,idnum'],
                 'office' => 'nullable',
-                'dept' => 'nullable',
+                'college' => 'nullable',
             ]);
 
             $user = User::find($this->userId);
@@ -108,9 +108,8 @@ class UserForm extends Component
                 'contnum' => ['required', 'max:11', 'unique:users,contnum'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
                 'idnum' => ['required', 'max:9', 'unique:users,idnum'],
-
                 'office' => 'nullable',
-                'dept' => 'nullable',
+                'college' => 'nullable',
                 'password' => ['required', 'confirmed', 'min:6', Rules\Password::defaults()],
             ]);
 
@@ -122,10 +121,9 @@ class UserForm extends Component
                 'bdate' => $this->bdate,
                 'contnum' => $this->contnum,
                 'idnum' => $this->idnum,
-
                 'email' => $this->email,
                 'office' => $this->office,
-                'dept' => $this->dept,
+                'college' => $this->college,
                 'password' => Hash::make($this->password)
             ]);
 
@@ -150,22 +148,16 @@ class UserForm extends Component
     public function render()
     {
         $roles = Role::all();
-        $positions = Position::all();
         $offices = OfficeLists::all();
-        $affiliations = AffiliationLists::all();
-        $depts = DepartmentLists::all();
         // $filteredPos = Position::where('description', '!=', 'Admin')->get();
         $filteredRoles = Role::whereIn('name', ['Head', 'Maintenance Personnel'])->get();
-        $filteredUserRoles = Role::whereIn('name', ['Student', 'Staff'])->get();
+        $filteredUserRoles = Role::whereIn('name', ['Dean'])->get();
         return view('livewire.user.user-form', [
             'roles' => $roles,
             'filteredRoles' =>  $filteredRoles,
             'filteredUserRoles' =>  $filteredUserRoles,
+            'offices' =>  $offices,
             // 'filteredPos' =>   $filteredPos,
-            'positions' => $positions,
-            'offices' => $offices,
-            'affiliations' => $affiliations,
-            'depts' => $depts,
         ]);
     }
 }

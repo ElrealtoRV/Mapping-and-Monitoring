@@ -3,13 +3,13 @@
 	<div class="sidebar-inner slimscroll">
 		<div class="sidebar-menu" style="margin-top: 20px;" id="sidebar-menu">
 			<ul>
-						@if(auth()->user()->hasRole('Maintenance Personnel') || auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
+						@if(auth()->user()->hasRole('Maintenance Personnel') || auth()->user()->hasRole('Dean'))
 								<li>
 								<a href="home"><span class="menu-side"><i class="fa-solid fa-house"></i></span>
 									<span>Home</span></a>
 								</li>
 						@endif
-						@if(auth()->user()->hasRole('Student')||auth()->user()->hasRole('Staff'))
+						@if( auth()->user()->hasRole('Dean'))
 							<li class="submenu">
 								<a href="#"><span class="menu-side"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 										<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -48,7 +48,7 @@
 					</ul>	
 				</li>
 				@endif
-				@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Staff')||auth()->user()->hasRole('Student'))
+				@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Dean'))
 				<li>
 					<a href="map"><span class="menu-side"><i class="fas fa-map-marker"></i></span>
 						<span>Map</span>
@@ -79,6 +79,7 @@
 
 						<li><a href="{{ asset('fire-extinguisher') }}">Fire Extinguisher</a></li>
 						<li><a href="{{ asset('record') }}">Record</a></li>
+						<li><a href="{{ asset('expired-list') }}">Expired List</a></li>
 						<!-- <li><a href="{{ asset('type') }}">Type</a></li>
 						<li><a href="{{ asset('location') }}">Location</a></li> -->
 						
@@ -113,8 +114,8 @@
 
 					<ul style="display: none;">	
 
-						<li><a href="activity-log">Activity Log</a></li>
-						<li><a href="/report">Analytical</a></li>
+						<!-- <li><a href="activity-log">Activity Log</a></li> -->
+						<li><a href="/report">Report</a></li>
 					</ul>
 				</li>
 				@endif
@@ -148,7 +149,7 @@
 							</a>
 						</li>
 						@endif
-					@if(auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Staff')||auth()->user()->hasRole('Student'))
+					@if(auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Dean'))
 						
 
 						<li class="submenu">

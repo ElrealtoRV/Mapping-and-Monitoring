@@ -5,7 +5,7 @@ namespace App\Http\Livewire\FireExtinguisher;
 use Livewire\Component;
 use App\Models\FireList;
 use App\Models\TypeList;
-use App\Models\LocationList;
+use App\Models\ExpiredFire;
 use Carbon\Carbon;
 
 class FireExtinguisher extends Component
@@ -14,6 +14,7 @@ class FireExtinguisher extends Component
     public $search = '';
     public $action = '';  //flash
     public $message = '';  //flash
+    public $statuses = ['Active', 'Expired'];
 
    
     
@@ -64,6 +65,30 @@ class FireExtinguisher extends Component
         $this->emit('flashAction', $action, $message);
         $this->emit('refreshTable');
     }
+    public function moveExpiredFireToExpiredFireTable($expiredFireId)
+    {
+        $expiredFire = FireList::findOrFail($expiredFireId);
+
+        // Create a new record in the ExpiredFire table
+        ExpiredFire::create([
+            'type' => $expiredFire->type,
+            'firename' => $expiredFire->firename,
+            'serial_number' => $expiredFire->serial_number,
+            'building' => $expiredFire->building,
+            'floor' => $expiredFire->floor,
+            'room' => $expiredFire->room,
+            'installation_date' => $expiredFire->installation_date,
+            'expiration_date' => $expiredFire->expiration_date,
+            'description' => $expiredFire->description,
+            'status' => 'Expired',
+        ]);
+
+        // Delete the expired fire extinguisher from the FireList table
+  
+
+        // Optionally emit a message or trigger a notification
+        $this->emit('expiredFireMoved', $expiredFireId);
+    }
     public function isExpirationDateCloseToWarning($expirationDate)
     {
         $expirationDate = Carbon::parse($expirationDate);
@@ -108,6 +133,19 @@ class FireExtinguisher extends Component
         }
         return $fire;
     });
+    $this->fire = $query->get()->map(function ($fire) {
+        if (Carbon::now()->greaterThan(Carbon::parse($fire->expiration_date))) {
+            $fire->status = 'Expired';
+        }
+        return $fire;
+    });
+    $expiredFireIds = $this->fire->filter(function ($fire) {
+        return Carbon::now()->gt(Carbon::parse($fire->expiration_date));
+    })->pluck('id');
+
+    foreach ($expiredFireIds as $expiredFireId) {
+        $this->moveExpiredFireToExpiredFireTable($expiredFireId);
+    }
     return view('livewire.fire-extinguisher.fire-extinguisher', [
         'fire' => $fire,
         'fire_id' => $fireWithWarningStatus,

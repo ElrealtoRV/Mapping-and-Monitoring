@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('affiliation_lists', function (Blueprint $table) {
+        Schema::create('approve_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->foreignId('request_id')->constrained('request_lists')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('status_lists');
+        Schema::dropIfExists('approve_lists');
     }
 };
+

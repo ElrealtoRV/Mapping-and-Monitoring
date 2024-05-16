@@ -210,8 +210,8 @@ footer {
 
             <div class="hero-content">
 
-                <h1>NORSU Fire Extinguisher Mapping and Monitoring System</h1>
-                <p>Enhancing fire safety on all NORSU campuses through digital tools and data-driven decision making.</p>
+                <h1>NORSU Fire Extinguisher Mapping and Maintenance System</h1>
+                <p>Enhancing fire safety on  Norsu Main Campus through digital tools and data-driven decision making.</p>
             </div>
             <div class="hero-image">
                 <a class="btn"><img src="{{ asset('assets/img/fireman1.0.png') }}" alt="Fire man"></a>

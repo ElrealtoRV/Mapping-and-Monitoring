@@ -58,6 +58,8 @@
 									<th style="width: 5%">Building</th>
 									<th style="width: 5%">Floor</th>
 									<th style="width: 5%">Room</th>
+									<th style="width: 5%">Approve By:</th>
+									<th style="width: 5%">Approve At:</th>
                                     <th style="width: 5%">Status</th>
 									<th style="width: 5%; text-align: center;">Action</th>
 									
@@ -67,11 +69,13 @@
 								@foreach ($requests as $request)
 								<tr>
 								<td>{{  $request->AddRequest->description  }}</td>
-								<td>{{  $request->fireex->description  }}</td>
+								<td>{{  $request->type  }}</td>
                                 <td>{{  $request->serial_number  ?? 'No Serial provided'}}</td>
 								<td>{{  $request->building ?? 'No Building provided'}}</td>
 								<td>{{  $request->floor  ?? 'No Floor provided' }}</td>
 								<td>{{  $request->room  ?? 'No Building provided' }}</td>
+								<td>{{ $request->approver ?? 'Waiting For Approval' }}</td>
+								<td>{{ $request->approved_at ?? 'Not Approved Yet' }}</td>
                                 <td>{{  $request->status  }}</td>
                                 
                                 

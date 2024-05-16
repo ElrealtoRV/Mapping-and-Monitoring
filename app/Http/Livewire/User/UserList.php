@@ -74,6 +74,7 @@ class UserList extends Component
             $users->where(function ($query) {
                 $query->where('first_name', 'LIKE', '%' . $this->search . '%')
                     ->orWhere('last_name', 'LIKE', '%' . $this->search . '%')
+                    ->orWhere('college', 'LIKE', '%' . $this->search . '%')
                     ->orWhereHas('roles', function ($RoleQuery) {
                         $RoleQuery->where('name', 'LIKE', '%' . $this->search . '%');
                     });
@@ -83,8 +84,7 @@ class UserList extends Component
         // Check if the filter option is provided in the request
         if ($filter === 'users') {
             $users->whereHas('roles', function ($query) {
-                $query->where('name', 'Student')
-                    ->orWhere('name', 'Staff');
+                $query->where('name', 'Dean');   
             });
         } elseif ($filter === 'employees') {
             $users->whereHas('roles', function ($query) {

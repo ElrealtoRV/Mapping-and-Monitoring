@@ -32,7 +32,8 @@ use App\Http\Livewire\Map\Cas\GroundFloor;
 use App\Http\Livewire\Department\DepartmentList;
 use App\Http\Livewire\Task\TaskManager;
 use App\Http\Livewire\Task\TaskList;
-use App\Http\Livewire\Report\Analytical;
+use App\Http\Livewire\Report\ReportList;
+use App\Http\Livewire\ExpiredList\ExpiredList;
 
 
 /*
@@ -61,7 +62,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::view('setting', 'setting')->name('setting');
    
 });
-Route::group(['middleware' => ['role:admin|Head|Maintenance Personnel|Student|Staff']], function () {
+Route::group(['middleware' => ['role:admin|Head|Maintenance Personnel|Dean']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('setting', setting::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -74,18 +75,15 @@ Route::group(['middleware' => ['role:admin|Head|Maintenance Personnel|Student|St
 });
 Route::group(['middleware' => ['role:admin|Head']], function () {
     Route::get('user', UserList::class);
-    Route::get('regular-user-list', RegularUserList::class);
     Route::get('positions', PositionList::class);
-    Route::get('affiliation',AffiliationList::class);
     Route::get('office',OfficeList::class);
-    Route::get('department',DepartmentList::class);
-    Route::get('type', Type::class);
     Route::get('location', Location::class);
     Route::get('inspection', Inspection::class);
     Route::get('fire-extinguisher', FireExtinguisher::class);
+    Route::get('expired-list',FireExtinguisher::class);
     // Route::get('fire-form', Cas::class);
     Route::get('record', RecordList::class);
-    Route::get('/report', Analytical::class)->name('ground.floor');
+    Route::get('/report', ReportList::class)->name('report');
    
 
 
@@ -94,18 +92,18 @@ Route::group(['middleware' => ['role:admin|Head']], function () {
 
 
 });
-Route::group(['middleware' => ['role:Maintenance Personnel|Student|Staff']], function () {
+Route::group(['middleware' => ['role:Maintenance Personnel|Dean']], function () {
     Route::get('/home', [Home::class, 'index'])->name('home');
     Route::get('/home-page', HomePage::class);
   
 });
 
-Route::group(['middleware' => ['role:Head|Maintenance Personnel|Student|Staff']], function () {
+Route::group(['middleware' => ['role:Head|Maintenance Personnel|Dean']], function () {
 
     Route::get('my-profile', MyProfile::class);
   
 });
-Route::group(['middleware' => ['role:Student|Staff']], function () {
+Route::group(['middleware' => ['role:Dean']], function () {
     Route::get('user-request', UserRequest::class);
 });
 Route::group(['middleware' => ['role:Maintenance Personnel']], function () {

@@ -186,6 +186,7 @@
     align-items: center; /* Center vertically */
     padding-top: 10px;
     display:inline-block;
+    border:2px solid #007bff;
 }
 
 
@@ -194,6 +195,7 @@
     left: 1350px;
     visibility: visible;
     opacity: 1;
+   
 }
 
     #tooltip:hover #tooltipText,

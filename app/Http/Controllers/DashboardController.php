@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RequestLists;
-use App\Models\EmployeeList;
-use App\Http\Livewire\TodoList;
 use App\Models\User;
 use App\Models\Task;
 use App\Models\Position;
 use App\Models\FireList;
+use App\Models\ExpiredFire;
 
 
 use Carbon\Carbon;
@@ -32,7 +31,7 @@ class DashboardController extends Controller
         $userCounts = User::count();
         $users = User::all();
         $fires = FireList::count();
-        $positions = Position::all();
+        $exfires = ExpiredFire::count();
         $tasks = Task::count();
         $requests = RequestLists::count();
     
@@ -65,8 +64,8 @@ class DashboardController extends Controller
         // Apply filter based on the selected option
         if ($filter === 'users') {
             $usersQuery->whereHas('roles', function ($query) {
-                $query->where('name', 'Student')
-                    ->orWhere('name', 'Staff');
+                $query->where('name', 'Dean');
+                    
             });
         } elseif ($filter === 'employees') {
             $usersQuery->whereHas('roles', function ($query) {
@@ -90,11 +89,12 @@ class DashboardController extends Controller
             'userCounts' => $userCounts,
             'users' => $users,
             'fires' => $fires,
-            'positions' => $positions,
+            'exfires' => $exfires,
             'tasks' => $tasks,
             'requests' => $requests,
             'search' => $search,
             'filter' => $filter,
+            
 
         ]);
     }

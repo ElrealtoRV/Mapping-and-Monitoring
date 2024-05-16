@@ -1,4 +1,4 @@
-	@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') ||auth()->user()->hasRole('Maintenance Personnel')|| auth()->user()->hasRole('Staff')|| auth()->user()->hasRole('Student'))
+	@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') ||auth()->user()->hasRole('Maintenance Personnel')|| auth()->user()->hasRole('Dean'))
 
 
 		<x-app-layout>
@@ -72,7 +72,7 @@
 						<i class='bx bxs-group'></i>
 						<span class="text">
 							@php
-								$totalRegularUsers = \App\Models\User::where('role', 'Student')->count() + \App\Models\User::where('role', 'Staff')->count();
+								$totalRegularUsers = \App\Models\User::where('role', 'Dean')->count();
 							@endphp
 
 							@if($totalRegularUsers == 0)
@@ -107,9 +107,14 @@
 								<li>
 									<i class='fas fa-fire-extinguisher' ></i>
 									<span class="text">
-										<h3>2543</h3>
+									@if($exfires == 0)
+										<h3>{{ $exfires }}</h3>
 										<p>Expired Fire Extinguisher</p>
-									</span>
+									@else
+										<h3>{{ $exfires }}</h3>
+										<p>Expired Fire Extinguisher{{ $exfires != 1 ? 's' : '' }}</p>
+									@endif
+							</span>
 								</li>
 								@if(auth()->user()->hasRole('Head'))
 								<li>

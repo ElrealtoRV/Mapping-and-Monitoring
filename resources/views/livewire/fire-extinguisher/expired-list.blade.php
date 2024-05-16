@@ -73,12 +73,11 @@
 									<th style="width: 5%; color:white;">Type</th>
 									<th style="width: 5%; color:white;">Name</th>
 									<th style="width: 5%;  color:white;">Serial Number</th>
-									<th style="width:5%; color:white;">Building / College</th>
+									<th style="width:5%; color:white;">Building / Department</th>
 									<th style="width:5%; color:white;">Floor</th>
 									<th style="width:5%; color:white;">Room</th>
 									<th style="width: 5%; color:white;">Installation Date</th>
 									<th style="width: 5%; color:white;">Expiration Date</th>
-									<th style="width: 5%; color:white;">Description</th>
 									<th style="width: 10%; color:white;">Status</th>
 									<th style="width: 10%; text-align: center;color:white;">Action</th>
 								</tr>
@@ -94,7 +93,6 @@
        					     <td>{{ $fire_fetch_list->room }}</td>
        					     <td>{{ $fire_fetch_list['installation_date']}}</td>
 							<td>{{ $fire_fetch_list['expiration_date']}}</td>
-							<td>{{ $fire_fetch_list['description']}}</td>
        					     <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
        					
 									<td class="text-center">
@@ -118,13 +116,5 @@
 			</div>
 		</div>
 
-		{{-- Modal --}}
-		<div wire.ignore.self class="modal fade" id="FireModal" tabindex="-1" role="dialog" aria-labelledby="FireModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-			<div class="modal-dialog modal-dialog-centered modal-lg">
-				<livewire:fire-extinguisher.fire-form />
-			</div>
-		</div>
-		@section('custom_script')
-		@include('layouts.scripts.fire-scripts')
-		@endsection
+		
 </div>

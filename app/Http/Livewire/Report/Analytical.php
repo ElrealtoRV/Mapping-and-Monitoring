@@ -12,9 +12,14 @@ use App\Models\RequestLists;
 class Analytical extends Component
 {
     public $fires;
+    public $selectedReport = 'analytical';
     public $userCounts;
     public $regularusers;
 
+    public function showReport($report)
+    {
+        $this->selectedReport = $report;
+    }
     public function mount()
     {
         $this->fires = FireList::count();

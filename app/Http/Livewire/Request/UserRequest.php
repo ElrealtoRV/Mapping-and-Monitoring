@@ -6,7 +6,6 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RequestLists;
 use App\Models\Request;
-use App\Models\TypeList;
 use App\Models\User;
 use App\Models\ApproveList;
 
@@ -62,39 +61,39 @@ class UserRequest extends Component
     {
         $this->showRequestList = false;
     }
+    
     public function render()
     {
         $user = Auth::user();
-        $requests = $user->requests()->with(['AddRequest', 'fireex'])->get();
-        $types = TypeList::all();
+        $requests = $user->requests()->with(['AddRequest'])->get();
     
-        // Remove this block as it retrieves all requests, not just the user's requests
-        // $addrequests = RequestLists::with('AddRequest')->get();
-    
-        // Convert integer data to strings
-        $requests->transform(function ($request) {
-            $request->type = $request->type ? TypeList::find($request->type)->name : null;
-            // Convert other integer fields in a similar manner if needed
+        // Retrieve the approver's information for each request
+        $requests->map(function ($request) {
+            $approveRecord = ApproveList::where('request_id', $request->id)->first();
+            if ($approveRecord) {
+                $approver = $approveRecord->user->first_name . ' ' . $approveRecord->user->last_name;
+                $approvedAt = $approveRecord->created_at->format('Y-m-d H:i:s'); // Assuming 'created_at' stores the approval time
+                $request->approver = $approver;
+                $request->approved_at = $approvedAt;
+            } else {
+                $request->approver = 'Waiting For Approval';
+                $request->approved_at = null; // Or any default value you prefer
+            }
             return $request;
         });
     
         if (!empty($this->search)) {
-            $requests->where(function ($query) {
-                $query->where('type', 'LIKE', '%' . $this->search . '%')
-                    ->orWhere('Status', 'LIKE', '%' . $this->search . '%')
-                    ->orWhereHas('serialNum', function ($locationQuery) {
-                        $locationQuery->where('description', 'LIKE', '%' . $this->search . '%');
-                    });
+            $requests = $requests->filter(function ($request) {
+                return stripos($request->type, $this->search) !== false
+                    || stripos($request->firename, $this->search) !== false
+                    || stripos($request->request, $this->search) !== false;
             });
         }
     
         return view('livewire.request.user-request', [
             'requests' => $requests,
-            'types' => $types,
-            // Remove 'addrequests' from the returned data as it's not needed
             'user' => $user
         ]);
     }
-    
 
 }

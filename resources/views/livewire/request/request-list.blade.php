@@ -28,11 +28,12 @@
 							<div class="doctor-table-blk">
 									@if ($showRequestList)
 										<h3>Request Table</h3>
-										<div class="doctor-search-blk">
+									
+										<!-- <div class="doctor-search-blk">
 											<div class="add-group">
 												<a wire:click="createRequest" class="btn btn-primary ms-2"><img src="{{ asset('assets/img/icons/plus.svg') }}" alt></a>
 											</div>
-										</div>
+										</div> -->
 									@endif
 								</div>
 								<!-- <div class="col-sm-12 mt-2">
@@ -43,15 +44,34 @@
 							</div> -->
 							</div>
 							<div class="col-auto text-end float-end ms-auto download-grp">
-								<div class="top-nav-search table-search-blk">
-									<form>
-										<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search" name="search">
-										<a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
-									</form>
+								
+									<div class="top-nav-search table-search-blk">
+										<form>
+											<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search" name="search">
+											<a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
+										</form>
+
+									</div>
 								</div>
-							</div>
-						</div>
-					</div>
+								<div class="filter-container">
+												<label for="collegeFilter">College:</label>
+													<select id="collegeFilter" wire:model="selectedCollege">
+														<option value="">All</option>
+														@foreach($colleges as $college)
+															<option value="{{ $college }}">{{ $college }}</option>
+														@endforeach
+													</select>
+
+
+													<label for="statusFilter">Status:</label>
+													<select id="statusFilter" wire:model="selectedStatus">
+														<option value="">All</option>
+														@foreach($statuses as $status)
+															<option value="{{ $status }}">{{ $status }}</option>
+														@endforeach
+													</select>
+													
+												</div>
 					
 					{{--Request list here--}}
 					@if ($showRequestList)
@@ -62,15 +82,16 @@
 									
 									<th style="width: 5%">Requester</th>
 									<th style="width: 5%">Id Number</th>
+									<th style="width: 5%">College</th>
 									<th style="width: 5%">Role</th>
 									
 									
 									<th style="width: 5%">Request</th>
 									<th style="width: 5%">Type</th>
-									<th style="width: 5%">Serial Number</th>
 									<th style="width: 5%">Building</th>
 									<th style="width: 5%">Floor</th>
 									<th style="width: 5%">Room</th>
+									<th style="width: 5%">Created At</th>
 									<th style="width: 5%">Status</th>
 									<th style="width: 5%; text-align: center;">Action</th>
 									
@@ -82,16 +103,14 @@
 								<td>{{ $request->user->first_name . ' ' . $request->user->last_name }}</td>
 
 								<td>{{ $request->user->idnum }}</td>
+								<td>{{ $request->user->college }}</td>
 								<td>{{ $request->user->role }}</td>
-							
-        						
-
 								<td>{{  $request->AddRequest->description  }}</td>
-								<td>{{  $request->fireex->description  }}</td>
-                                <td>{{  $request->serial_number  ?? 'No Serial provided'}}</td>
+								<td>{{  $request->type  }}</td>
 								<td>{{  $request->building ?? 'No Building provided'}}</td>
 								<td>{{  $request->floor  ?? 'No Floor provided' }}</td>
 								<td>{{  $request->room  ?? 'No Building provided' }}</td>
+								<td>{{ 	$request->created_at->format('Y-m-d H:i:s') }}</td> <!-- New Date Column -->
 								<td>{{  $request->status  }}</td>
                                 
                                 
@@ -102,9 +121,7 @@
 										<a class="btn btn-success btn-sm mx-1" wire:click="approveRequest({{ $request->id }})" title="Approve">
 											<i class="fas fa-check"></i> <!-- Assuming you're using Font Awesome -->
 										</a>
-										<a class="btn btn-danger btn-sm mx-1" wire:click="deleteRequest({{ $request->id }})" title="Delete">
-											<i class="fa fa-trash"></i>
-										</a>
+										
 									</div>
 								</td>
 
@@ -199,3 +216,6 @@
 		}
 	}
 </style>
+
+
+	

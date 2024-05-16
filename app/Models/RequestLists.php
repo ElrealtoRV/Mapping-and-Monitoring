@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class RequestLists extends Model
 {
@@ -12,13 +13,10 @@ class RequestLists extends Model
     protected $table = 'request_lists';
     
     protected $fillable = [
-        'user_id','type', 'firename', 'serial_number', 'room', 'building', 'floor', 'status', 'request',
+        'type', 'firename', 'serial_number', 'room', 'building', 'floor', 'status', 'request',
     ];
 
-    public function fireex()
-    {
-        return $this->belongsTo(TypeList::class, 'type', 'id');
-    }
+
     public function fireLocation()
     {
         return $this->belongsTo(FireList::class, 'building', 'floor', 'room');
@@ -27,11 +25,7 @@ class RequestLists extends Model
     {
         return $this->belongsTo(OfficeLists::class);
     }
-    public function dept()
-    {
-        return $this->belongsTo(DepartmentLists::class);
-    }
-    
+
     public function addRequest()
     {
         return $this->belongsTo(Request::class, 'request', 'id');
@@ -54,5 +48,19 @@ class RequestLists extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public static function boot()
+    {
+        parent::boot();
 
+        // Automatically set the user_id when creating a new request
+        static::creating(function ($requestList) {
+            if (!isset($requestList->user_id)) {
+                $requestList->user_id = Auth::id();
+            }
+        });
+    }
+    public function approves()
+    {
+        return $this->hasMany(ApproveList::class, 'request_id');
+    }
 }

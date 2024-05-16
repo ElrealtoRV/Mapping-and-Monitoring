@@ -6,10 +6,12 @@ use Livewire\Component;
 use App\Models\FireList;
 use App\Models\TypeList;
 use App\Models\LocationList;
+use Carbon\Carbon;
 
 class GroundFloor extends Component
 {
     public $selectedFloor = 'ground-floor';
+    public $statuses = ['Active', 'Expired'];
     public $selectedRoom = '';
     public $fireCasDean = []; // Initialize as an empty array
     public $fireCas106 = []; // Initialize as an empty array
@@ -62,6 +64,10 @@ class GroundFloor extends Component
 
     public function render()
     {
+        $query = FireList::query();
+        $fire = $query->get();
+        FireList::where('expiration_date', '<', Carbon::now())
+        ->update(['status' => 'Expired']);
         return view('livewire.map.cas.ground-floor', [
             'locations' => $this->locations,
             'fireCasDean' => $this->fireCasDean,
