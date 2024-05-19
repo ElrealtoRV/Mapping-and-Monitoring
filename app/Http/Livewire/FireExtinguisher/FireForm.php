@@ -51,8 +51,12 @@ class FireForm extends Component
     public function fireId($fireId)
     {
         $this->resetInputFields();
+    
+        // Find the FireList model instance by ID
+        $fire = FireList::findOrFail($fireId);
+    
+        // Assign properties from the retrieved FireList model instance
         $this->fireId = $fireId;
-        $fire = FireList::find($fireId);
         $this->type = $fire->type;
         $this->firename = $fire->firename;
         $this->serial_number = $fire->serial_number;
@@ -64,54 +68,56 @@ class FireForm extends Component
         $this->description = $fire->description;
         $this->finding = $fire->finding;
         $this->status = $fire->status;
-
+    
+        // Populate the selectedFire array with the names of all fires
         $this->selectedFire = $fire->getFireNames()->toArray();
         $this->viewMode = false;
     }
+    
 
     public function store()
-    {
-        if (is_object($this->selectedFire)) {
-            $this->selectedFire = json_decode(json_encode($this->selectedFire), true);
-        }
+{
+    if (is_object($this->selectedFire)) {
+        $this->selectedFire = json_decode(json_encode($this->selectedFire), true);
+    }
 
-        if (empty($this->fireCheck)) {
-            $this->fireCheck = array_map('strval', $this->selectedFire);
-        }
+    if (empty($this->fireCheck)) {
+        $this->fireCheck = array_map('strval', $this->selectedFire);
+    }
 
-        if ($this->fireId) {
-            $data = $this->validate([
-                'type' => 'required',
-                'firename' => 'required',
-                'serial_number' => 'required',
-                'building' => 'required',
-                'floor' => 'nullable',
-                'room' => 'required',
-                'installation_date' => 'required',
-                'expiration_date' => 'required',
-                'description' => 'nullable',
-                'finding'         => 'nullable',
-                'status' => 'nullable',
+    $data = $this->validate([
+        'type' => 'required',
+        'firename' => 'required',
+        'serial_number' => 'required',
+        'building' => 'required',
+        'floor' => 'nullable',
+        'room' => 'required',
+        'installation_date' => 'required',
+        'expiration_date' => 'required',
+        'description' => 'nullable',
+        'finding' => 'nullable',
+        'status' => 'nullable',
+    ]);
+
+    if ($this->fireId) {
+        $fire = FireList::find($this->fireId);
+        if ($fire) {
+            // Save old data to history table
+            FireListHistory::create([
+                'fire_list_id' => $fire->id,
+                'type' => $fire->type,
+                'firename' => $fire->firename,
+                'serial_number' => $fire->serial_number,
+                'building' => $fire->building,
+                'floor' => $fire->floor,
+                'room' => $fire->room,
+                'installation_date' => $fire->installation_date,
+                'expiration_date' => $fire->expiration_date,
+                'description' => $fire->description,
+                'finding' => $fire->finding,
+                'status' => $fire->status,
             ]);
 
-            $fire = FireList::find($this->fireId);
-            if ($fire) {
-                // Save old data to history table
-                FireListHistory::create([
-                    'fire_list_id' => $fire->id,
-                    'type' => $fire->type,
-                    'firename' => $fire->firename,
-                    'serial_number' => $fire->serial_number,
-                    'building' => $fire->building,
-                    'floor' => $fire->floor,
-                    'room' => $fire->room,
-                    'installation_date' => $fire->installation_date,
-                    'expiration_date' => $fire->expiration_date,
-                    'description' => $fire->description,
-                    'finding' => $fire->finding,
-                    'status' => $fire->status,
-                ]);
-    
             $fire->update($data);
             if (!empty($this->selectedFire)) {
                 $fire->syncFire($this->selectedFire);
@@ -119,47 +125,49 @@ class FireForm extends Component
 
             $action = 'edit';
             $message = 'Successfully Updated';
-        } else {
-            $this->validate([
-                'type' => 'required',
-                'firename' => 'required',
-                'serial_number' => 'required|unique:fire_lists|digits:7',
-                'building' => 'required',
-                'floor' => 'nullable',
-                'room' => 'required',
-                'installation_date' => 'required',
-                'expiration_date' => 'required',
-                'description' => 'nullable',
-                'finding'     => 'nullable',
-                'status' => 'nullable',
-            ]);
-
-            $fire = FireList::create([
-                'type' => $this->type,
-                'firename' => $this->firename,
-                'serial_number' => $this->serial_number,
-                'building' => $this->building,
-                'floor' => $this->floor,
-                'room' => $this->room,
-                'installation_date' => $this->installation_date,
-                'expiration_date' => $this->expiration_date,
-                'description' => $this->description,
-                'finding'      => $this->finding,
-                'status' => $this->status,
-            ]);
-
-            $action = 'store';
-            $message = 'Successfully Created';
         }
+    } else {
+        $this->validate([
+            'type' => 'required',
+            'firename' => 'required',
+            'serial_number' => 'required|unique:fire_lists|digits:7',
+            'building' => 'required',
+            'floor' => 'nullable',
+            'room' => 'required',
+            'installation_date' => 'required',
+            'expiration_date' => 'required',
+            'description' => 'nullable',
+            'finding' => 'nullable',
+            'status' => 'nullable',
+        ]);
 
-        $this->emit('flashAction', $action, $message);
-        $this->resetInputFields();
-        $this->emit('closeFireModal');
-        $this->emit('refreshParentFireExtinguisher');
-        $this->emit('refreshTable');
+        $fire = FireList::create([
+            'type' => $this->type,
+            'firename' => $this->firename,
+            'serial_number' => $this->serial_number,
+            'building' => $this->building,
+            'floor' => $this->floor,
+            'room' => $this->room,
+            'installation_date' => $this->installation_date,
+            'expiration_date' => $this->expiration_date,
+            'description' => $this->description,
+            'finding' => $this->finding,
+            'status' => $this->status,
+        ]);
+
+
+
+        $action = 'store';
+        $message = 'Successfully Created';
     }
 
-    }
+    $this->emit('flashAction', $action, $message);
+    $this->resetInputFields();
+    $this->emit('closeFireModal');
+    $this->emit('refreshParentFireExtinguisher');
+    $this->emit('refreshTable');
+}
+
     public function render()
     {
         $fire = FireList::all();

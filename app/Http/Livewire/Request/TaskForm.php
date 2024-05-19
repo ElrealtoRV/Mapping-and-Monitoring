@@ -93,7 +93,6 @@ class TaskForm extends Component
                 'task_name' => $this->task_name,
                 'user_id' => $this->user_id,
                 'due_date' => $this->due_date,
-                'approve_list_id' => $this->approveListId, // Ensure this is set correctly
             ]);
 
             $approveRequest = ApproveList::find($this->approveListId);

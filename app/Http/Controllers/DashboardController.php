@@ -20,26 +20,43 @@ class DashboardController extends Controller
     public $message = '';  //flash
 
 
-    public function expiredNotif(Request $request)
+    public function fireExtinguisherNotif(Request $request)
     {
-        // Fetch count of fire extinguishers with status "expired"
+        // Fetch count of fire extinguishers with status "Expired"
         $expiredCount = FireList::where('status', 'Expired')->count();
+        // Fetch count of fire extinguishers with status "Active"
+        $installedCount = FireList::where('status', 'Active')->count();
+        
+        // Fetch detailed data for expired notifications
+        $expiredNotifications = FireList::where('status', 'Expired')->get(['room']);
+        // Fetch detailed data for installed notifications
+        $installedNotifications = FireList::where('status', 'Active')->get(['room']);
     
-        // You can customize the response format according to your needs
+        // Return counts and detailed data
         return response()->json([
-            'expiredCount' => $expiredCount
+            'expiredCount' => $expiredCount,
+            'expired' => $expiredNotifications,
+            'installedCount' => $installedCount,
+            'installed' => $installedNotifications
         ]);
     }
-    public function installFireNotif(Request $request)
-    {
-        // Fetch count of fire extinguishers with status "Installed"
-        $installCount = FireList::where('status', 'Active')->count();
     
-        // You can customize the response format according to your needs
-        return response()->json([
-            'installCount' => $installCount
-        ]);
-    }
+    
+    // public function installedFireNotif(Request $request)
+    // {
+    //     // Fetch count of fire extinguishers with status "Active"
+    //     $installedCount = FireList::where('status', 'Active')->count();
+    //     // Fetch detailed data for installed notifications
+    //     $installedNotifications = FireList::where('status', 'Active')->get(['room']); // Fetch only the room numbers
+    //     // Return counts and detailed data
+    //     return response()->json([
+    //         'installedCount' => $installedCount,
+    //         'installed' => $installedNotifications
+    //     ]);
+    // }
+    
+    
+    
     
     public function updatingSearch()
     {

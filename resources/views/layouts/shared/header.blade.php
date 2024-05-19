@@ -22,45 +22,65 @@
     }
 
     .notification {
-        position: relative;
-        display: inline-block;
-    }
+  position: relative;
+}
 
-    .notification .badge {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        padding: 5px 10px;
-        border-radius: 50%;
-        background-color: red;
-        color: white;
-    }
+.notification-details {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  width: 300px;
+  max-width: 90vw; /* Add this line to make it responsive */
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    .notification .dropdown-menu {
-        display: none;
-        position: absolute;
-        top: 30px;
-        right: 0;
-        background-color: white;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        width: 300px;
-        max-height: 400px;
-        overflow-y: auto;
-    }
+.notification:hover .notification-details {
+  display: block;
+  animation: fadeIn 0.3s;
+}
 
-    .notification.show .dropdown-menu {
-        display: block;
-    }
+.expired-notification-details,
+.installed-notification-details {
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+#expiredDetails{
+    z-index: 20;
+    margin-top:100px;
+}
 
-    .notification .dropdown-menu li {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-    }
+.notification-counter {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 
-    .notification .dropdown-menu li:last-child {
-        border-bottom: none;
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Add media query for mobile devices */
+@media (max-width: 280px) {
+  .notification-details {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px 10px 0 0;
+  }
+}
 </style>
 
 <div class="header">
@@ -81,7 +101,7 @@
 
     <div class="top-nav-search mob-view">
         <form>
-            <input type="text" class="form-control" placeholder="Search here">
+            <input type="text"id="searchForm" class="form-control" placeholder="Search here">
             <a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
         </form>
     </div>
@@ -90,10 +110,32 @@
     </a>
 
     <ul class="nav user-menu float-end">
-        <a href="#" class="notification">
-            <i class='bx bxs-bell' id="expiredCount"></i>
-            <div></div>
-        </a>
+    <a href="#" class="notification">
+    <i class="bx bxs-bell" id="totalNotificationCount"></i>
+    <div class="notification-count" id="totalNotificationCount"></div>
+
+    <div class="notification-details" id="expiredDetails">
+        <div class="expired-notification-details">
+            <div class="notification-counter" id="expiredCount"></div>
+            <ul id="expiredNotifications">
+                <!-- Notification items will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="notification-details" id="installedDetails">
+        <div class="expired-notification-details">
+            <div class="notification-counter" id="installedCount"></div>
+            <ul id="installedNotifications">
+            </ul>
+        </div>
+    </div>
+</a>
+
+
+
+
+
         <li class="nav-item dropdown has-arrow user-profile-list" id="prolist">
             <a class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
                 <div class="user-names">
@@ -157,15 +199,4 @@
             });
     });
 
-    $('#notificationToggle').on('click', function(e) {
-        e.preventDefault();
-        $('.notification').toggleClass('show');
-    });
-
-    // Hide the dropdown when clicking outside
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('.notification').length) {
-            $('.notification').removeClass('show');
-        }
-    });
 </script>

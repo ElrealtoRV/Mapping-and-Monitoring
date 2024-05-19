@@ -365,16 +365,15 @@
                             <div class="form-group local-forms">
                                 <label>College</label>
                                 <select class="form-control select" wire:model="college">
-                                    <option value="" selected>Select a College</option>
+                                    <option value="" selected>Select a College / Building</option>
                                     <option value="CAS">College of Arts and Sciences (CAS)</option>
                                     <option value="CBA">College of Business Administration (CBA)</option>
                                     <option value="CTEd">College of Teacher Education (CTEd)</option>
-                                    <option value="CEA">College of Engineering and Architecture (CEA)</option>
                                     <option value="CNPAHS">College of Nursing, Pharmacy, and Allied Health Sciences (CNPAHS)</option>
                                     <option value="CIT">College of Industrial Technology (CIT)</option>
-                                    <option value="CCJE">College of Criminal Justice Education (CCJE)</option>
-                                    <option value="CAFF">College of Agriculture, Forestry and Fisheries (CAFF)</option>
                                     <option value="COL">College of Law (COL)</option>
+                                    <option value="ADMIN BUILDING">Admin Building</option>
+                                    <option value="GRAGUATE SCHOOL">GRADUATE SCHOOL</option>
                                 </select>
                             </div>
                         </div>

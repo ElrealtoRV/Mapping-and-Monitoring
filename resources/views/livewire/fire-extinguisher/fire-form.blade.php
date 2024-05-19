@@ -89,11 +89,11 @@
                                         <label>Room / Office</label>
                                         <select class="form-control select" wire:model="room" @if($viewMode) disabled @endif>
                                             <option value="" selected>Select a Room</option>
-                                            <option value="CasDean" selected>CAS DEAN</option>
+                                            <option value="CAS DEAN OFFICE" selected>CAS DEAN OFFICE</option>
                                             <option value="CAS106" selected>CAS 106</option>
                                             <option value="CAS105" selected>CAS 105</option>
                                             <option value="CAS104" selected>CAS 104</option>
-                                            <option value="MCL" selected>MASS COMM LABORATORY</option>
+                                            <option value="MASS COMM LABORATORY" selected>MASS COMM LABORATORY</option>
                                             <option value="CAS103" selected>CAS 103</option>
                                             <option value="CAS102" selected>CAS 102</option>
                                             <option value="CAS101" selected>CAS 101</option>

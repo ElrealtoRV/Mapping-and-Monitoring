@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('request_id')->constrained('request_lists')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->boolean('task_posted')->default(false);
             $table->timestamps();
         });
     }

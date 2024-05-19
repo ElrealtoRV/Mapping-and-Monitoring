@@ -147,9 +147,8 @@
 <img src="{{ asset('assets/img/GroundFloor.png') }}" alt="GroundFloor" width="1000px" height="300px">
 <!-- Display the icon outside of the loop -->
 <div id="casDeanIcon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
-    <span class="CasDean"><i class="fas fa-plus plus-icon" wire:click="createFire('CASDEAN')"></i></span>
-    
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="CasDean"><i class="fas fa-plus plus-icon" wire:click="createFire('CASDEAN')"></i></span>   
 @endif
     <div id="tooltip">
         <span id="tooltipText"> 
@@ -166,6 +165,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -190,6 +190,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -199,76 +200,77 @@
             </div>
             
         </span>
-        <span class="CasDean"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CasDean"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CasDean"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
-
-
-
 <div id="cas106Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS106"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS106')"></i></span>
    
-@endif
-    <div id="tooltip">
-        <span id="tooltipText"> 
-            <h1>INFO</h1>
-            <div class="popup">
-                <div class="half first-half">
-                    <table>
-                        <tr>
-                            <th>Type</th>
-                            <th>Firename</th>
-                            <th>Serial Number</th>
-                            <th>Building</th>
-                            <th>Floor</th>
-                            <th>Room</th>
-                            <th>Installation date</th>
-                            <th>Expiration date</th>
-                            <th>Status</th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="half second-half">
-                    <table>
-                    @if($fireCas106->isEmpty())
-                        <tr>
-                            <td colspan="9">No data available</td>
-                        </tr>
-                        @else
-                        <!-- Loop through the data if available -->
-                        @foreach($fireCas106 as $fires)
-                        <tr>
-                            <td>{{ $fires->type }}</td>
-                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
-                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
-                            <td>{{ $fires->building }}</td>
-                            <td>{{ $fires->floor }}</td>
-                            <td>{{ $fires->room }}</td>
-                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
-                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
-                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
-                        </tr>
-                        @endforeach
-                        @endif
-                    </table>
-                </div>
+        @endif
+            <div id="tooltip">
+                <span id="tooltipText"> 
+                    <h1>INFO</h1>
+                    <div class="popup">
+                        <div class="half first-half">
+                            <table>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Firename</th>
+                                    <th>Serial Number</th>
+                                    <th>Building</th>
+                                    <th>Floor</th>
+                                    <th>Room</th>
+                                    <th>Installation date</th>
+                                    <th>Expiration date</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="half second-half">
+                            <table>
+                            @if($fireCas106->isEmpty())
+                                <tr>
+                                    <td colspan="9">No data available</td>
+                                </tr>
+                                @else
+                                <!-- Loop through the data if available -->
+                                @foreach($fireCas106 as $fires)
+                                <tr>
+                                    <td>{{ $fires->type }}</td>
+                                    <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                                    <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                                    <td>{{ $fires->building }}</td>
+                                    <td>{{ $fires->floor }}</td>
+                                    <td>{{ $fires->room }}</td>
+                                    <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                                    <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                                    <td>{{$fires->description}}-</td>
+                                    <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                                </tr>
+                                @endforeach
+                                @endif
+                            </table>
+                        </div>
+                    </div>
+                </span>
+                <span class="CAS106"><i class="fas fa-eye eye-icon"></i></span>
             </div>
-        </span>
-        <span class="CAS106"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
-        <span class="CAS106"><i class="fas fa-eye eye-icon"></i></span>
-        
-    </div>
-</div>
+                @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+                <span class="CAS106"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+                @endif
 
+        </div>
 
-
-<div id="cas105Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
-    <span class="CAS105"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS105')"></i></span>
-    
-@endif
+        <div id="cas105Icon" class="classroom">
+            @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+                <span class="CAS105"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS105')"></i></span>
+                
+            @endif
     <div id="tooltip">
         <span id="tooltipText"> 
             <h1>INFO</h1>
@@ -316,13 +318,17 @@
                 </div>
             </div>
         </span>
-        <span class="CAS105"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        
         <span class="CAS105"><i class="fas fa-eye eye-icon"></i></span>
-    </div>
+        </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS105"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
+    
 </div>
 
 <div id="cas104Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS104"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS104')"></i></span>
     
 @endif
@@ -373,14 +379,15 @@
                 </div>
             </div>
         </span>
+        <span class="CAS104"><i class="fas fa-eye eye-icon"></i></span>  
+    </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS104"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
-        <span class="CAS104"><i class="fas fa-eye eye-icon"></i></span>
-    
-</div>
+        @endif
 </div>
 
 <div id="mclIcon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="MCL"><i class="fas fa-plus plus-icon" wire:click="createFire('MCL')"></i></span>
    
     
@@ -433,14 +440,15 @@
                 </div>
             </div>
         </span>
-        <span class="MCL"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="MCL"><i class="fas fa-eye eye-icon"></i></span>
-        
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="MCL"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
 
 <div id="cas103Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS103"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS103')"></i></span>
 @endif
     <div id="tooltip">
@@ -490,12 +498,14 @@
                 </div>
             </div>
         </span>
-        <span class="CAS103"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS103"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS103"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
 <div id="cas102Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS102"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS102')"></i></span>
 @endif
     <div id="tooltip">
@@ -513,6 +523,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -535,6 +546,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -543,13 +555,15 @@
                 </div>
             </div>
         </span>
-        <span class="CAS102"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS102"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS102"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
 
 <div id="cas101Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS101"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS101')"></i></span>
 @endif
     <div id="tooltip">
@@ -567,6 +581,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -589,6 +604,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -597,13 +613,15 @@
                 </div>
             </div>
         </span>
-        <span class="CAS101"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS101"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS101"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
 
 <div id="cas107Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS107"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS107')"></i></span>
 @endif
     <div id="tooltip">
@@ -622,6 +640,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -644,6 +663,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -652,12 +672,14 @@
                 </div>
             </div>
         </span>
-        <span class="CAS107"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS107"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS107"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
 <div id="cas108Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS108"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS108')"></i></span>
 @endif
     <div id="tooltip">
@@ -675,6 +697,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -697,6 +720,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -705,12 +729,14 @@
                 </div>
             </div>
         </span>
-        <span class="CAS108"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS108"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS108"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
 <div id="cas109Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS109"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS109')"></i></span>
 @endif
     <div id="tooltip">
@@ -728,6 +754,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -750,6 +777,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -758,12 +786,14 @@
                 </div>
             </div>
         </span>
-        <span class="CAS109"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS109"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS109"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
 <div id="cas110Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS110"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS110')"></i></span>
 @endif
     <div id="tooltip">
@@ -781,6 +811,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -803,6 +834,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -811,12 +843,15 @@
                 </div>
             </div>
         </span>
-        <span class="CAS110"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS110"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS110"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
+
 <div id="cas111Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS111"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS111')"></i></span>
 @endif
     <div id="tooltip">
@@ -834,6 +869,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -856,6 +892,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -864,12 +901,15 @@
                 </div>
             </div>
         </span>
-        <span class="CAS111"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS111"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS111"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
+
 <div id="cas112Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
     <span class="CAS112"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS112')"></i></span>
 @endif
     <div id="tooltip">
@@ -887,6 +927,7 @@
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -909,6 +950,7 @@
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -917,9 +959,11 @@
                 </div>
             </div>
         </span>
-        <span class="CAS112"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
-        <span class="CAS112"><i class="fas fa-eye eye-icon"></i></span>
+                <span class="CAS112"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+        @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="CAS112"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+        @endif
 </div>
 <script>
     function editpopup() {

@@ -1,4 +1,4 @@
-
+<div>
 <style>	
 .table tbody tr:hover {
             background-color: #e9ecef;
@@ -108,4 +108,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>

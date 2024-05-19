@@ -1,3 +1,4 @@
+<div>
 <style>	
 .table tbody tr:hover {
             background-color: #e9ecef;
@@ -126,12 +127,6 @@
 							filterForm.submit();
 						});
 				});
-
-				// Listen for the 'viewTask' event and show the view modal
-
-
-
-
 				</script>
 
 		{{-- Modal --}}
@@ -143,3 +138,4 @@
 		@section('custom_script')
 		@include('layouts.scripts.user-scripts')
 		@endsection
+</div>

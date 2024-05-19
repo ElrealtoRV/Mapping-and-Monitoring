@@ -181,7 +181,7 @@
   opacity: 0;
   transition: opacity 0.5s ease;
   width: auto;
-  height: 400px;
+  height: 420px;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   padding-top: 10px;

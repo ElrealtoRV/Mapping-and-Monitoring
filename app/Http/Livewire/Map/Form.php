@@ -7,7 +7,7 @@ use App\Models\FireListHistory;
 
 class Form extends Component
 {
-    public $fireId, $type, $firename, $serial_number, $building, $floor, $room, $installation_date, $expiration_date, $description, $status;
+    public $fireId, $type, $firename, $serial_number, $building, $floor, $room, $installation_date, $expiration_date, $description,$finding, $status;
     public $action = '';  //flash
     public $message = '';  //flash
     public $fireCheck = [];
@@ -68,12 +68,12 @@ class Form extends Component
         $this->installation_date = $fire->installation_date;
         $this->expiration_date = $fire->expiration_date;
         $this->description = $fire->description;
+        $this->finding = $fire->finding;
         $this->status = $fire->status;
 
         $this->selectedFire = $fire->getFireNames()->toArray();
         $this->viewMode = false;
     }
-
     
 
     public function store()
@@ -81,11 +81,11 @@ class Form extends Component
         if (is_object($this->selectedFire)) {
             $this->selectedFire = json_decode(json_encode($this->selectedFire), true);
         }
-
+    
         if (empty($this->fireCheck)) {
             $this->fireCheck = array_map('strval', $this->selectedFire);
         }
-
+    
         $data = $this->validate([
             'type' => 'required',
             'firename' => 'required',
@@ -96,9 +96,10 @@ class Form extends Component
             'installation_date' => 'required',
             'expiration_date' => 'required',
             'description' => 'nullable',
-            
+            'finding' => 'nullable',
+            'status' => 'nullable',
         ]);
-
+    
         if ($this->fireId) {
             $fire = FireList::find($this->fireId);
             if ($fire) {
@@ -118,27 +119,56 @@ class Form extends Component
                     'status' => $fire->status,
                 ]);
     
-            $fire->update($data);
-            if (!empty($this->selectedFire)) {
-                $fire->syncFire($this->selectedFire);
+                $fire->update($data);
+                if (!empty($this->selectedFire)) {
+                    $fire->syncFire($this->selectedFire);
+                }
+    
+                $action = 'edit';
+                $message = 'Successfully Updated';
             }
-
-            $this->action = 'edit';
-            $this->message = 'Successfully Updated';
         } else {
-            FireList::create($data);
-
-            $this->action = 'store';
-            $this->message = 'Successfully Created';
+            $this->validate([
+                'type' => 'required',
+                'firename' => 'required',
+                'serial_number' => 'required|unique:fire_lists|digits:7',
+                'building' => 'required',
+                'floor' => 'nullable',
+                'room' => 'required',
+                'installation_date' => 'required',
+                'expiration_date' => 'required',
+                'description' => 'nullable',
+                'finding' => 'nullable',
+                'status' => 'nullable',
+            ]);
+    
+            $fire = FireList::create([
+                'type' => $this->type,
+                'firename' => $this->firename,
+                'serial_number' => $this->serial_number,
+                'building' => $this->building,
+                'floor' => $this->floor,
+                'room' => $this->room,
+                'installation_date' => $this->installation_date,
+                'expiration_date' => $this->expiration_date,
+                'description' => $this->description,
+                'finding' => $this->finding,
+                'status' => $this->status,
+            ]);
+    
+    
+    
+            $action = 'store';
+            $message = 'Successfully Created';
         }
-
-        $this->emit('flashAction', $this->action, $this->message);
+    
+        $this->emit('flashAction', $action, $message);
         $this->resetInputFields();
-        $this->emit('closeMapFormModal');
+        $this->emit('closeFireModal');
         $this->emit('refreshParentCasFloor');
         $this->emit('refreshTable');
     }
-}
+    
     public function render()
     {
         return view('livewire.map.form', [

@@ -66,7 +66,7 @@ Route::group(['middleware' => ['role:admin']], function () {
    
 });
 Route::group(['middleware' => ['role:admin|Head|Maintenance Personnel|Secretary|Dean']], function () {
-    Route::get('/expiredNotif', [DashboardController::class, 'expiredNotif']);
+    Route::get('/fireExtinguisherNotif', [DashboardController::class, 'fireExtinguisherNotif']);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('setting', setting::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

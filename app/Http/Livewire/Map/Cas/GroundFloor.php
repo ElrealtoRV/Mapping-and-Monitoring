@@ -37,11 +37,11 @@ class GroundFloor extends Component
 
     public function mount()
     {
-        $this->fireCasDean = FireList::where('room', 'CASDEAN')->get();
+        $this->fireCasDean = FireList::where('room', 'CAS DEAN OFFICE')->get();
         $this->fireCas106 = FireList::where('room', 'CAS106')->get();
         $this->fireCas105 = FireList::where('room', 'CAS105')->get();
         $this->fireCas104 = FireList::where('room', 'CAS104')->get();
-        $this->fireMassComm = FireList::where('room', 'MCL')->get();
+        $this->fireMassComm = FireList::where('room', 'MASS COMM LABORATORY')->get();
         $this->fireCas103 = FireList::where('room', 'CAS103')->get();
         $this->fireCas102 = FireList::where('room', 'CAS102')->get();
         $this->fireCas101 = FireList::where('room', 'CAS101')->get();

@@ -1,3 +1,4 @@
+<div>
 <style>	
 .table tbody tr:hover {
             background-color: #e9ecef;
@@ -120,3 +121,4 @@
 @section('custom_script')
 	@include('layouts.scripts.task-script')
 @endsection
+</div>

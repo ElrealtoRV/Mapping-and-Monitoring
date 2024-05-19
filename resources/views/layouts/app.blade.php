@@ -49,7 +49,7 @@
     @vite([])
 </head>
 
-<body>
+<>
     <div class="main-wrapper">
         @include('layouts.shared.header')
 
@@ -70,7 +70,7 @@
 
     <script src="{{ asset('assets/js/jquery-3.6.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/css/bootstrap.min.js') }}"></script>
+    <!-- <script src="{{ asset('assets/css/bootstrap.min.js') }}"></script> -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets/js/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
@@ -80,43 +80,78 @@
     <script src="{{ asset('assets/plugins/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.waypoints.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
-    <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
+    <!-- <script src="{{ asset('vendor/livewire/livewire.js') }}"></script> -->
     <script src="{{ asset('assets/plugins/apexchart/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/apexchart/chart-data.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script>
-        $(document).ready(function() {
-    // Function to fetch notifications
-    function fetchExpiredNotification() {
+$(document).ready(function() {
+    function fetchNotifications() {
         $.ajax({
-            url: '/expiredNotif',
+            url: '/fireExtinguisherNotif',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
-                // Update UI with notification count and requests
-                $('#expiredCount').text(response.expiredCount);
-                
-                // You can handle requests array as you need, for example, display them in a list
-                $('#expired').empty();
-                $.each(response.expired, function(index, expired) {
-                    $('#expired').append('<li>' + expired.serial_number + '</li>');
-                });
+                console.log('Notification response:', response); // Log the response to the console
+
+                // Handle expired notifications
+                if (response.expiredCount > 0) {
+                    $('#expiredCount').text(response.expiredCount);
+                    $('#expiredNotifications').empty();
+                    $.each(response.expired, function(index, expired) {
+                        console.log('Expired item:', expired); // Log each expired item
+                        $('#expiredNotifications').append('<li>Expired Fire Extinguisher in Room ' + expired.room + '</li>');
+                    });
+                    animateNotification('#expiredDetails');
+                } else {
+                    $('#expiredCount').text('0');
+                    $('#expiredNotifications').empty().append('<li>No expired notifications</li>');
+                    console.warn('No expired notifications to display'); // Log a warning if no expired items
+                }
+
+                // Handle installed notifications
+                if (response.installedCount > 0) {
+                    $('#installedCount').text(response.installedCount);
+                    $('#installedNotifications').empty();
+                    $.each(response.installed, function(index, installed) {
+                        console.log('Installed item:', installed); // Log each installed item
+                        $('#installedNotifications').append('<li>Installed Fire Extinguisher in Room ' + installed.room + '</li>');
+                    });
+                    animateNotification('#installedDetails');
+                } else {
+                    $('#installedCount').text('0');
+                    $('#installedNotifications').empty().append('<li>No installed notifications</li>');
+                    console.warn('No installed notifications to display'); // Log a warning if no installed items
+                }
             },
             error: function(xhr, status, error) {
-                console.error(xhr.responseText);
+                console.error('Error fetching notifications:', xhr.responseText); // Log the error
                 // Handle error
             }
         });
     }
 
-    // Fetch notifications initially when the page loads
-    fetchExpiredNotification();
+    function animateNotification(notificationId) {
+        console.log('Animating notification:', notificationId); // Log the animation step
+        $(notificationId).addClass('animated');
+        setTimeout(function() {
+            $(notificationId).removeClass('animated');
+        }, 1000);
+    }
 
-    // Set interval to fetch notifications periodically (e.g., every 5 seconds)
-    setInterval(fetchExpiredNotification, 10000); // Adjust the interval as needed
+    fetchNotifications();
+
+    setInterval(function() {
+        fetchNotifications();
+    }, 5000);
 });
-    </script>
+
+
+
+
+
+</script>
     @livewireScripts
     @yield('custom_script')
    

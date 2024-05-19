@@ -75,10 +75,15 @@
 								<td>{{ $approveRequest->user->first_name . ' ' . $approveRequest->user->last_name }}</td> <!-- Approver's name -->
 								<td class="text-center">
 									<div class="btn-group" role="group">
-										<a class="btn btn-success btn-sm mx-1"  wire:click="$emit('openTaskModal', '{{ $approveRequest->id }}')">
-											<i class="fas fa-edit">Post</i> <!-- Assuming you're using Font Awesome -->
-										</a>
-										
+										@if($approveRequest->task_posted)
+											<button class="btn btn-secondary btn-sm mx-1" disabled>
+												<i class="fas fa-check">Posted</i>
+											</button>
+										@else
+											<a class="btn btn-success btn-sm mx-1" wire:click="$emit('openTaskModal', '{{ $approveRequest->id }}')">
+												<i class="fas fa-edit">Post</i>
+											</a>
+										@endif
 									</div>
 								</td>
 								</tr>
