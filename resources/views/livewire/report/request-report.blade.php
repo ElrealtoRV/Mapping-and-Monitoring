@@ -93,8 +93,9 @@ body {
         <div id="printrequest">
             <table class="table">
                 <thead>
-                    <tr style="background: linear-gradient(to right, #3498db, #2e37a4); color: white;">
-                    <th style="width: 5%">Requester</th>
+                  <tr style="background: linear-gradient(to right, #3498db, #2e37a4); color: white;">
+                  <th style="width: 5%">Transantion Id</th>
+                  <th style="width: 5%">Requester</th>
 									<th style="width: 5%">Id Number</th>
 									<th style="width: 5%">College</th>
 									<th style="width: 5%">Role</th>
@@ -103,9 +104,9 @@ body {
 									<th style="width: 5%">Building</th>
 									<th style="width: 5%">Floor</th>
 									<th style="width: 5%">Room</th>
-                                    <th style="width: 5%">Approve By</th>
+                  <th style="width: 5%">Approve By</th>
 									<th style="width: 5%">Requested At</th>
-                                    <th style="width: 5%">Approve At</th>
+                   <th style="width: 5%">Approve At</th>
 									<th style="width: 5%">Status</th>
 								
                     </tr>
@@ -113,12 +114,12 @@ body {
                 <tbody>
                 @foreach ($addRequests as $request)
 								<tr>
+                <td>{{ $request->transaction_id }}</td>
 								<td>{{ $request->user->first_name . ' ' . $request->user->last_name }}</td>
-
 								<td>{{ $request->user->idnum }}</td>
 								<td>{{ $request->user->college }}</td>
 								<td>{{ $request->user->role }}</td>
-								<td>{{  $request->AddRequest->description  }}</td>
+								<td>{{  $request->request }}</td>
 								<td>{{  $request->type  }}</td>
 								<td>{{  $request->building ?? 'No Building provided'}}</td>
 								<td>{{  $request->floor  ?? 'No Floor provided' }}</td>

@@ -48,6 +48,10 @@ class UserSeeder extends Seeder
             'password' => bcrypt('staff123')
         ])->assignRole('Head');
 
+ 
+        
+
+
         // $studentOffice = OfficeLists::create(['description' => 'IRS']);
         // RegularList::create([
         //     'first_name' => 'Charry',

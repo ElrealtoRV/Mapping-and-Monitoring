@@ -28,9 +28,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dashboard.css') }}">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        integrity="sha512-w2uOvh/Uz/NMI6I4RaNpJ6bC+XgA24SZlT1r1cp5sW9Bp8vXtBE00X61a9bW29/+xzhmtBlNo3XzrWvN5uJXkg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous">
 
     <style>
         .bt-sty:hover {
@@ -87,6 +85,38 @@
     <script src="{{ asset('assets/plugins/apexchart/chart-data.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+    // Function to fetch notifications
+    function fetchExpiredNotification() {
+        $.ajax({
+            url: '/expiredNotif',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update UI with notification count and requests
+                $('#expiredCount').text(response.expiredCount);
+                
+                // You can handle requests array as you need, for example, display them in a list
+                $('#expired').empty();
+                $.each(response.expired, function(index, expired) {
+                    $('#expired').append('<li>' + expired.serial_number + '</li>');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                // Handle error
+            }
+        });
+    }
+
+    // Fetch notifications initially when the page loads
+    fetchExpiredNotification();
+
+    // Set interval to fetch notifications periodically (e.g., every 5 seconds)
+    setInterval(fetchExpiredNotification, 10000); // Adjust the interval as needed
+});
+    </script>
     @livewireScripts
     @yield('custom_script')
    

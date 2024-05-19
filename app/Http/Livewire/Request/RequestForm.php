@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Request;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RequestLists;
-
+use Illuminate\Support\Str;
 use App\Models\LocationList;
 use App\Models\Request;
 use App\Models\FindingList;
@@ -99,6 +99,7 @@ class RequestForm extends Component
                 'building'      => $this->building,
                 'floor'      => $this->floor,
                 'request'      => $this->request,
+                'transaction_id' => Str::uuid(),
                 
             ]);
 
@@ -136,7 +137,7 @@ class RequestForm extends Component
         $this->emit('flashAction', $action, $message);
         $this->resetInputFields();
         $this->emit('closeRequestModal');
-        $this->emit('refreshParentRequest   ');
+        $this->emit('refreshParentRequestList   ');
         $this->emit('refreshTable');
     }
 
@@ -150,7 +151,7 @@ class RequestForm extends Component
         $this->emit('flashAction', $action, $message);
         $this->resetInputFields();
         $this->emit('closeRequestModal');
-        $this->emit('refreshParentRequest   ');
+        $this->emit('refreshParentRequestList   ');
         $this->emit('refreshTable');
     }
     public function render()

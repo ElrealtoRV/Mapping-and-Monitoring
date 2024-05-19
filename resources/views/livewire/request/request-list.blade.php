@@ -79,13 +79,11 @@
 						<table class="table border-0 custom-table comman-table datatable mb-0">
 							<thead>
 								<tr>
-									
+								<th style="width: 5%">Transaction Id</th>
 									<th style="width: 5%">Requester</th>
 									<th style="width: 5%">Id Number</th>
 									<th style="width: 5%">College</th>
 									<th style="width: 5%">Role</th>
-									
-									
 									<th style="width: 5%">Request</th>
 									<th style="width: 5%">Type</th>
 									<th style="width: 5%">Building</th>
@@ -100,12 +98,13 @@
 							<tbody>
 								@foreach ($addrequests as $request)
 								<tr>
+								<td>{{ $request->transaction_id }}</td>
 								<td>{{ $request->user->first_name . ' ' . $request->user->last_name }}</td>
 
 								<td>{{ $request->user->idnum }}</td>
 								<td>{{ $request->user->college }}</td>
 								<td>{{ $request->user->role }}</td>
-								<td>{{  $request->AddRequest->description  }}</td>
+								<td>{{  $request->request  }}</td>
 								<td>{{  $request->type  }}</td>
 								<td>{{  $request->building ?? 'No Building provided'}}</td>
 								<td>{{  $request->floor  ?? 'No Floor provided' }}</td>
@@ -215,6 +214,11 @@
 			padding: 4px 8px;
 		}
 	}
+	.table tbody tr:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 </style>
 
 

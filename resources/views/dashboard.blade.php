@@ -1,4 +1,4 @@
-	@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') ||auth()->user()->hasRole('Maintenance Personnel')|| auth()->user()->hasRole('Dean'))
+	@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') ||auth()->user()->hasRole('Maintenance Personnel')||  auth()->user()->hasRole('Secretary')||auth()->user()->hasRole('Dean'))
 
 
 		<x-app-layout>
@@ -48,11 +48,11 @@
 				</div>
 			</div>
 
-			@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') || auth()->user()->hasRole('Maintenance Personnel'))
+			@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') || auth()->user()->hasRole('Maintenance Personnel')|| auth()->user()->hasRole('Secretary'))
 			<div class="head-title">
 				<div class="left">
 					<ul class="box-info">
-					@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') ||auth()->user()->hasRole('Maintenance Personnel'))
+					@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head') || auth()->user()->hasRole('Maintenance Personnel')|| auth()->user()->hasRole('Secretary'))
 						<li>
 							<i class="fas fa-fire-extinguisher"></i>
 							<span class="text">
@@ -84,13 +84,14 @@
 							@endif
 						</span>
 					</li>
-
+					@endif 
+					@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
 								
 							<li>
 							<i class='bx bxs-briefcase'></i>
 						<span class="text">
 							@php
-								$totalEmployee = \App\Models\User::where('role', 'Head')->count() + \App\Models\User::where('role', 'Maintenance Personnel')->count();
+								$totalEmployee = \App\Models\User::where('role', 'Head')->count() + \App\Models\User::where('role', 'Maintenance Personnel')->count()+ \App\Models\User::where('role','Secretary')->count();
 							@endphp
 
 							@if($totalEmployee == 0)
@@ -107,16 +108,17 @@
 								<li>
 									<i class='fas fa-fire-extinguisher' ></i>
 									<span class="text">
-									@if($exfires == 0)
-										<h3>{{ $exfires }}</h3>
+									@if($expiredFireCount == 0)
+										<h3>{{ $expiredFireCount }}</h3>
 										<p>Expired Fire Extinguisher</p>
 									@else
-										<h3>{{ $exfires }}</h3>
-										<p>Expired Fire Extinguisher{{ $exfires != 1 ? 's' : '' }}</p>
+										<h3>{{ $expiredFireCount }}</h3>
+										<p>Expired Fire Extinguisher{{ $expiredFireCount!= 1 ? 's' : '' }}</p>
 									@endif
 							</span>
 								</li>
-								@if(auth()->user()->hasRole('Head'))
+								
+								@if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head')||auth()->user()->hasRole('Secretary'))
 								<li>
 									<i class='bx bx-task' ></i>
 									<span class="text">

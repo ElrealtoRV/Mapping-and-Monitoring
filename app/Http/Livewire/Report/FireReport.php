@@ -42,34 +42,29 @@ class FireReport extends Component
     }
     public function updatedSelectedStatus()
     {
-        $this->filterFireList();
     }
-    public function filterFireList()
-    {
-        $query = FireList::query();
+        public function filterFireList()
+{
+    $query = FireList::query();
 
-        if ($this->selectedDepartment) {
-            $query->where('building', $this->selectedDepartment);
+    if ($this->selectedStatus) {
+        if ($this->selectedStatus == 'Expired') {
+            $query->whereDate('expiration_date', '<', now());
+        } else {
+            $query->whereDate('expiration_date', '>=', now());
         }
-
-        if ($this->selectedType) {
-            $query->where('type', $this->selectedType);
-        }
-        if ($this->selectedStatus) {
-            if ($this->selectedStatus == 'Expired') {
-                $query->whereDate('expiration_date', '<', now());
-            } else {
-                $query->whereDate('expiration_date', '>=', now());
-            }
-        }
-
-        $this->fire = $query->get()->map(function($fire) {
-            if (now()->greaterThan($fire->expiration_date)) {
-                $fire->status = 'Expired';
-            }
-            return $fire;
-        });
     }
+
+    $this->fire = $query->get()->map(function($fire) {
+        if (now()->greaterThan($fire->expiration_date)) {
+            $fire->status = 'Expired';
+        } else {
+            $fire->status = 'Active';
+        }
+        return $fire;
+    });
+}
+
     public function render()
     {
        

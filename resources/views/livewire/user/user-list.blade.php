@@ -1,3 +1,10 @@
+<style>	
+.table tbody tr:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+</style>
 <div class="content">
 	<div class="page-header">
 		<div class="row">
@@ -33,14 +40,16 @@
 							<div class="col-auto text-end float-end ms-auto download-grp">
 								<div class="top-nav-search table-search-blk">
 									<form id="filterForm" >
-										<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search" name="search" >
+										
+
+										<input type="text" class="form-control" wire:model="search" placeholder="Search users...">
 										<a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
-									
-										<select  style="margin-top:10px; border-radius:10px 5px 5px 5px;" name="filter" id="filterSelect">
-												<option value="all" {{ $filter === 'all' ? 'selected' : '' }}>All</option>
-												<option value="users" {{ $filter === 'users' ? 'selected' : '' }}>Users</option>
-												<option value="employees" {{ $filter === 'employees' ? 'selected' : '' }}>Employees</option>
-												</select>
+											<select wire:model="filter">
+												<option value="all">All</option>
+												<option value="users">Users</option>
+												<option value="employees">Employees</option>
+												
+											</select>
 									</form>
 								</div>
 							</div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Task;
+namespace App\Http\Livewire\Request;
 
 use App\Models\Task;
 use App\Models\User;
@@ -15,13 +15,15 @@ class TaskForm extends Component
     public $user_id;
     public $status;
     public $users;
+    public $approveListId;
     
     public $taskCheck = array();
     public $selectedTask= [];
 
     protected $listeners = [
         'taskId',
-        'resetInputFields'
+        'resetInputFields',
+        'taskForm:openTaskModal' => 'openTaskModal', // Specify the method to call when receiving the event
     ];
 
     // protected $rules = [
@@ -49,61 +51,68 @@ class TaskForm extends Component
 
         $this->selectedTask = $task->getTaskNames()->toArray();
     }
+    public function openTaskModal($approveListId)
+    {
+        $this->approveListId = $approveListId;
+        $this->resetInputFields();
+        $this->emit('taskForm:openTaskModal', $approveListId); // Unique event name
+    }
 
     public function store()
     {
         if (is_object($this->selectedTask)) {
             $this->selectedTask = json_decode(json_encode($this->selectedTask), true);
         }
-    
+
         if (empty($this->taskCheck)) {
             $this->taskCheck = array_map('strval', $this->selectedTask);
         }
-    
+
+        $data = $this->validate([
+            'task_name' => 'required|string',
+            'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d'),
+            'user_id' => 'required|exists:users,id',
+        ], [
+            'task_name.required' => 'Task field is required.',
+            'due_date.required' => 'Due date is required.',
+            'user_id.required' => 'Assigned personnel is required.',
+            'due_date.after_or_equal' => 'The due date must be a future date.',
+            'user_id.exists' => 'Assigned personnel must be a valid user.',
+        ]);
+
         if ($this->taskId) {
-            $data = $this->validate([
-                'task_name' => 'required|string',
-                'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d'),
-                'user_id' => 'required|exists:users,id',
-            ]);
-    
             $task = Task::find($this->taskId);
             $task->update($data);
-    
             $task->syncTask($this->taskCheck);
-    
+
+            $approveRequest = ApproveList::find($task->approve_list_id);
             $action = 'edit';
             $message = 'Successfully Updated';
         } else {
-            $this->validate([
-                'task_name' => 'required|string',
-                'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d'),
-                'user_id' => 'required|exists:users,id',
-            ], [
-                'task_name.required' => 'Task field is required.',
-                'due_date.required' => 'Due date is required.',
-                'user_id.required' => 'Assigned personnel is required.',
-                'due_date.after_or_equal' => 'The due date must be a future date.',
-                'user_id.exists' => 'Assigned personnel must be a valid user.',
-            ]);
-    
             $task = Task::create([
-                'task_name'    => $this->task_name,
-                'user_id'   => $this->user_id,
-                'due_date'      => $this->due_date,
+                'task_name' => $this->task_name,
+                'user_id' => $this->user_id,
+                'due_date' => $this->due_date,
+                'approve_list_id' => $this->approveListId, // Ensure this is set correctly
             ]);
-    
+
+            $approveRequest = ApproveList::find($this->approveListId);
             $action = 'store';
             $message = 'Successfully Created';
         }
-        
+
+        // Update status to "Posted"
+        if ($approveRequest) {
+            $approveRequest->status = 'Posted';
+            $approveRequest->save();
+        }
+
         $this->emit('flashAction', $action, $message);
         $this->resetInputFields();
         $this->emit('closeTaskModal');
         $this->emit('refreshParentTaskManager');
         $this->emit('refreshTable');
     }
-    
     
     public function editTask($taskId)
     {
@@ -133,7 +142,7 @@ class TaskForm extends Component
     {
 
 
-    return view('livewire.task.task-form');
+    return view('livewire.request.task-form');
 
     }
 }

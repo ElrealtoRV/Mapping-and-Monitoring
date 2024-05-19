@@ -1,4 +1,4 @@
-@if(auth()->user()->hasRole('Head') || auth()->user()->hasRole('Maintenance Personnel') || auth()->user()->hasRole('Dean'))
+@if(auth()->user()->hasRole('Head') || auth()->user()->hasRole('Maintenance Personnel') ||  auth()->user()->hasRole('Secretary')||auth()->user()->hasRole('Dean'))
 
 <div class="setting-box">
     <h2 class="P">My Profile</h2>

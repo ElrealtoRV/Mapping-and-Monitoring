@@ -14,6 +14,14 @@
         padding: 0.25rem 0.5rem;
     }
 }
+.td:hover {
+  background-color: #eee;
+}
+.table tbody tr:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 </style>
 <div class="content">
 	<div class="page-header">
@@ -79,8 +87,8 @@
 									<th style="width: 5%; color:white;">Installation Date</th>
 									<th style="width: 5%; color:white;">Expiration Date</th>
 									<th style="width: 5%; color:white;">Description</th>
-									<th style="width: 10%; color:white;">Status</th>
-									<th style="width: 10%; text-align: center;color:white;">Action</th>
+									<th style="width: 5%; color:white;">Status</th>
+									<th style="width: 5%; text-align: center;color:white;">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -107,7 +115,7 @@
 												<i class="fa fa-trash"></i>
 											</a>
 										</div>
-																				</div>
+										</div>
 									</td>
 								</tr>
 								@endforeach

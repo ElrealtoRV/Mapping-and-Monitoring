@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('request_lists', function (Blueprint $table) {
             $table->id();
+            $table->uuid('transaction_id')->unique(); 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('type')->nullable();
@@ -21,8 +22,7 @@ return new class extends Migration
             $table->string('room');
             $table->string('building')->nullable();
             $table->string('floor')->nullable();
-            $table->unsignedBigInteger('request');
-            $table->foreign('request')->references('id')->on('requests');
+            $table->string('request');
             $table->string('status')->default('pending');
             $table->timestamps();
         });

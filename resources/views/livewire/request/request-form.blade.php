@@ -33,11 +33,7 @@
                                 <select class="form-control select" wire:model="request">
 
                                 <option value="" selected>Select a Request</option>
-                                @foreach ($addrequests as $addrequest)
-                                    <option value="{{ $addrequest->id }}">
-                                        {{ $addrequest->description }}
-                                    </option>
-                                @endforeach
+                                    <option value="Install Fire Extinguisher">Install Fire Extinguisher</option>
                                 </select>
                                 
                             </div>

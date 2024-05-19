@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Report;
 
 use Livewire\Component;
 use App\Models\FireList;
+use App\Models\ExpiredFire;
 use App\Models\User;
 use App\Models\ExpiredList;
 use App\Models\Task;
@@ -23,6 +24,7 @@ class Analytical extends Component
     public function mount()
     {
         $this->fires = FireList::count();
+        $this->expiredFireCount = FireList::where('status', 'Expired')->count(); // Count expired fire extinguishers
         $this->userCounts = User::count();
         $this->taskCounts = Task::count();
         $this->requestCounts = RequestLists::count();
@@ -34,6 +36,7 @@ class Analytical extends Component
         $requests = RequestLists::count();
         return view('livewire.report.analytical', [
             'fires' => $this->fires,
+            'expiredFireCount' => $this->expiredFireCount,
             'userCounts' => $this->userCounts,
             'tasks' => $this->taskCounts,
             'requests' => $this->requestCounts,

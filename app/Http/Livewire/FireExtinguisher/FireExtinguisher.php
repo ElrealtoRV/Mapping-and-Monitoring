@@ -4,8 +4,6 @@ namespace App\Http\Livewire\FireExtinguisher;
 
 use Livewire\Component;
 use App\Models\FireList;
-use App\Models\TypeList;
-use App\Models\ExpiredFire;
 use Carbon\Carbon;
 
 class FireExtinguisher extends Component
@@ -20,7 +18,7 @@ class FireExtinguisher extends Component
     
 
     protected $listeners = [
-        'refreshFireExtinguisher' => '$refresh',
+        'refreshParentFireExtinguisher' => '$refresh',
         'deleteFire',
         'editFire',
         'viewFire',
@@ -65,30 +63,7 @@ class FireExtinguisher extends Component
         $this->emit('flashAction', $action, $message);
         $this->emit('refreshTable');
     }
-    public function moveExpiredFireToExpiredFireTable($expiredFireId)
-    {
-        $expiredFire = FireList::findOrFail($expiredFireId);
 
-        // Create a new record in the ExpiredFire table
-        ExpiredFire::create([
-            'type' => $expiredFire->type,
-            'firename' => $expiredFire->firename,
-            'serial_number' => $expiredFire->serial_number,
-            'building' => $expiredFire->building,
-            'floor' => $expiredFire->floor,
-            'room' => $expiredFire->room,
-            'installation_date' => $expiredFire->installation_date,
-            'expiration_date' => $expiredFire->expiration_date,
-            'description' => $expiredFire->description,
-            'status' => 'Expired',
-        ]);
-
-        // Delete the expired fire extinguisher from the FireList table
-  
-
-        // Optionally emit a message or trigger a notification
-        $this->emit('expiredFireMoved', $expiredFireId);
-    }
     public function isExpirationDateCloseToWarning($expirationDate)
     {
         $expirationDate = Carbon::parse($expirationDate);
@@ -112,15 +87,19 @@ class FireExtinguisher extends Component
         $query->where(function ($subQuery) {
             $subQuery->where('type', 'LIKE', '%' . $this->search . '%')
                 ->orWhere('firename', 'LIKE', '%' . $this->search . '%')
-                ->orWhere('serialNum', 'LIKE', '%' . $this->search . '%')
-                ->orWhereHas('type', function ($typeQuery) {
-                    $typeQuery->where('description', 'LIKE', '%' . $this->search . '%');
-                });
+                ->orWhere('serial_number', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('building', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('floor', 'LIKE', '%' . $this->search . '%')
+                ->orWhere('room', 'LIKE', '%' . $this->search . '%');
         });
+    } else {
+        // If the search term is empty, return all records
+        $query->whereRaw('1 = 1');
     }
-
+    
     // Fetch results
     $fire = $query->get();
+    
 
     // Fetch types if needed
 
@@ -143,9 +122,7 @@ class FireExtinguisher extends Component
         return Carbon::now()->gt(Carbon::parse($fire->expiration_date));
     })->pluck('id');
 
-    foreach ($expiredFireIds as $expiredFireId) {
-        $this->moveExpiredFireToExpiredFireTable($expiredFireId);
-    }
+
     return view('livewire.fire-extinguisher.fire-extinguisher', [
         'fire' => $fire,
         'fire_id' => $fireWithWarningStatus,

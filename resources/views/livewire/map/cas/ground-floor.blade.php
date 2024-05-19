@@ -136,15 +136,7 @@
 .refill {
     background-color: blue; /* Refill state background color */
 }
-#tooltipText{
 
-margin-top:-200px !important;
-margin-left:-500px !important;
-
-}
-.popup {
-    background-color:red;
-}
 
 
 </style>
@@ -155,14 +147,11 @@ margin-left:-500px !important;
 <img src="{{ asset('assets/img/GroundFloor.png') }}" alt="GroundFloor" width="1000px" height="300px">
 <!-- Display the icon outside of the loop -->
 <div id="casDeanIcon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CasDean"><i class="fas fa-plus plus-icon" wire:click="createFire('CASDEAN')"></i></span>
+    
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CasDean"><i class="fas fa-plus plus-icon" wire:click="createFire('CASDEAN')"></i></span>
-    @endif
-
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -210,7 +199,7 @@ margin-left:-500px !important;
             </div>
             
         </span>
-        
+        <span class="CasDean"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CasDean"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
@@ -218,13 +207,11 @@ margin-left:-500px !important;
 
 
 <div id="cas106Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS106"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS106')"></i></span>
+   
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -269,18 +256,20 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS106"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS106"><i class="fas fa-eye eye-icon"></i></span>
+        
     </div>
 </div>
 
 
 
 <div id="cas105Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS105"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS105')"></i></span>
+    
 @endif
     <div id="tooltip">
-
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -295,6 +284,7 @@ margin-left:-500px !important;
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -317,6 +307,7 @@ margin-left:-500px !important;
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->description ?? 'No Description' }}</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -325,18 +316,17 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS105"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS105"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 
 <div id="cas104Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS104"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS104')"></i></span>
+    
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS104"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS104')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -351,6 +341,7 @@ margin-left:-500px !important;
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -373,6 +364,7 @@ margin-left:-500px !important;
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->description ?? 'No Description' }}</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -381,20 +373,20 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
-    
+        <span class="CAS104"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS104"><i class="fas fa-eye eye-icon"></i></span>
     
 </div>
 </div>
 
 <div id="mclIcon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="MCL"><i class="fas fa-plus plus-icon" wire:click="createFire('MCL')"></i></span>
+   
+    
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="MCL"><i class="fas fa-plus plus-icon" wire:click="createFire('MCL')"></i></span>
-@endif
+
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -409,6 +401,7 @@ margin-left:-500px !important;
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -431,6 +424,7 @@ margin-left:-500px !important;
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->description ?? 'No Description' }}</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -439,18 +433,17 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="MCL"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="MCL"><i class="fas fa-eye eye-icon"></i></span>
+        
     </div>
 </div>
 
 <div id="cas103Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS103"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS103')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS103"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS103')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -465,6 +458,7 @@ margin-left:-500px !important;
                             <th>Room</th>
                             <th>Installation date</th>
                             <th>Expiration date</th>
+                            <th>Description</th>
                             <th>Status</th>
                         </tr>
                     </table>
@@ -487,6 +481,7 @@ margin-left:-500px !important;
                             <td>{{ $fires->room }}</td>
                             <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
                             <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->description }}</td>
                             <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
                         </tr>
                         @endforeach
@@ -495,17 +490,15 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS103"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS103"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 <div id="cas102Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS102"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS102')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS102"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS102')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -550,18 +543,16 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS102"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS102"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 
 <div id="cas101Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS101"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS101')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS101"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS101')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -606,18 +597,17 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS101"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS101"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 
 <div id="cas107Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS107"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS107')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS107"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS107')"></i></span>
-@endif
+
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -662,17 +652,15 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS107"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS107"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 <div id="cas108Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS108"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS108')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS108"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS108')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -717,17 +705,15 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS108"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS108"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 <div id="cas109Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS109"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS109')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS109"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS109')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -772,17 +758,15 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS109"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS109"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 <div id="cas110Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS110"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS110')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS110"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS110')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -827,17 +811,15 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS110"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS110"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 <div id="cas111Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS111"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS111')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS111"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS111')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -882,17 +864,15 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS111"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS111"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>
 <div id="cas112Icon" class="classroom">
-@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel'))
     <span class="CAS112"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS112')"></i></span>
 @endif
     <div id="tooltip">
-    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('head')||auth()->user()->hasRole('Maintenance Personnel'))
-        <span class="CAS112"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS112')"></i></span>
-@endif
         <span id="tooltipText"> 
             <h1>INFO</h1>
             <div class="popup">
@@ -937,6 +917,7 @@ margin-left:-500px !important;
                 </div>
             </div>
         </span>
+        <span class="CAS112"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         <span class="CAS112"><i class="fas fa-eye eye-icon"></i></span>
     </div>
 </div>

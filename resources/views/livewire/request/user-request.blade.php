@@ -68,7 +68,7 @@
 							<tbody>
 								@foreach ($requests as $request)
 								<tr>
-								<td>{{  $request->AddRequest->description  }}</td>
+								<td>{{  $request->request }}</td>
 								<td>{{  $request->type  }}</td>
                                 <td>{{  $request->serial_number  ?? 'No Serial provided'}}</td>
 								<td>{{  $request->building ?? 'No Building provided'}}</td>
@@ -182,4 +182,9 @@
 			padding: 4px 8px;
 		}
 	}
+	.table tbody tr:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 </style>

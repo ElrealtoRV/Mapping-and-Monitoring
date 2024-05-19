@@ -150,7 +150,7 @@ class UserForm extends Component
         $roles = Role::all();
         $offices = OfficeLists::all();
         // $filteredPos = Position::where('description', '!=', 'Admin')->get();
-        $filteredRoles = Role::whereIn('name', ['Head', 'Maintenance Personnel'])->get();
+        $filteredRoles = Role::whereIn('name', ['Head', 'Maintenance Personnel','Secretary'])->get();
         $filteredUserRoles = Role::whereIn('name', ['Dean'])->get();
         return view('livewire.user.user-form', [
             'roles' => $roles,

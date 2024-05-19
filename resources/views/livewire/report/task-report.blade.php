@@ -102,7 +102,7 @@ body {
                         <th style="width: 5%; color:white;">Task</th>
                         <th style="width: 5%; color:white;">Personnel</th>
                         <th style="width: 5%; color:white;">Due Date</th>
-                        <th style="width:5%; color:white;">Date of Completion</th>
+                        <!-- <th style="width:5%; color:white;">Date of Completion</th> -->
                         <th style="width: 5%; color:white;">Status</th>
                     </tr>
                 </thead>
@@ -112,7 +112,7 @@ body {
                         <td>{{ $task->task_name ?: 'Empty' }}</td>
                         <td>{{ $task->user->first_name }} {{ $task->user->last_name }}</td>
                         <td>{{ $task->due_date }}</td>
-                        <td>junes 26 2024</td>
+                        <!-- <td>junes 26 2024</td> -->
                         <td>{{ $task->status }}</td>
                     </tr>
                     @endforeach

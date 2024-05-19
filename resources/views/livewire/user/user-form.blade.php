@@ -445,7 +445,7 @@
                                         @endforelse
                                     @else
                                         @forelse ($filteredRoles as $role)
-                                            @if ($role->name == 'Student' || $role->name == 'Staff')
+                                            @if ($role->name == 'Dean') 
                                                 <div class="form-check mb-2">
                                                     <input wire:model.defer="selectedRoles" type="checkbox"
                                                         class="form-check-input" value="{{ $role->name }}"

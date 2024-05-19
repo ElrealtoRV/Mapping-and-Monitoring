@@ -170,71 +170,96 @@
 }
 
 #tooltipText {
-    z-index: 9999;
-    position: fixed;
-    transform: translate(-50%, -50%);
-    background-image: linear-gradient(to top, #007bff, #ffffff);
-    color: #fff;
-    white-space: nowrap;
-    border-radius: 7px;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    width: auto;
-    height: 400px;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    padding-top: 10px;
-    display:inline-block;
-    border:2px solid #007bff;
+  z-index: 9999;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  background-image: linear-gradient(to top, #007bff, #ffffff);
+  color: #fff;
+  white-space: nowrap;
+  border-radius: 7px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  width: auto;
+  height: 400px;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding-top: 10px;
+  display: inline-block;
+  border: 2px solid #007bff;
 }
-
 
 #tooltipText.active {
-    top: 550px;
-    left: 1350px;
-    visibility: visible;
-    opacity: 1;
-   
+  top: 50%;
+  left: 50%;
+  visibility: visible;
+  opacity: 1;
 }
 
-    #tooltip:hover #tooltipText,
-    #tooltip.active {
-        top:550px;
-        left: 1350px;
-        visibility: visible;
-        opacity: 1;
-    }
-    #tooltipText.active .eye-icon {
-        color: red; /* Change the color to red when #tooltipText has the active class */
-    }
+#tooltip:hover #tooltipText,
+#tooltip.active {
+  top: 50%;
+  left: 50%;
+  visibility: visible;
+  opacity: 1;
+}
+
+#tooltipText.active .eye-icon {
+  color: red; /* Change the color to red when #tooltipText has the active class */
+}
+
 .empty {
-    color: #333333  !important;
-    font-style: italic;
-    font-weight: bold;
+  color: #333333 !important;
+  font-style: italic;
+  font-weight: bold;
 }
 
-    .HAHA {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        width: 455px;
-        height: 400px;
-    }
+.HAHA {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 455px;
+  height: 400px;
+}
 
-    .HAHA-close {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        cursor: pointer;
-    }
+.HAHA-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  #tooltip {
+    font-size: 14px;
+  }
+
+  .half {
+    width: 100%;
+    float: none;
+  }
+
+  .second-half {
+    margin-top: 20px;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  th, td {
+    padding: 5px;
+    font-size: 12px;
+  }
+
+
+}
 @media (max-width: 768px) {
         .horizontal-scroll-container {
             width: 800px; /* Adjust this value based on your desired width for smaller screens */

@@ -14,6 +14,11 @@
         padding: 0.25rem 0.5rem;
     }
 }
+.table tbody tr:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 </style>
 <div class="content">
 	<div class="page-header">

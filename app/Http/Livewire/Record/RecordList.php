@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Record;
 
 use Livewire\Component;
-use App\Models\RecordLists;
+use App\Models\FireList;
 
 class RecordList extends Component
 {
@@ -19,54 +19,23 @@ class RecordList extends Component
         'deleteConfirmRecord'
         
     ];
-    public function updatingSearch()
+   
+    public function mount()
     {
-        $this->emit('refreshTable');
-    }
-    public function createRecord()
-    {
-        $this->emit('resetInputFields');
-        $this->emit('openRecordModal');
-    }
-    public function editRecord($recordId)
-    {
-        $this->recordId = $recordId;
-        $this->emit('recordId', $this->recordId);
-        $this->emit('openRecordModal');
-        
-    }
-    public function deleteRecord($recordId)
-    {
-        RecordLists::destroy($recordId);
+        $this->fire = FireList::all();
 
-        $action = 'error';
-        $message = 'Successfully Deleted';
-
-        $this->emit('flashAction', $action, $message);
-        $this->emit('refreshTable');
     }
-
     public function render()
     {
 
 
-        $records = RecordLists::all();
+        $fire = FireList::all();
         
 
         
 
-        if (!empty($this->search)) {
-            $records->where(function ($query) {
-                $query->where('type', 'LIKE', '%' . $this->search . '%')
-                    ->orWhere('firename', 'LIKE', '%' . $this->search . '%') 
-                    ->orWhere('serialNum', 'LIKE', '%' . $this->search . '%')
-                    ->orWhereHas('status', function ($positionQuery) {
-                        $positionQuery->where('description', 'LIKE', '%' . $this->search . '%');
-                    });
-                });
-            }
-            return view('livewire.record.record-list', [
-                'records' => $records,
+            return view('livewire.record.record-list',[
+                'fire' => $fire,
             ]); 
     }
 }

@@ -192,7 +192,7 @@
 						<i class='bx bxs-group'></i>
 						<span class="text">
 							@php
-								$totalRegularUsers = \App\Models\User::where('role', 'Student')->count() + \App\Models\User::where('role', 'Staff')->count();
+								$totalRegularUsers = \App\Models\User::where('role', 'Dean')->count(); 
 							@endphp
 
 							@if($totalRegularUsers == 0)
@@ -222,14 +222,20 @@
 						</span>
 					</li>
 					@endif
-        <li>
-            <i class="fas fa-fire-extinguisher"></i>
-            <span class="features">
-                <h3>2543</h3>
-                <p>Expired Fire Extinguisher</p>
-            </span>
-        </li>
-        @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
+                    
+                    <li>
+                    <i class='fas fa-fire-extinguisher'></i>
+                    <span class="text">
+                        @if($expiredFireCount == 0)
+                            <h3>{{ $expiredFireCount }}</h3>
+                            <p>Expired Fire Extinguisher</p>
+                        @else
+                            <h3>{{ $expiredFireCount }}</h3>
+                            <p>Expired Fire Extinguisher{{ $expiredFireCount != 1 ? 's' : '' }}</p>
+                        @endif
+                    </span>
+                </li>
+                        @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Head'))
 								<li>
 									<i class='bx bx-task' ></i>
 									<span class="text">
@@ -293,13 +299,14 @@
 
     function updateCharts() {
         const fires = @json($fires);
+        const expiredFireCount = @json($expiredFireCount);
         const regularUsers = @json($totalRegularUsers);
         const employeeCounts = @json($totalEmployee);
         const taskCounts = @json($tasks);
         const requestCounts = @json($requests);
 
         updateChart('existingChart', fires, 'Fire Extinguisher', 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
-        updateChart('expiredChart', 2543, 'Expired Fire Extinguisher', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)'); // Provide dummy data if needed
+        updateChart('expiredChart', expiredFireCount, 'Expired Fire Extinguisher', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)'); // Provide dummy data if needed
         updateChart('employeeChart', employeeCounts, 'Employee', 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)');
         updateChart('userChart', regularUsers, 'User', 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 1)');
         updateChart('taskChart', taskCounts, 'Task', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 1)');

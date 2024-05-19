@@ -148,6 +148,7 @@ class RequestList extends Component
                       ->orWhere('firename', 'LIKE', '%' . $this->search . '%')
                       ->orWhere('request', 'LIKE', '%' . $this->search . '%')
                       ->orWhere('college', 'LIKE', '%' . $this->search . '%')
+                      ->orWhere('transaction_id', 'LIKE', '%' . $this->search . '%')
                       ->orWhere('serialNum', 'LIKE', '%' . $this->search . '%');
             });
         }

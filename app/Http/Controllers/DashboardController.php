@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Task;
 use App\Models\Position;
 use App\Models\FireList;
-use App\Models\ExpiredFire;
 
 
 use Carbon\Carbon;
@@ -21,17 +20,38 @@ class DashboardController extends Controller
     public $message = '';  //flash
 
 
-
+    public function expiredNotif(Request $request)
+    {
+        // Fetch count of fire extinguishers with status "expired"
+        $expiredCount = FireList::where('status', 'Expired')->count();
+    
+        // You can customize the response format according to your needs
+        return response()->json([
+            'expiredCount' => $expiredCount
+        ]);
+    }
+    public function installFireNotif(Request $request)
+    {
+        // Fetch count of fire extinguishers with status "Installed"
+        $installCount = FireList::where('status', 'Active')->count();
+    
+        // You can customize the response format according to your needs
+        return response()->json([
+            'installCount' => $installCount
+        ]);
+    }
+    
     public function updatingSearch()
     {
         $this->emit('refreshTable');
     }
     public function index(Request $request)
     {
+        
         $userCounts = User::count();
         $users = User::all();
         $fires = FireList::count();
-        $exfires = ExpiredFire::count();
+        $this->expiredFireCount = FireList::where('status', 'Expired')->count(); // Count expired fire extinguishers
         $tasks = Task::count();
         $requests = RequestLists::count();
     
@@ -69,7 +89,7 @@ class DashboardController extends Controller
             });
         } elseif ($filter === 'employees') {
             $usersQuery->whereHas('roles', function ($query) {
-                $query->whereIn('name', ['Head', 'Maintenance Personnel']);
+                $query->whereIn('name', ['Head', 'Maintenance Personnel','Secretary']);
             });
         } elseif ($filter === 'all') {
             // No additional filter needed for "All" option
@@ -89,7 +109,7 @@ class DashboardController extends Controller
             'userCounts' => $userCounts,
             'users' => $users,
             'fires' => $fires,
-            'exfires' => $exfires,
+            'expiredFireCount' => $this->expiredFireCount,
             'tasks' => $tasks,
             'requests' => $requests,
             'search' => $search,

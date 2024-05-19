@@ -12,6 +12,8 @@ use App\Http\Livewire\Location\Location;
 use App\Http\Livewire\Inspection\Inspection;
 use App\Http\Livewire\Request\RequestList;
 use App\Http\Livewire\AddRequest\AddRequest;
+use App\Http\Livewire\Request\ApproveList;
+use App\Http\Livewire\Report\History;
 use App\Http\Livewire\AddTaskModal\AddTaskModal;
 use App\Http\Livewire\FireExtinguisher\FireExtinguisher;
 use Illuminate\Support\Facades\Route;
@@ -58,17 +60,18 @@ Route::get('/dashboard', function () {
 Route::group(['middleware' => ['role:admin']], function () {
     Route::get('status', StatusList::class);
     Route::get('role', RoleList::class);
+    Route::get('/history', History::class);
     Route::get('permission', PermissionList::class);
     Route::view('setting', 'setting')->name('setting');
    
 });
-Route::group(['middleware' => ['role:admin|Head|Maintenance Personnel|Dean']], function () {
+Route::group(['middleware' => ['role:admin|Head|Maintenance Personnel|Secretary|Dean']], function () {
+    Route::get('/expiredNotif', [DashboardController::class, 'expiredNotif']);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('setting', setting::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    //map
     Route::get('map', BuildingList::class);
     Route::get('/cas-floor', CasFloor::class)->name('cas.floor');
 
@@ -78,19 +81,22 @@ Route::group(['middleware' => ['role:admin|Head']], function () {
     Route::get('positions', PositionList::class);
     Route::get('office',OfficeList::class);
     Route::get('location', Location::class);
-    Route::get('inspection', Inspection::class);
-    Route::get('fire-extinguisher', FireExtinguisher::class);
     Route::get('expired-list',FireExtinguisher::class);
+    Route::get('request', RequestList::class);
+    Route::get('add-request', AddRequest::class);
     // Route::get('fire-form', Cas::class);
-    Route::get('record', RecordList::class);
     Route::get('/report', ReportList::class)->name('report');
-   
 
 
-
-
-
-
+});
+Route::group(['middleware' => ['role:Head|admin|Secretary']], function () {
+    Route::get('fire-extinguisher', FireExtinguisher::class);
+    Route::get('inspection', Inspection::class);
+    Route::get('approve-list', ApproveList::class);
+    Route::get('add-request', AddRequest::class);
+    Route::get('/task-manager', TaskManager::class);
+    Route::get('/task-form', TaskManager::class);
+    Route::get('record', RecordList::class);
 });
 Route::group(['middleware' => ['role:Maintenance Personnel|Dean']], function () {
     Route::get('/home', [Home::class, 'index'])->name('home');
@@ -98,8 +104,7 @@ Route::group(['middleware' => ['role:Maintenance Personnel|Dean']], function () 
   
 });
 
-Route::group(['middleware' => ['role:Head|Maintenance Personnel|Dean']], function () {
-
+Route::group(['middleware' => ['role:Head|Maintenance Personnel|Secretary|Dean']], function () {
     Route::get('my-profile', MyProfile::class);
   
 });
@@ -109,11 +114,5 @@ Route::group(['middleware' => ['role:Dean']], function () {
 Route::group(['middleware' => ['role:Maintenance Personnel']], function () {
     Route::get('/task-list', TaskList::class);
 });
-Route::group(['middleware' => ['role:Head']], function () {
-    Route::get('request', RequestList::class);
-    Route::get('add-request', AddRequest::class);
-    Route::get('/task-manager', TaskManager::class);
-    Route::get('/task-form', TaskManager::class);
 
-});
 require __DIR__.'/auth.php';

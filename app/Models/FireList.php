@@ -11,7 +11,7 @@ class FireList extends Model
     protected $table = 'fire_lists';
     use HasFactory;
     protected $fillable = [
-        'type', 'firename', 'serial_number','building','floor','room','installation_date','expiration_date', 'description','status',
+        'type', 'firename', 'serial_number','building','floor','room','installation_date','expiration_date', 'description','finding','status',
     ];
 
     public function fireLocation()
@@ -48,4 +48,5 @@ class FireList extends Model
         {
             return Carbon::now()->greaterThan(Carbon::parse($this->expiration_date));
         }
+
 }

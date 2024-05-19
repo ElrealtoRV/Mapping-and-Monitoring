@@ -3,7 +3,7 @@ namespace App\Http\Livewire\Map;
 
 use Livewire\Component;
 use App\Models\FireList;
-use App\Models\LocationList;
+use App\Models\FireListHistory;
 
 class Form extends Component
 {
@@ -33,7 +33,6 @@ class Form extends Component
     public function mount()
     {
         $this->fire = FireList::all();
-        $this->locations = LocationList::all(); // Fetch all locations
     }
 
     public function openViewModal($fireId)
@@ -74,13 +73,7 @@ class Form extends Component
         $this->selectedFire = $fire->getFireNames()->toArray();
         $this->viewMode = false;
     }
-    public function editFire($fireId)
-    {
-        $this->resetInputFields(); // Reset form fields
-        $this->fireId($fireId); // Fetch fire details by ID
-        $this->action = 'edit'; // Set action to 'edit' for flash message
-        $this->emit('openMapFormModal'); // Open the form modal
-    }
+
     
 
     public function store()
@@ -96,7 +89,7 @@ class Form extends Component
         $data = $this->validate([
             'type' => 'required',
             'firename' => 'required',
-            'serial_number' => 'required|digits:7',
+            'serial_number' => 'required',
             'building' => 'required',
             'floor' => 'nullable',
             'room' => 'required',
@@ -108,8 +101,27 @@ class Form extends Component
 
         if ($this->fireId) {
             $fire = FireList::find($this->fireId);
+            if ($fire) {
+                // Save old data to history table
+                FireListHistory::create([
+                    'fire_list_id' => $fire->id,
+                    'type' => $fire->type,
+                    'firename' => $fire->firename,
+                    'serial_number' => $fire->serial_number,
+                    'building' => $fire->building,
+                    'floor' => $fire->floor,
+                    'room' => $fire->room,
+                    'installation_date' => $fire->installation_date,
+                    'expiration_date' => $fire->expiration_date,
+                    'description' => $fire->description,
+                    'finding' => $fire->finding,
+                    'status' => $fire->status,
+                ]);
+    
             $fire->update($data);
-            $fire->syncFire($this->fireCheck);
+            if (!empty($this->selectedFire)) {
+                $fire->syncFire($this->selectedFire);
+            }
 
             $this->action = 'edit';
             $this->message = 'Successfully Updated';
@@ -126,7 +138,7 @@ class Form extends Component
         $this->emit('refreshParentCasFloor');
         $this->emit('refreshTable');
     }
-
+}
     public function render()
     {
         return view('livewire.map.form', [

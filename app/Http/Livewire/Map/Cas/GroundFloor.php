@@ -12,6 +12,7 @@ class GroundFloor extends Component
 {
     public $selectedFloor = 'ground-floor';
     public $statuses = ['Active', 'Expired'];
+    public $fireId;
     public $selectedRoom = '';
     public $fireCasDean = []; // Initialize as an empty array
     public $fireCas106 = []; // Initialize as an empty array
@@ -59,7 +60,13 @@ class GroundFloor extends Component
         $this->emit('resetInputFields');
         $this->emit('openMapFormModal');
     }
-
+    public function editFire($fireId)
+    {
+        $this->fireId = $fireId;
+        $this->emit('fireId', $this->fireId);
+        $this->emit('openMapFormModal');
+        
+    }
     
 
     public function render()

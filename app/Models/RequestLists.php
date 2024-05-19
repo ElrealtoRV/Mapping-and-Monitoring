@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class RequestLists extends Model
 {
@@ -13,7 +14,7 @@ class RequestLists extends Model
     protected $table = 'request_lists';
     
     protected $fillable = [
-        'type', 'firename', 'serial_number', 'room', 'building', 'floor', 'status', 'request',
+        'transaction_id','type', 'firename', 'serial_number', 'room', 'building', 'floor', 'status', 'request',
     ];
 
 
@@ -46,19 +47,20 @@ class RequestLists extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
     public static function boot()
-    {
-        parent::boot();
+{
+    parent::boot();
 
-        // Automatically set the user_id when creating a new request
-        static::creating(function ($requestList) {
-            if (!isset($requestList->user_id)) {
-                $requestList->user_id = Auth::id();
-            }
-        });
-    }
+    // Automatically set the user_id and transaction_id when creating a new request
+    static::creating(function ($requestList) {
+        if (!isset($requestList->user_id)) {
+            $requestList->user_id = Auth::id();
+        }
+        $requestList->transaction_id = Str::uuid();
+    });
+}
     public function approves()
     {
         return $this->hasMany(ApproveList::class, 'request_id');

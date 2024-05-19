@@ -1,3 +1,11 @@
+
+<style>	
+.table tbody tr:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+</style>
 <div class="content">
 	<div class="page-header">
 		<div class="row">
@@ -61,7 +69,7 @@
 						<table class="table border-0 custom-table comman-table datatable mb-0">
 							<thead>
 								<tr style="background: linear-gradient(to right, #3498db, #2e37a4); color:white;">
-                                <th style="width: 20%; color:white;">Task</th>
+								<th style="width: 20%; color:white;">Task</th>
                                 <th style="width: 20%; color:white;">Assigned To</th>
                                 <th style="width: 20%; color:white;">Due Date</th>
                                 <th style="width: 20%; color:white;">Status</th>
