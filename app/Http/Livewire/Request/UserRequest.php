@@ -72,7 +72,7 @@ class UserRequest extends Component
             $approveRecord = ApproveList::where('request_id', $request->id)->first();
             if ($approveRecord) {
                 $approver = $approveRecord->user->first_name . ' ' . $approveRecord->user->last_name;
-                $approvedAt = $approveRecord->created_at->format('Y-m-d H:i:s'); // Assuming 'created_at' stores the approval time
+                $approvedAt = $approveRecord->created_at->setTimezone('Asia/Manila')->format('M d, Y h:i A'); // Format with Philippines time and MDY format
                 $request->approver = $approver;
                 $request->approved_at = $approvedAt;
             } else {

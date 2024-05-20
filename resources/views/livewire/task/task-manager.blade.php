@@ -82,7 +82,7 @@
 										{{ $task->user->first_name }} {{ $task->user->last_name }}
 										</td>
 										<td>
-											{{ $task->due_date }}
+										{{ Carbon\Carbon::parse($task->due_date)->format('M d, Y h:i A') }}
 										</td>
                                         <td>
 											{{ $task->status }}

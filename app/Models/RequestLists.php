@@ -65,4 +65,5 @@ class RequestLists extends Model
     {
         return $this->hasMany(ApproveList::class, 'request_id');
     }
+    
 }

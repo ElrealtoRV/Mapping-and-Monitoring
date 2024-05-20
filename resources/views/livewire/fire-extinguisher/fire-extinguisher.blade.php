@@ -1,13 +1,14 @@
 <div>
 <style>
 	/* Styles for screens smaller than 768px (e.g., mobile devices) */
-@media (max-width: 767px) {
+@media (max-width: 1080px) {
     /* CSS rules for mobile screens */
     .card-table {
         font-size: 14px;
+		max-width:500px;
     }
     .table th, .table td {
-        padding: 0.5rem;
+        padding: 2rem;
     }
     .btn {
         font-size: 12px;
@@ -53,14 +54,13 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-auto text-end float-end ms-auto download-grp">
-								<div class="top-nav-search table-search-blk">
-									<form>
-										<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search" name="search">
-										<a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
-									</form>
-								</div>
+							<div class="top-nav-search table-search-blk">
+								<form>
+									<input type="text" class="form-control" placeholder="Search here" wire:model.debounce.500ms="search" name="search">
+									<button type="button" class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></button>
+								</form>
 							</div>
+
 						</div>
 					</div>
 					<div>
@@ -93,15 +93,16 @@
 							</thead>
 							<tbody>
 							@foreach($fire as $fire_fetch_list)
-       					<tr>
+							<tr class="@if($fire_fetch_list->status == 'Expired') bg-danger text-white @elseif($fire_fetch_list->is_expiration_warning) bg-warning @endif">
        					     <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
        					     <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
        					     <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
        					     <td>{{ $fire_fetch_list->building }}</td>
        					     <td>{{ $fire_fetch_list->floor }}</td>
        					     <td>{{ $fire_fetch_list->room }}</td>
-       					     <td>{{ $fire_fetch_list['installation_date']}}</td>
-							<td>{{ $fire_fetch_list['expiration_date']}}</td>
+       					     <td>{{ Carbon\Carbon::parse($fire_fetch_list->installation_date)->format('M d, Y h:i A') }}</td>
+							<td>{{ Carbon\Carbon::parse($fire_fetch_list->expiration_date)->format('M d, Y h:i A') }}</td>
+							
 							<td>{{ $fire_fetch_list['description']}}</td>
        					     <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
        					
@@ -111,7 +112,7 @@
 												<i class='fa fa-pen-to-square'></i>
 											</button>
 
-											<a class="btn btn-danger btn-sm mx-1" wire:click="deleteFire({{ $fire_fetch_list->id }})" title="Delete">
+											<a class="btn btn-secondary btn-sm mx-1" wire:click="deleteFire({{ $fire_fetch_list->id }})" title="Delete">
 												<i class="fa fa-trash"></i>
 											</a>
 										</div>

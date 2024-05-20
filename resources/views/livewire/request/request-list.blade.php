@@ -109,7 +109,7 @@
 								<td>{{  $request->building ?? 'No Building provided'}}</td>
 								<td>{{  $request->floor  ?? 'No Floor provided' }}</td>
 								<td>{{  $request->room  ?? 'No Building provided' }}</td>
-								<td>{{ 	$request->created_at->format('Y-m-d H:i:s') }}</td> <!-- New Date Column -->
+								<td>{{ 	$request->created_at->format('M d, Y h:i A')  }}</td> <!-- New Date Column -->
 								<td>{{  $request->status  }}</td>
                                 
                                 

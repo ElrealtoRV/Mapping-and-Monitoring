@@ -95,6 +95,13 @@ $(document).ready(function() {
       success: function(response) {
         console.log('Notification response:', response);
 
+        // Calculate total notification count
+        var totalNotificationCount = response.expiredCount + response.installedCount;
+
+        // Update bell icon and total count
+        $('#notificationIcon').removeClass('notification-icon-empty').addClass('notification-icon');
+        $('#totalNotificationCount').text(totalNotificationCount);
+
         // Handle expired notifications
         if (response.expiredCount > 0) {
           $('#expiredCount').text(response.expiredCount);
@@ -134,6 +141,7 @@ $(document).ready(function() {
     fetchNotifications();
   }, 5000);
 });
+
 </script>
 
     @livewireScripts
