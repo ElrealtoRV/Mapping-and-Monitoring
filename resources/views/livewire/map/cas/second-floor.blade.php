@@ -1,3 +1,4 @@
+<div>
 <style>
     .popup {
     margin-top: 18px;
@@ -48,94 +49,94 @@
 
 /* Other styles... */
 
-.FCRH,
-.RA,
-.LRA,
-.LBS,
-.IAO,
-.ITO,
-.ITO-DS,
-.LSR,
-.OOTL,
-.RPS,
-.LS,
-.GSS {
+.FacultyCenter,
+.ReadingArea,
+.LibraryReadingArea,
+.LibraryBooksSection,
+.InternalAuditOffice,
+.InformationTechnologyOffice,
+.ItoDirectorsOffice,
+.LibraryStorageRoom,
+.OfficeOfTheLibrarian,
+.ReferenceAndPeriodicalsSection,
+.LawSection,
+.GraduateSchoolSection {
     position: absolute;
     cursor: pointer;
     display: flex;
     gap: 10px;
 }
 
-.FCRH {
+.FacultyCenter {
     top: 35px;
     left: 120px;
 }
 
-.RA {
+.ReadingArea {
     top: 35px;
     left: 445px;
 }
 
-.LRA {
+.LibraryReadingArea {
     top: 35px;
     left: 830px;
 }
 
-.LBS {
+.LibraryBooksSection {
     top: 35px;
     left: 965px;
 }
 
-.IAO {
+.InternalAuditOffice {
     top: 215px;
     left: 120px;
     justify-content: space-between;
     gap: 5px;
 }
 
-.ITO {
+.InformationTechnologyOffice {
     top: 205px;
     left: 180px;
     justify-content: space-between;
     gap: 5px;
 }
 
-.ITO-DS {
+.ItoDirectorsOffice {
     top: 205px;
     left: 250px;
     justify-content: space-between;
     gap: 5px;
 }
 
-.LSR {
+.LibraryStorageRoom {
     top: 205px;
     left: 290px;
     justify-content: space-between;
     gap: 5px;
 }
 
-.OOTL {
+.OfficeOfTheLibrarian {
     top: 205px;
-    left: 375px;
+    left: 430px;
     justify-content: space-between;
     gap: 5px;
 }
 
-.RPS {
+.ReferenceAndPeriodicalsSection {
     top: 205px;;
     left: 680px;
     justify-content: space-between;
     gap: 5px;
 }
 
-.LS {
+.LawSection {
     top: 205px;
     left: 810px;
     justify-content: space-between;
     gap: 5px;
 }
 
-.GSS {
+.GraduateSchoolSection{
     top: 205px;
     left: 945px;
     justify-content: space-between;
@@ -143,7 +144,8 @@
 }
 
 #eye-icon,
-#edit-icon {
+#edit-icon,
+#plus-icon {
     font-size: small;
     display: inline-block;
     margin-left: 13px;
@@ -166,7 +168,11 @@
 
 .eye-icon {
     color: gray;
-    padding-right: 25px;
+    padding-right: 20px;
+}
+.plus-icon {
+    color: black;
+    padding-right: 20px;
 }
 
 #tooltipText {
@@ -266,580 +272,776 @@
         }
     }
 </style>
-
+<livewire:flash-message.flash-message />
 <div class="scroll-container">
     <div id="second-floor" class="floor-content">
         <img src="{{ asset('assets/img/CasSecondFloor.png') }}" alt="SecondFloor" width="1000px" height="300px">
 
- <div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>FCRH</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
-            </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 16) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="FCRH"><i class="fas fa-eye eye-icon"></i></span>
-</div>
-    <!-- <span class="RA" onclick="editpopup()"><i class="fas fa-edit edit-icon"></i></span>
-    <div id="edit-popup" class="HAHA">
-                    <div class="half first-half">
-        <div class="popup">
-
-            <div class="half second-half">
-                <table>
-            @foreach($fire_list->where('id', 2) as $fire_fetch_list)
-            <form wire:submit.prevent="update" enctype="multipart/form-data">
-                                    <div class="form-group local-forms">
-                                        <label>Name</label>
-                                        <input class="form-control" type="text" wire:model="firename"/>
-                                    </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
-
-        @endforeach
-
-                    {{-- <form wire:submit.prevent="updatefire" enctype="multipart/form-data">
-                                        <label>Type</label>
-                                        <select class="form-control select" wire:model="type">
-                                            <option value="" selected>Select a Types</option>
-                                            <option value="water" selected>Water</option>
-                                            <option value="foam" selected>Foam</option>
-                                            <option value="CO2" selected>Carbon Dioxide CO2</option>
-                                            <option value="dry chemical powder" selected>Dry Powder</option>
-                                            <option value="wet chemical" selected>Wet Chemical</option>
-                                            <option value="powder" selected>Powder</option>
-                                        </select>
-                                        @error('type') <span>{{ $message}}</span> @enderror
-                                        <br>
-                                        <label>Name</label>
-                                        <input class="form-control" type="text" wire:model="" placeholder="Name" />
-                                        @error('fire_fetch_list.firename') <span>{{ $message}}</span> @enderror
-                                        <label>Serial Number</label>
-                                        <input class="form-control" type="text" wire:model="serial_number">
-                                         <label>Installation Date</label>
-                                        <input class="form-control" type="date" wire:model="installation_date">
-                                         <label>Expiration Date</label>
-                                        <input class="form-control" type="date" id="expiry-date" wire:model="expiration_date">
-                                        <label>Description</label>
-                                        <input class="form-control" type="text" wire:model="description">
-                                        <label>Status</label>
-                                        <select class="form-control" wire:model="status">
-                                            <option value=" ">Select</option>
-                                            <option value="Active">Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                            <option value="Refill">Refill</option>
-                                        </select>
-                    </form>
-                    @endforeach --}}
-                </table>
-            </div>
-        </div>
-            </div>
-    <span class="popup-close" onclick="closeEditPopup()"><i class="fas fa-times"></i></span>
-    </div> -->
+<div id="facultycenterIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="FacultyCenter"><i class="fas fa-plus plus-icon" wire:click="createFire('FACULTY CENTER')"></i></span>   
+@endif
     <div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireFacultyCenter->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireFacultyCenter as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 17) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="RA"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="FacultyCenter"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireFacultyCenter as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="FacultyCenter"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+
+
+<div id="readingareaIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="ReadingArea"><i class="fas fa-plus plus-icon" wire:click="createFire('READING AREA')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireReadingArea->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireReadingArea as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 18) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="IAO"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="ReadingArea"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireReadingArea as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="ReadingArea"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+
+
+<div id="libraryreadingareaIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="LibraryReadingArea"><i class="fas fa-plus plus-icon" wire:click="createFire('LIBRARY READING AREA')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireLibraryReadingArea->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireLibraryReadingArea as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 19) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="ITO"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="LibraryReadingArea"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireLibraryReadingArea as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="LibraryReadingArea"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+<div id="librarybookssectionIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="LibraryBooksSection"><i class="fas fa-plus plus-icon" wire:click="createFire('LIBRARY BOOKS SECTION')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireLibraryBooksSection->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireLibraryBooksSection as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 20) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="ITO-DS"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="LibraryBooksSection"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireLibraryBooksSection as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="LibraryBooksSection"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+<div id="internalaudditofficeIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="InternalAuditOffice"><i class="fas fa-plus plus-icon" style="margin-left: -5px; margin-top:70px;" wire:click="createFire('INTERNAL AUDIT OFFICE')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireInternalAuditOffice->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireInternalAuditOffice as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 21) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="LSR"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="InternalAuditOffice"><i class="fas fa-eye eye-icon"style="width:15px;"></i></span>
+    </div>
+@foreach($fireInternalAuditOffice as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="InternalAuditOffice"><i class="fas fa-edit edit-icon" style="margin-left: 15px; margin-top:70px;" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+<div id="informationtechnologyofficeIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="InformationTechnologyOffice"><i class="fas fa-plus plus-icon"style="margin-left: -15px; margin-top:80px;" wire:click="createFire('INFORMATION TECHNOLOGY OFFICE')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireInformationTechnologyOffice->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireInformationTechnologyOffice as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 22) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="OOTL"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="InformationTechnologyOffice"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireInformationTechnologyOffice as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="InformationTechnologyOffice"><i class="fas fa-edit edit-icon"style="margin-left: 10px; margin-top:80px;" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+
+<div id="itodirectorsofficceIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="ItoDirectorsOffice"><i class="fas fa-plus plus-icon" style="margin-left:-25px;"wire:click="createFire('ITO DIRECTORS OFFICE')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireItoDirectorsOffice->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireItoDirectorsOffice as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 23) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="LRA"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="ItoDirectorsOffice"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireItoDirectorsOffice as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="ItoDirectorsOffice"><i class="fas fa-edit edit-icon" style="margin-left:-6px;"wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+<div id="librarystorageroomIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="LibraryStorageRoom"><i class="fas fa-plus plus-icon" style="margin-left: 10px; margin-top:80px;" wire:click="createFire('LIBRARY STORAGE ROOM')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireLibraryStorageRoom->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireLibraryStorageRoom as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 27) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="LBS"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="LibraryStorageRoom"><i class="fas fa-eye eye-icon"style="margin-left:25px; width:5px;"></i></span>
+    </div>
+@foreach($fireLibraryStorageRoom as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="LibraryStorageRoom"><i class="fas fa-edit edit-icon"style="margin-left: 35px; margin-top:80px;"wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+
+<div id="officeofthelibrarianIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="OfficeOfTheLibrarian"><i class="fas fa-plus plus-icon" wire:click="createFire('OFFICE OF THE LIBRARIAN')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireOfficeOfTheLibrarian->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireOfficeOfTheLibrarian as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 24) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="RPS"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="OfficeOfTheLibrarian"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireOfficeOfTheLibrarian as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="OfficeOfTheLibrarian"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+
+<div id="referencesectionIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="ReferenceAndPeriodicalsSection"><i class="fas fa-plus plus-icon" wire:click="createFire('REFERENCE AND PERIODICALS SECTION')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireReferenceAndPeriodicalsSection->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireReferenceAndPeriodicalsSection as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 25) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="LS"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="ReferenceAndPeriodicalsSection"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireReferenceAndPeriodicalsSection as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="ReferenceAndPeriodicalsSection"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<div id="tooltip">
-    <span id="tooltipText"> 
-        <h1>INFO</h1>
-        <div class="popup">
-            <div class="half first-half">
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Firename</th>
-                        <th>Serial Number</th>
-                        <th>Building</th>
-                        <th>Floor</th>
-                        <th>Room</th>
-                        <th>Installation date</th>
-                        <th>expiration date</th>
-                        <th>Status</th>
-                    </tr>
-                </table>
+
+<div id="lawsectionIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="LawSection"><i class="fas fa-plus plus-icon" wire:click="createFire('LAW SECTION')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireLawSection->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireLawSection as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
             </div>
-            <div class="half second-half">
-                <table>
-                         @foreach($fire_list->where('id', 26) as $fire_fetch_list)
-                <tr>
-            <td class="{{ empty($fire_fetch_list['type']) ? 'empty' : '' }}">{{ $fire_fetch_list['type'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['firename']) ? 'empty' : '' }}">{{ $fire_fetch_list['firename'] ?: 'Empty' }}</td>
-            <td class="{{ empty($fire_fetch_list['serial_number']) ? 'empty' : '' }}">{{ $fire_fetch_list['serial_number'] ?: 'Empty' }}</td>
-            <td>{{ $fire_fetch_list->firebuilding->building }}</td>
-            <td>{{ $fire_fetch_list->firefloor->floor }}</td>
-            <td>{{ $fire_fetch_list->fireroom->room }}</td>
-            <td>{{ $fire_fetch_list['installation_date']}}</td>
-            <td>{{ $fire_fetch_list['expiration_date']}}</td>
-            <td class="{{ empty($fire_fetch_list['status']) ? 'empty' : '' }}">{{ $fire_fetch_list['status'] ?: 'Empty' }}</td>
-        </tr>
-        @endforeach
-                </table>
-            </div>
-        </div>
-    </span>
-    <span class="GSS"><i class="fas fa-eye eye-icon"></i></span>
+            
+        </span>
+        <span class="LawSection"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireLawSection as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="LawSection"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
 </div>
-<h1>SECOND FLOOR</h1>
 
 
+<div id="graduateschoolIcon" class="classroom">
+@if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+    <span class="GraduateSchoolSection"><i class="fas fa-plus plus-icon" wire:click="createFire('GRADUATE SCHOOL SECTION')"></i></span>   
+@endif
+    <div id="tooltip">
+        <span id="tooltipText"> 
+            <h1>INFO</h1>
+            <div class="popup">
+                <div class="half first-half">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Firename</th>
+                            <th>Serial Number</th>
+                            <th>Building</th>
+                            <th>Floor</th>
+                            <th>Room</th>
+                            <th>Installation date</th>
+                            <th>Expiration date</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </table>
+                </div>
 
+                <div class="half second-half">
+                    <table>
+                        <!-- Check if there is data available -->
+                        @if($fireGraduateSchoolSection->isEmpty())
+                        <tr>
+                            <td colspan="9">No data available</td>
+                        </tr>
+                        @else
+                        <!-- Loop through the data if available -->
+                        @foreach($fireGraduateSchoolSection as $fires)
+                        <tr>
+                            <td>{{ $fires->type }}</td>
+                            <td class="{{ empty($fires['firename']) ? 'empty' : '' }}">{{ $fires['firename'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['serial_number']) ? 'empty' : '' }}">{{ $fires['serial_number'] ?: 'Empty' }}</td>
+                            <td>{{ $fires->building }}</td>
+                            <td>{{ $fires->floor }}</td>
+                            <td>{{ $fires->room }}</td>
+                            <td class="{{ empty($fires['installation_date']) ? 'empty' : '' }}">{{ $fires['installation_date'] ?: 'Empty' }}</td>
+                            <td class="{{ empty($fires['expiration_date']) ? 'empty' : '' }}">{{ $fires['expiration_date'] ?: 'Empty' }}</td>
+                            <td>{{$fires->description}}-</td>
+                            <td class="{{ empty($fires['status']) ? 'empty' : '' }}">{{ $fires['status'] ?: 'Empty' }}</td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </table>
+                </div>
+            </div>
+            
+        </span>
+        <span class="GraduateSchoolSection"><i class="fas fa-eye eye-icon"></i></span>
+    </div>
+@foreach($fireGraduateSchoolSection as $fires)
+    @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
+        <span class="GraduateSchoolSection"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
+    @endif
+@endforeach
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 <script>
     function editpopup() {
         var popup = document.getElementById('edit-popup');
@@ -851,9 +1053,14 @@
         popup.style.display = 'none';
     }
 </script>
-
-
-    
-        </div>
-
+        <h1>SECOND FLOOR</h1>
+    </div>
 </div>
+<div wire.ignore.self class="modal fade" id="MapFormModal" tabindex="-1" role="dialog" aria-labelledby="MapFormModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<livewire:map.form />
+			</div>
+		</div>
+		@section('custom_script')
+		@include('layouts.scripts.MapForm-scripts')
+		@endsection

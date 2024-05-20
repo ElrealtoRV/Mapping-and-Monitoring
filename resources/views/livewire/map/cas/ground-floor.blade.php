@@ -148,7 +148,7 @@
 <!-- Display the icon outside of the loop -->
 <div id="casDeanIcon" class="classroom">
 @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
-    <span class="CasDean"><i class="fas fa-plus plus-icon" wire:click="createFire('CASDEAN')"></i></span>   
+    <span class="CasDean"><i class="fas fa-plus plus-icon" wire:click="createFire('CAS DEAN OFFICE')"></i></span>   
 @endif
     <div id="tooltip">
         <span id="tooltipText"> 
@@ -202,9 +202,11 @@
         </span>
         <span class="CasDean"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCasDean as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CasDean"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 <div id="cas106Icon" class="classroom">
 @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
@@ -260,10 +262,11 @@
                 </span>
                 <span class="CAS106"><i class="fas fa-eye eye-icon"></i></span>
             </div>
+            @foreach($fireCas106 as $fires)
                 @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
                 <span class="CAS106"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
                 @endif
-
+            @endforeach
         </div>
 
         <div id="cas105Icon" class="classroom">
@@ -321,9 +324,11 @@
         
         <span class="CAS105"><i class="fas fa-eye eye-icon"></i></span>
         </div>
+        @foreach($fireCas105 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS105"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+        @endforeach
     
 </div>
 
@@ -381,9 +386,11 @@
         </span>
         <span class="CAS104"><i class="fas fa-eye eye-icon"></i></span>  
     </div>
+    @foreach($fireCas104 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS104"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 
 <div id="mclIcon" class="classroom">
@@ -442,9 +449,11 @@
         </span>
         <span class="MCL"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireMassComm as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="MCL"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 
 <div id="cas103Icon" class="classroom">
@@ -500,9 +509,11 @@
         </span>
         <span class="CAS103"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas103 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS103"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 <div id="cas102Icon" class="classroom">
 @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
@@ -557,9 +568,11 @@
         </span>
         <span class="CAS102"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas102 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS102"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 
 <div id="cas101Icon" class="classroom">
@@ -615,9 +628,11 @@
         </span>
         <span class="CAS101"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas101 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS101"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 
 <div id="cas107Icon" class="classroom">
@@ -674,9 +689,11 @@
         </span>
         <span class="CAS107"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas107 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS107"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 <div id="cas108Icon" class="classroom">
 @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
@@ -731,9 +748,11 @@
         </span>
         <span class="CAS108"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas108 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS108"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 <div id="cas109Icon" class="classroom">
 @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
@@ -788,9 +807,11 @@
         </span>
         <span class="CAS109"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas109 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS109"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 <div id="cas110Icon" class="classroom">
 @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
@@ -845,9 +866,11 @@
         </span>
         <span class="CAS110"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas110 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS110"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 
 <div id="cas111Icon" class="classroom">
@@ -903,9 +926,11 @@
         </span>
         <span class="CAS111"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas111 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS111"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 
 <div id="cas112Icon" class="classroom">
@@ -961,9 +986,11 @@
         </span>
                 <span class="CAS112"><i class="fas fa-eye eye-icon"></i></span>
     </div>
+    @foreach($fireCas112 as $fires)
         @if(auth()->user()->hasRole('admin')||auth()->user()->hasRole('Head')||auth()->user()->hasRole('Maintenance Personnel')||auth()->user()->hasRole('Assistant'))
         <span class="CAS112"><i class="fas fa-edit edit-icon" wire:click="editFire({{ $fires->id }})" ></i></span>
         @endif
+    @endforeach
 </div>
 <script>
     function editpopup() {

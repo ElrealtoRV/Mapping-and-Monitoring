@@ -21,44 +21,142 @@
         margin-top: 25px;
     }
 
-    .notification {
+ /* Notification Container */
+.notification {
   position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 
-.notification-details {
-  display: none;
+/* Notification Bell Icon */
+.notification i {
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  margin-right: 8px; /* Adjusted spacing */
+}
+
+/* Notification Count */
+.notification-count {
+  background-color: #ff4d4f;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 4px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Notification Dropdown */
+.notification-dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 10px);
   right: 0;
-  background: white;
-  border: 1px solid #ccc;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
   width: 300px;
-  max-width: 90vw; /* Add this line to make it responsive */
-  z-index: 10;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.notification:hover .notification-details {
-  display: block;
+  z-index: 1;
+  display: none;
   animation: fadeIn 0.3s;
 }
 
-.expired-notification-details,
-.installed-notification-details {
-  padding: 10px;
+.notification:hover .notification-dropdown,
+.notification-dropdown:hover {
+  display: block;
+}
+
+.notification-header {
+  background-color: #f5f5f5;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.notification-tabs {
+  display: flex;
+}
+
+.tab-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.tab-button.active {
+  background-color: #f5f5f5;
+}
+
+.notification-tab-content {
+  padding: 15px;
   max-height: 300px;
   overflow-y: auto;
 }
-#expiredDetails{
-    z-index: 20;
-    margin-top:100px;
-}
 
+/* Notification Counter */
 .notification-counter {
+  font-size: 14px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
+/* Notification List */
+.notification-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.notification-list li:last-child {
+  border-bottom: none;
+}
+
+.notification-list li i {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Responsive Styles */
+@media (max-width: 720px) {
+  .notification-dropdown {
+    width: 90vw;
+    max-width: none;
+    right: 5vw;
+    left: 5vw;
+    background-color: red;
+  }
+  .nav{
+    background-color: red;
+  }
+}
+@media (min-width: 1080px) {
+  .notification-dropdown {
+    max-width: 500px; /* Increase the maximum width */
+    width: 400px; /* Adjust the width */
+  }
+
+  .notification-tab-content {
+    max-height: 400px; /* Increase the maximum height for better visibility */
+  }
+
+  /* Adjust other styles as needed */
+}
+
+/* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -68,19 +166,6 @@
   }
 }
 
-/* Add media query for mobile devices */
-@media (max-width: 280px) {
-  .notification-details {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 10px 10px 0 0;
-  }
-}
 </style>
 
 <div class="header">
@@ -98,65 +183,51 @@
     <a id="toggle_btn" href="#"><img src="{{ asset('assets/img/icons/bar-icon.svg') }}" alt></a>
 
     <a id="mobile_btn" class="mobile_btn float-start" href="#sidebar"><img src="{{ asset('assets/img/icons/bar-icon.svg') }}" alt></a>
-
-    <div class="top-nav-search mob-view">
-        <form>
-            <input type="text"id="searchForm" class="form-control" placeholder="Search here">
-            <a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
-        </form>
-    </div>
     <a href="#top" id="back-to-top-button" alt>
         <i class="fa-solid fa-arrow-up"></i> <!-- Use the appropriate icon class here -->
     </a>
 
     <ul class="nav user-menu float-end">
     <a href="#" class="notification">
-    <i class="bx bxs-bell" id="totalNotificationCount"></i>
-    <div class="notification-count" id="totalNotificationCount"></div>
-
+  <i class="bx bxs-bell" id="notificationIcon"></i>
+  <div class="notification-count" id="totalNotificationCount"></div>
+  <div class="notification-dropdown">
     <div class="notification-details" id="expiredDetails">
-        <div class="expired-notification-details">
-            <div class="notification-counter" id="expiredCount"></div>
-            <ul id="expiredNotifications">
-                <!-- Notification items will be dynamically added here -->
-            </ul>
-        </div>
+      <div class="expired-notification-details">
+        <div class="notification-counter" id="expiredCount"></div>
+        <ul id="expiredNotifications">
+          <!-- Notification items will be dynamically added here -->
+        </ul>
+      </div>
     </div>
-
     <div class="notification-details" id="installedDetails">
-        <div class="expired-notification-details">
-            <div class="notification-counter" id="installedCount"></div>
-            <ul id="installedNotifications">
-            </ul>
-        </div>
+      <div class="installed-notification-details">
+        <div class="notification-counter" id="installedCount"></div>
+        <ul id="installedNotifications">
+          <!-- Notification items will be dynamically added here -->
+        </ul>
+      </div>
     </div>
+  </div>
 </a>
-
-
-
-
-
-        <li class="nav-item dropdown has-arrow user-profile-list" id="prolist">
-            <a class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
-                <div class="user-names">
-                    {{-- <h5>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h5>
-                    <span class="text-capitalize">{{ auth()->user()->roles[0]->name }}</span> --}}
-                    <!-- Use the user's name instead of the image -->
-                    <span style="color: black;">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }} <i class="fa fa-chevron-down"></i></span>
-                </div>
-            </a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="settingView" style="color: black;">Settings</a>
-                <a class="dropdown-item" href="{{ route('logout') }}" style="color: black;">Logout</a>
-
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown has-arrow user-profile-menu" id="prolist">
+                <a class="dropdown-toggle nav-link user-link" href="#" role="button" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="user-names">
+                        <span style="color: black;">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }} <i class="fa fa-chevron-down"></i></span>
+                    </div>
+                </a>
+                <div class="dropdown-menu" style="background-color:#fff; margin-top:-100px;"aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/setting" style="color: black;">Settings</a>
+                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color: black;">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                </a>
-            </div>
-        </li>
+                </div>
+            </li>
+        </ul>
+    </nav>
     </ul>
 </div>
 
@@ -165,38 +236,6 @@
     document.getElementById('toggle_btn').addEventListener('click', function() {
         var icon = document.getElementById('fireExtinguisherIcon');
         icon.style.display = (icon.style.display === 'none' || icon.style.display === '') ? 'inline' : 'none';
-    });
-
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        // Get the search query and other parameters
-        var searchQuery = document.getElementById('searchQuery').value;
-        var position_id = document.getElementById('positionDropdown').value;
-        // Get values for other search parameters
-
-        // Send an AJAX request to the backend
-        // Adjust the URL and data based on your backend implementation
-        // Example using fetch API
-        fetch('/search', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    searchQuery: searchQuery,
-                    position_id: position_id,
-                    // Include other search parameters in the body
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Update the UI with the search results
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
     });
 
 </script>

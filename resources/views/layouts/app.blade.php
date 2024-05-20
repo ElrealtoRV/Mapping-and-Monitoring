@@ -87,71 +87,55 @@
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script>
 $(document).ready(function() {
-    function fetchNotifications() {
-        $.ajax({
-            url: '/fireExtinguisherNotif',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                console.log('Notification response:', response); // Log the response to the console
+  function fetchNotifications() {
+    $.ajax({
+      url: '/fireExtinguisherNotif',
+      type: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        console.log('Notification response:', response);
 
-                // Handle expired notifications
-                if (response.expiredCount > 0) {
-                    $('#expiredCount').text(response.expiredCount);
-                    $('#expiredNotifications').empty();
-                    $.each(response.expired, function(index, expired) {
-                        console.log('Expired item:', expired); // Log each expired item
-                        $('#expiredNotifications').append('<li>Expired Fire Extinguisher in Room ' + expired.room + '</li>');
-                    });
-                    animateNotification('#expiredDetails');
-                } else {
-                    $('#expiredCount').text('0');
-                    $('#expiredNotifications').empty().append('<li>No expired notifications</li>');
-                    console.warn('No expired notifications to display'); // Log a warning if no expired items
-                }
+        // Handle expired notifications
+        if (response.expiredCount > 0) {
+          $('#expiredCount').text(response.expiredCount);
+          $('#expiredNotifications').empty();
+          $.each(response.expired, function(index, expired) {
+            console.log('Expired item:', expired);
+            $('#expiredNotifications').append('<li>Expired Fire Extinguisher in Room ' + expired.room + '</li>');
+          });
+        } else {
+          $('#expiredCount').text('0');
+          $('#expiredNotifications').empty().append('<li>No expired notifications</li>');
+          console.warn('No expired notifications to display');
+        }
 
-                // Handle installed notifications
-                if (response.installedCount > 0) {
-                    $('#installedCount').text(response.installedCount);
-                    $('#installedNotifications').empty();
-                    $.each(response.installed, function(index, installed) {
-                        console.log('Installed item:', installed); // Log each installed item
-                        $('#installedNotifications').append('<li>Installed Fire Extinguisher in Room ' + installed.room + '</li>');
-                    });
-                    animateNotification('#installedDetails');
-                } else {
-                    $('#installedCount').text('0');
-                    $('#installedNotifications').empty().append('<li>No installed notifications</li>');
-                    console.warn('No installed notifications to display'); // Log a warning if no installed items
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching notifications:', xhr.responseText); // Log the error
-                // Handle error
-            }
-        });
-    }
+        // Handle installed notifications
+        if (response.installedCount > 0) {
+          $('#installedCount').text(response.installedCount);
+          $('#installedNotifications').empty();
+          $.each(response.installed, function(index, installed) {
+            console.log('Installed item:', installed);
+            $('#installedNotifications').append('<li>Installed Fire Extinguisher in Room ' + installed.room + '</li>');
+          });
+        } else {
+          $('#installedCount').text('0');
+          $('#installedNotifications').empty().append('<li>No installed notifications</li>');
+          console.warn('No installed notifications to display');
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('Error fetching notifications:', xhr.responseText);
+      }
+    });
+  }
 
-    function animateNotification(notificationId) {
-        console.log('Animating notification:', notificationId); // Log the animation step
-        $(notificationId).addClass('animated');
-        setTimeout(function() {
-            $(notificationId).removeClass('animated');
-        }, 1000);
-    }
-
+  fetchNotifications();
+  setInterval(function() {
     fetchNotifications();
-
-    setInterval(function() {
-        fetchNotifications();
-    }, 5000);
+  }, 5000);
 });
-
-
-
-
-
 </script>
+
     @livewireScripts
     @yield('custom_script')
    

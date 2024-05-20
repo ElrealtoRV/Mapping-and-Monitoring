@@ -89,20 +89,32 @@
                                         <label>Room / Office</label>
                                         <select class="form-control select" wire:model="room" @if($viewMode) disabled @endif>
                                             <option value="" selected>Select a Room</option>
-                                            <option value="CAS DEAN OFFICE" selected>CAS DEAN OFFICE</option>
-                                            <option value="CAS106" selected>CAS 106</option>
-                                            <option value="CAS105" selected>CAS 105</option>
-                                            <option value="CAS104" selected>CAS 104</option>
-                                            <option value="MASS COMM LABORATORY" selected>MASS COMM LABORATORY</option>
-                                            <option value="CAS103" selected>CAS 103</option>
-                                            <option value="CAS102" selected>CAS 102</option>
-                                            <option value="CAS101" selected>CAS 101</option>
-                                            <option value="CAS107" selected>CAS 107</option>
-                                            <option value="CAS108" selected>CAS 108</option>
-                                            <option value="CAS109" selected>CAS 109</option>
-                                            <option value="CAS110" selected>CAS 110</option>
-                                            <option value="CAS111" selected>CAS 111</option>
-                                            <option value="CAS112" selected>CAS 112</option>
+                                            <option id="Ground-Floor" value="CAS DEAN OFFICE" selected>CAS DEAN OFFICE</option>
+                                            <option id="Ground-Floor" value="CAS106" selected>CAS 106</option>
+                                            <option id="Ground-Floor" value="CAS105" selected>CAS 105</option>
+                                            <option id="Ground-Floor" value="CAS104" selected>CAS 104</option>
+                                            <option id="Ground-Floor" value="MASS COMM LABORATORY" selected>MASS COMM LABORATORY</option>
+                                            <option id="Ground-Floor" value="CAS103" selected>CAS 103</option>
+                                            <option id="Ground-Floor" value="CAS102" selected>CAS 102</option>
+                                            <option id="Ground-Floor" value="CAS101" selected>CAS 101</option>
+                                            <option id="Ground-Floor" value="CAS107" selected>CAS 107</option>
+                                            <option id="Ground-Floor" value="CAS108" selected>CAS 108</option>
+                                            <option id="Ground-Floor" value="CAS109" selected>CAS 109</option>
+                                            <option id="Ground-Floor" value="CAS110" selected>CAS 110</option>
+                                            <option id="Ground-Floor" value="CAS111" selected>CAS 111</option>
+                                            <option id="Ground-Floor" value="CAS112" selected>CAS 112</option>
+                                            <option value="FACULTY CENTER" selected>FACULTY CENTER</option>
+                                            <option value="READING AREA" selected>READING AREA</option>
+                                            <option value="LIBRARY READING AREA" selected>LIBRARY READING AREA</option>
+                                            <option value="LIBRARY BOOKS SECTION" selected>LIBRARY BOOKS SECTION</option>
+                                            <option value="INTERNAL AUDIT OFFICE" selected>INTERNAL AUDIT OFFICE</option>
+                                            <option value="INFORMATION TECHNOLOGY OFFICE" selected>INFORMATION TECHNOLOGY OFFICE</option>
+                                            <option value="ITO DIRECTORS OFFICE" selected>ITO DIRECTOR'S OFFICE</option>
+                                            <option value="LIBRARY STORAGE ROOM" selected>LIBRARY STORAGE ROOM</option>
+                                            <option value="OFFICE OF THE LIBRARIAN" selected>OFFICE OF THE LIBRARIAN</option>
+                                            <option value="REFERENCE AND PERIODICALS SECTION" selected>"REFERENCE AND PERIODICALS SECTION</option>
+                                            <option value="lAW SECTION" selected>lAW SECTION</option>
+                                            <option value="GRADUATE SCHOOL SECTION" selected>GRADUATE SCHOOL SECTION</option>
                                             
 
                                            
